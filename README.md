@@ -9,5 +9,5 @@
 - 사전 수업 기간엔 책이 없어서 https://poiemaweb.com/ <- 이 사이트를 주로 활용할 예정 (HTML / CSS 위주로)
 - 강의용 디스코드 채널 입장
 - VS Code 설치, 첫 HTML 파일 생성
-- 강의용 노션 접속. (주소 : https://www.notion.so/260629-387a69c6e8268029bc39e45c08072f09)
+- 노션은 복습용으로 사용될 예정 (주소 : https://www.notion.so/260629-387a69c6e8268029bc39e45c08072f09)
 - HTML 기초
