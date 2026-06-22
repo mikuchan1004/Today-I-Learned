@@ -11,4 +11,6 @@
 - VS Code 설치, 첫 HTML 파일 생성
 - 노션은 복습용으로 사용될 예정 (주소 : https://www.notion.so/260629-387a69c6e8268029bc39e45c08072f09)
 - HTML 노션 링크 : https://www.notion.so/HTML-387a69c6e82680c6b409f13b73f5f457
+
+
 **HTML에서는 1개 이상의 연속된 공백(space)을 삽입하여도 1개의 공백으로 표시된다. 1개 이상의 연속된 줄바꿈(enter)도 1개의 공백으로 표시된다.**
