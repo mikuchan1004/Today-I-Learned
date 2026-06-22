@@ -8,4 +8,4 @@
 - 강의실 듀얼 모니터 세팅 확인
 - 사전 수업 기간엔 책이 없어서 https://poiemaweb.com/ <- 이 사이트를 주로 활용할 예정 (HTML / CSS 위주로)
 - 강의용 디스코드 채널 입장
-- VS Code 설치
+- VS Code 설치, 첫 HTML 파일 생성
