@@ -10,7 +10,7 @@
 - 강의용 디스코드 채널 (화면 공유 및 공지사항 등등)
 - VS Code 설치, 첫 HTML 파일 생성
 - 노션은 복습용으로 사용될 예정 (주소 : https://www.notion.so/260629-387a69c6e8268029bc39e45c08072f09)
-- HTML 노션 링크 : https://www.notion.so/HTML-387a69c6e82680c6b409f13b73f5f457
+- HTML 정리 노션 링크 : https://www.notion.so/HTML-387a69c6e82680c6b409f13b73f5f457
 
 **공백의 축약 : HTML은 연속된 공백(엔터 포함)은 하나의 공백으로 축약된다**
 
