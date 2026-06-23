@@ -24,13 +24,17 @@
 
 | 수업중에 만든 파일들 |
 | :--- |
- [01_hello.html](workspace_html/01_hello.html) 
- [02_tag.html](workspace_html/02_tag.html)     
+[01_hello.html](workspace_html/01_hello.html) 
+[02_tag.html](workspace_html/02_tag.html)     
 ------------------------------------------------------------------------
 ## 2026-06-23 (화)
 - HTML 수업을 이어서 진행 (HTML 태그 - Link ~ )
 - href : hypertext reference ; 하이퍼텍스트 참고 / target= "_blank" ; 새 탭에서 열기 
 <img width="423" height="209" alt="image" src="https://github.com/user-attachments/assets/2dc3638a-6c74-48ff-a8bf-b25399a04d2b" />
 
-- a태그 : 앵커(anchor)의 약자. 연결해주는 태그. 브라우저 주소를 대신 적어주는 기능. / a태그에 이미지도 넣을 수 있음.
+- a태그 : 앵커(anchor)의 약자. 연결해주는 태그. 브라우저 주소를 대신 적어주는 기능.
+- a태그에 이미지, 텍스트, 컴퓨터에 저장된 파일도 넣을 수 있음
 <img width="941" height="39" alt="image" src="https://github.com/user-attachments/assets/b2f0d97a-086d-4a85-8c42-a3c2c102f553" />
+<img width="434" height="25" alt="image" src="https://github.com/user-attachments/assets/a337d8f3-f590-45a0-ac0a-72f65e96f1a6" />
+
+- 상대 주소 : 내 위치를 기준으로 삼는 주소. 현재 주소의 가장 마지막 / 이후의 주소를 변경한다. 
