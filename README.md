@@ -5,7 +5,7 @@
 
 |링크 모음|
 | :--- |
-[전체 수업 내용 정리(노션)](https://www.notion.so/260629-387a69c6e8268029bc39e45c08072f09)
+[전체 수업 내용 정리(노션)](https://www.notion.so/260629-387a69c6e8268029bc39e45c08072f09){:target="_blank}
 [HTML 수업 내용 정리(노션)](https://www.notion.so/HTML-387a69c6e82680c6b409f13b73f5f457)
 [사전 수업 기간동안 활용할 사이트(poiemaweb)](https://poiemaweb.com/)
 
