@@ -50,4 +50,5 @@
 | 수업중에 만든 파일들 |
 | :--- |
 [detail.html](workspace_html/asset/detail.html) 
+[03_a.html](workspace_html/03_상대주소/03_a.html)
 
