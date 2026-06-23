@@ -37,4 +37,17 @@
 <img width="941" height="39" alt="image" src="https://github.com/user-attachments/assets/b2f0d97a-086d-4a85-8c42-a3c2c102f553" />
 <img width="434" height="25" alt="image" src="https://github.com/user-attachments/assets/a337d8f3-f590-45a0-ac0a-72f65e96f1a6" />
 
-- 상대 주소 : 내 위치를 기준으로 삼는 주소. 현재 주소의 가장 마지막 / 이후의 주소를 변경한다. 
+- 상대 주소 : 내 위치를 기준으로 삼는 주소. 현재 주소의 가장 마지막 / 이후의 주소를 변경한다.
+
+- 절대 주소
+1. 프로토콜로 시작 (http:// , https:// , ftp://)
+2. // 로 시작 (프로토콜의 마지막 //)
+3. / 로 시작
+  3.1 ip:port/ <<< 여기를 뜻함
+
+* 절대 주소가 아닌 모든 주소는 상대 주소를 뜻함
+
+| 수업중에 만든 파일들 |
+| :--- |
+[detail.html](workspace_html/asset/detail.html) 
+
