@@ -6,11 +6,15 @@
 - 부트캠프 사전 안내 및 환경 설정
 - 깃허브 TIL 저장소 개설 완료
 - 강의실 듀얼 모니터 세팅 확인
-- 사전 수업 기간엔 책이 없어서 https://poiemaweb.com/ <- 이 사이트를 주로 활용할 예정 (HTML / CSS 위주로)
+- 사전 수업 기간엔 책이 없어서 poiemaweb이라는 사이트를 활용할 예정 (HTML / CSS)
 - 강의용 디스코드 채널 (화면 공유 및 공지사항 등등)
 - VS Code 설치, 첫 HTML 파일 생성
-- 노션은 복습용으로 사용될 예정 (주소 : https://www.notion.so/260629-387a69c6e8268029bc39e45c08072f09)
-- HTML 정리 노션 링크 : https://www.notion.so/HTML-387a69c6e82680c6b409f13b73f5f457
+
+|링크 모음|
+| :--- |
+[전체 수업 내용 정리](https://www.notion.so/260629-387a69c6e8268029bc39e45c08072f09)
+[HTML 수업 내용 정리](https://www.notion.so/HTML-387a69c6e82680c6b409f13b73f5f457)
+[사전 수업 기간동안 활용할 사이트](https://poiemaweb.com/)
 
 **공백의 축약 : HTML은 연속된 공백(엔터 포함)은 하나의 공백으로 축약된다**
 
@@ -18,5 +22,15 @@
 
 **이왕 시작한거 끝까지 들어보자!**
 
+| 수업중에 만든 파일들 |
+| :--- |
+ [01_hello.html](workspace_html/01_hello.html) 
+ [02_tag.html](workspace_html/02_tag.html)     
 ------------------------------------------------------------------------
 ## 2026-06-23 (화)
+- HTML 수업을 이어서 진행 (HTML 태그 - Link ~ )
+- href : hypertext reference ; 하이퍼텍스트 참고 / target= "_blank" ; 새 탭에서 열기 
+<img width="423" height="209" alt="image" src="https://github.com/user-attachments/assets/2dc3638a-6c74-48ff-a8bf-b25399a04d2b" />
+
+- a태그 : 앵커(anchor)의 약자. 연결해주는 태그. 브라우저 주소를 대신 적어주는 기능. / a태그에 이미지도 넣을 수 있음.
+<img width="941" height="39" alt="image" src="https://github.com/user-attachments/assets/b2f0d97a-086d-4a85-8c42-a3c2c102f553" />
