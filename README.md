@@ -33,7 +33,7 @@
 <img width="423" height="209" alt="image" src="https://github.com/user-attachments/assets/2dc3638a-6c74-48ff-a8bf-b25399a04d2b" />
 
 - a태그 : 앵커(anchor)의 약자. 연결해주는 태그. 브라우저 주소를 대신 적어주는 기능.
-- a태그에 이미지, 텍스트, 컴퓨터에 저장된 파일도 넣을 수 있음
+- a태그에 이미지, 텍스트, 컴퓨터에 저장된 파일도 넣을 수 있음. 페이지 연결도 가능.
 <img width="941" height="39" alt="image" src="https://github.com/user-attachments/assets/b2f0d97a-086d-4a85-8c42-a3c2c102f553" />
 <img width="434" height="25" alt="image" src="https://github.com/user-attachments/assets/a337d8f3-f590-45a0-ac0a-72f65e96f1a6" />
 
