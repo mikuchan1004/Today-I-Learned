@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        text : <input type="text"><br>
+        text(기본값) : <input><br>
+        text(value) : <input type="text" name="val" value="초기값"><br>
+        text(placeholder) : <input type="text" placeholder="ID를 입력해주세요"><br>
+        text(readonly) : <input type="text" value="리드온리" readonly><br>
+        text(disabled) : <input type="text" value="disabled" disabled><br>
+        password : <input type="password"><br>
+        input(button) : <input type="button" value="input"><br>
+        button : <button type="button" name="btn" value="1">button</button><br>
+        submit : <input type="submit" value="전송"><br>
+        button(기본값:submit) : <button>submit</button><br>
+        <button type="button">
+             <img src="./asset/Spongebob-Christmas-PNG-Picture.png" alt="스폰지밥이 웃고있는 사진">
+        </button>
+        <hr>
+        checkbox:
+        <input type="checkbox" name="coffee" value="1">샷추가
+        <input type="checkbox" name="coffee" value="2" checked>펄추가
+        <input type="checkbox" name="coffee" value="3" disabled>휘핑크림
+        <input type="checkbox" name="coffee" value="4">시럽
+        <input type="checkbox" name="coffee" value="5">얼음많이
+        <br>
+        radio : 
+        <input type="radio" name="china" value="1" checked>짜장면
+        <input type="radio" name="china" value="2" disabled>볶음밥
+        <input type="radio" name="china" value="3">탕수육
+        <br>
+        <input type="radio" name="gender" value="여자" checked>여자
+        <input type="radio" name="gender" value="남자">남자
+        <br>
+        select:
+        <select>
+            <option value="1">한식</option>
+            <option value="2">중식</option>
+            <option value="3">양식</option>
+            <option value="4" selected>일식</option>
+            <option value="5">분식</option>
+        </select>
+        <br>
+        select - multiple:
+        <select multiple size="3">
+            <option>한식</option>
+            <option>중식</option>
+            <option>양식</option>
+            <option selected>일식</option>
+            <option>분식</option>
+        </select>
+        <br>
+
+        <hr>
+        <label>
+            <input type="checkbox">
+            펄추가
+        </label>
+        <br>
+        <label for="perl">펄추가</label>
+        <input type="checkbox" id="perl">
+        <br>
+        <textarea rows="10" cols="50" placeholder="글을 입력해주세요" name="ta"></textarea>
+        <hr>
+        reset : <input type="reset" value="초기화"><br>
+        color : <input type="color"><br>
+        date : <input type="date" name="date" value="2026-06-24"><br>
+        time : <input type="time"><br>
+        number : <input type="number"><br>
+        range : <input type="range" min="10" max="100" step="10"><br>
+    </form>
+
+
+    <hr>
+    <!--
+        form 속성
+        method : get, post
+        method 기본값 : get
+
+        action : 전송할 서버의 주소 
+        action 기본값 : 현재 내 주소 
+    -->
+    <form method="get">
+        <input type="text" name="song" ><br>
+        <input type="text"><br>
+        <input type="text" name="singer"><br>
+        <input type="submit" value="get 연습">
+    </form>
+
+    <hr>
+    
+    <form method="get" action="https://search.naver.com/search.naver" target="_blank">
+        <input type="text" placeholder="검색어를 입력해주세요" name="query"><br>
+        <input type="submit" value="네이버 검색">
+    </form>
+
+    <form method="get" action="https://www.google.com/search" target="_blank">
+        <input type="text" placeholder="검색어를 입력해주세요" name="q"><br>
+        <input type="submit" value="구글 검색">
+    </form>
+
+    <form method="get" action="https://www.youtube.com/results" target="_blank">
+        <input type="text" placeholder="검색어를 입력해주세요" name="search_query"><br>
+        <input type="submit" value="유튜브 검색">
+    </form>
+
+    <form method="post">
+        <input type="text" name="q"><br>
+        <input type="submit" value="post 연습">
+    </form>
+
+    <hr>
+
+    <table border="1">
+        <caption>로그인</caption>
+        <tr>
+            <td>
+            <form>
+                <input type="text" placeholder="ID를 입력해주세요"><br>
+                <input type="password" placeholder="비밀번호를 입력해주세요"><br>
+                <button>로그인</button>
+                <button>회원가입</button>
+                <br>
+                <label for="id_save">ID 저장</label>
+                <input type="checkbox" id="id_save">
+                <label for="stay_logged_in">로그인 상태 유지</label>
+                <input type="checkbox" id="stay_logged_in">
+            </form>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
