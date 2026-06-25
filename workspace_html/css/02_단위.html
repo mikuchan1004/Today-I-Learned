@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02_단위</title>
+    <style>
+        /* px : pixel, 디스플레이의 절대적인 크기 */
+        #pixel .box1{
+            /* font-size : 폰트 크기, 상속됨 */
+            font-size: 16px;
+        }
+        #pixel .box1 .box2 {
+            font-size: 32px;
+        }
+        #pixel .box1 .box2 .box3 {
+            font-size: 16px;
+        }
+        #percent .box1 {
+            font-size : 150%;
+        }
+        #percent .box1 .box2 {
+            font-size: 150%;
+        }
+        #percent .box1 .box2 .box3 {
+            font-size: 150%;
+        }
+        #em .box1 {
+            font-size : 1.5em;
+        }
+        #em .box1 .box2 {
+            font-size: 1.5em;
+        }
+        #em .box1 .box2 .box3 {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    기본글씨 abc ABC 123 Wi<br>
+    <div id="pixel">
+        <div class="box1">
+            box1
+            <div class="box2">
+                box2
+                <div class="box3">
+                    box3
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div id=percent>
+        <div class="box1">
+            box1-150%
+            <div class="box2">
+                box2-150%
+                <div class="box3">
+                    box3-150%
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div id=em>
+        <div class="box1">
+            box1-1.5em
+            <div class="box2">
+                box2-1.5em
+                <div class="box3">
+                    box3-1.5em
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
