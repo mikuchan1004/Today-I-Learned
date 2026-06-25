@@ -185,12 +185,40 @@
         }
 
         #table .no{
-            background-color: yellow;
+            background-color: yellow;    
         }
 
-        #table [id^=title_] {
+       #table [class^=no_] {
+        border: 1px solid red;
+        background-color: lightgreen;
+        color:black;
+       }
+
+       #table [class^=wri_] {
+        border: 1px solid blue;
+        background-color: pink;
+        color:black;
+       }
+
+       #table [class^=ti_] {
+        border: 1px solid green;
+        background-color: lightcoral;
+        color:black;
+       }
+
+       #table [id^=num_] {
+        border: 1px solid aqua;
+        background-color: antiquewhite;
+        color:black;
+       }
+
+        /* #table [id^=title_] {
             border: 1px solid red;
         }
+
+        #table [id^=writer_] {
+            border: 1px solid aqua;
+        } */
 
     </style>
 </head>
@@ -261,19 +289,19 @@
 
     <table id="table" border="1">
         <tr>
-            <td class="no">No</td>
-            <td id="title_0">제목</td>
-            <td>글쓴이</td>
+            <td class="no_1">No</td>
+            <td class="no_2" id="title_0">제목</td>
+            <td class="no_3" id="writer_0">글쓴이</td>
         </tr>
         <tr>
-            <td class="no">1</td>
-            <td id="title_1">제목1</td>
-            <td>글쓴이1</td>
+            <td id="num_1" class="no">1</td>
+            <td class="ti_1" id="title_1">제목1</td>
+            <td class="wri_1" id="writer_1">글쓴이1</td>
         </tr>
         <tr>
-            <td class="no">2</td>
-            <td id="title_2">제목2</td>
-            <td>글쓴이2</td>
+            <td id="num_2" class="no">2</td>
+            <td class="ti_2" id="title_2">제목2</td>
+            <td class="wri_2" id="writer_2">글쓴이2</td>
         </tr>
     </table>
     
