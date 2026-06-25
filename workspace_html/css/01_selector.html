@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01_selector</title>
+    <style>
+        /* CSS 주석 */
+
+        /* 전체 선택자 */
+        * {
+            color: red;
+        }
+
+        /* 태그 선택자 */
+        h2 {
+            font-size: 300%;
+        }
+
+        h1 {
+            font-size: 300%;
+        }
+
+        /* 컴마로 구분해서 여러개 동시 적용 가능 */
+        h1, h2 {
+            font-size: 300%;
+        }
+
+        /* ID 선택자 */
+        #li1 {
+            color: black;
+        }
+
+        /* 클래스 선택자 */
+        .c1 {
+            background-color: green;
+        }
+
+        .bigText {
+            font-size: 30px;
+        }
+
+        /* 속성 선택자 */
+        /* 속성이 존재한다면 */
+        [readonly] {
+            background-color: yellow;
+        }
+
+        /* 속성이 있고, 값도 일치하면 */
+        [type="password"] {
+            background-color: pink;
+        }
+
+        /* #li3은 [id="li3"]의 줄임말 */
+        [id="li3"] {
+            border: 3px solid red;
+        }
+
+        /* ^= href 속성의 값이 https로 시작하는 것 */
+        [href^=https] {
+            color:purple;
+        }
+
+        /* $= href 속성의 값이 com으로 끝나는 것 */
+        [href$=com] {
+            font-size: 30px;
+        }
+
+        /* ~= 띄어쓰기로 구분되는 값 */
+        /* .bigText는 [class~=bigText] */
+        [class~=bigText] {
+            color: #0000ff;
+        }
+
+        /* 딱 붙여서 쓰면 "그리고" 조건 */
+        h2.c1 {
+            color:rgb(200,100,0);
+        }
+
+        /* li 태그면서 c1과 c2 클래스를 가지는 것 선택하기 */
+        li.c1.c2 {
+            background-color:yellow;
+        }
+
+        /* 후손 선택자 */
+        div strong {
+            color : blue;
+        }
+
+        /* 자식 선택자 */
+        div > strong {
+            font-size : 40px;
+        }
+
+
+        /* 가상 클래스 선택자 */
+        /* 마우스 올라갈 떄 */
+        #div1:hover{
+            background-color: yellow;
+        }
+        /* 마우스 클릭할 떄 */
+        #div1:active{
+            background-color: green;
+        }
+        /* 요소가 선택되었을 때 */
+        .text1:focus {
+            background-color: yellow;
+        }
+        /* checkbox, radio가 선택된 상태일 떄 */
+        [type="checkbox"]:checked {
+            width:20px;
+            height:20px;
+        }
+
+        /* 형제 셀렉터 */
+
+        /* [type=checkbox] + span {
+            text-decoration: line-through;
+        } */
+
+        [type=checkbox]:checked + span {
+            text-decoration: line-through;
+        }
+
+        /* 구조 가상 클래스 셀렉터 */
+        /* 몇번째 요소 */
+        #ul1 > li:nth-child(4) {
+            color:black;
+        }
+        /* 홀수일때 */
+        #ul1 > li:nth-child(2n+1) {
+            background-color: gray;
+        }
+
+        /* 부정 셀렉터 */
+        /* not안의 선택지를 제외 */
+        #ul1 li:not(.c3) {
+            font-size : 32px;
+        }
+        
+        /* 가상 요소 셀렉터 */
+        /* 선택자 앞 또는 뒤에 추가 및 CSS 적용 */
+        /* before */
+        h3::before {
+            content:"before";
+            color: black;
+        }
+
+        /* after */
+        h3::after {
+            content:"after";
+            color:blue;
+            font-size:10px;
+        }
+
+        /* selection */
+        ::selection {
+            background-color: aqua;
+        }
+
+        /* 우선 순위 연습 */
+        /*
+            우선순위
+            
+            !important > style 속성 > #id > .class = 속성 > 태그 > * (전체 선택자) > 브라우저 기본값
+
+            동등한 우선 순위일 때 
+            나중에 나온 것이 덮어쓴다.
+        */
+
+        div {
+            border: 1px solid red;
+        }
+    
+        [human] {
+            border: 1px solid pink !important;
+        }
+
+        .c4 {
+            border: 1px solid blue;
+        }
+
+        #div2 {
+            border: 1px solid aqua;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>hello world</h1>
+    <h2 class="c1">부제목</h2>
+
+    <ul>
+        <li id="li1" class="c1">li 1</li>
+        <li class="c1 bigText c2">li 2</li>
+        <li id="li3">li 3</li>
+    </ul>
+
+    <input type="text" readonly><br>
+    <input type="password"><br>
+
+    <a href="http://naver.com">http</a><br>
+    <a href="https://daum.net">https</a><br>
+
+    <hr>
+
+    <strong>밖에 있는 strong</strong>
+    <div>
+        <strong> div 안에 있는 strong</strong>
+    </div>
+    <div>
+        <a href = "#">
+            <strong>div > a > strong</strong>
+        </a>
+    </div>
+
+    <input type="checkbox">
+    <span>점심먹기</span>
+    <br>
+
+    <hr>
+
+    <div id="div1">
+        hover 연습
+    </div>
+    focus 연습 : <input type="text" class="text1"><br>
+
+    <input type="checkbox">
+    checked 연습
+    <br>
+
+    <hr>
+
+    <ul id="ul1">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li class="c3">4</li>
+        <li class="c3">5</li>
+    </ul>
+
+    <hr>
+
+    <h3>비포 에프터 연습</h3>
+
+    <hr>
+
+    <div class="c4" id="div2" human="천안" style="border: 1px solid black;">
+        우선 순위 연습
+    </div>
+    
+</body>
+</html>
