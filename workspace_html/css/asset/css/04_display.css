@@ -1,0 +1,40 @@
+#div1 {
+    border: 1px solid red;
+}
+
+.block {
+    border: 1px solid red;
+    
+    width : 100px;
+
+    height: 50px;
+
+    margin: 10px auto;
+}
+
+.inline {
+    border: 1px solid red;
+
+    /* 너비와 높이가 적용되지 않는다. */
+    width: 200px;
+    height: 100px; 
+
+    /* 좌우는 되고 위아래는 적용 안됨 */
+    margin:30px 50px;
+
+    /* 
+        좌우는 되고 위아래는 적용 안됨 
+        그런데, border는 밀림.
+    */
+    padding: 30px 50px; 
+
+    background-color: yellow;
+
+    /* display:block; */
+}
+
+.parent {
+    border : 1px dotted rgb(255,0,255);
+    
+    text-align : center;
+}
