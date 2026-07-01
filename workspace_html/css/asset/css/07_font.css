@@ -1,3 +1,99 @@
+/* 웹 폰트 */
+@import url('https://cdn.jsdelivr.net/gh/MonadABXY/mona-font/web/mona.css');
+
 .size {
     font-size : 32px;
+}
+
+.style {
+    font-style : italic;
+}
+
+.font {
+    font-family : '모나12', 'Mona12', 'Mona', 'monospace';
+}
+
+/* 100 ~ 1000 까지 100단위로 사용 가능*/
+/* 기본값  : 500 */
+.fw-100 {font-weight : 100;}
+.fw-300 {font-weight : 300;}
+.fw-500 {font-weight : 500;}
+.fw-700 {font-weight : 700;}
+.fw-900 {font-weight : 900;}
+.fw-1000 {font-weight : 1000;}
+.fw-2000 {font-weight : 2000;}
+
+.fw-bold {font-weight : bold;}
+
+.lh {
+    line-height: 300%;
+}
+
+.middle {
+    border: 1px solid red;
+    height: 100px;
+    line-height:100px; 
+
+    width: 300px;
+    text-align: center;
+
+}
+
+.spacing {
+    /* 기본값 : letter-spacing: 1px;  */
+    letter-spacing: -1px;
+}
+
+.justify {
+    text-align: justify;
+}
+
+.right {
+    text-align: right;
+}
+
+.lt {
+    text-decoration: line-through;
+}
+
+.ul {
+    text-decoration: underline;
+}
+
+.none {
+    text-decoration: none;
+}
+/* a태그 방문 안했을 때 */
+.none:link {
+    color:aqua;
+}
+/* a태그 방문 했을 때 */
+.none:visited {
+    color: aqua;
+}
+
+.nowrap {
+    border : 1px solid red;
+    width:200px;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.text {
+    border: 1px solid red;
+    width : 200px;
+}
+
+.word-wrap {
+    word-wrap: break-word;
+}
+.word-break {
+    word-break:break-all;
+}
+
+.fake-h1 {
+    font-size:2em;
+    font-weight:bold;
 }
