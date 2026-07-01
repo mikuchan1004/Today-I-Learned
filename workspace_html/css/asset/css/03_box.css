@@ -1,0 +1,160 @@
+div.first{
+    border: 1px solid red;
+
+    width : 150px;
+
+    height : 200px;
+}
+
+div.second{
+    /* border: 1px solid red; */
+
+    width : 150px;
+
+    height : 200px;
+
+    /* margin : border 바깥 영역 */
+    margin-top: 50px;
+
+    margin-right: 40px;
+
+    margin-bottom : 30px;
+
+    margin-left : 20px; 
+
+    /* margin 축약형 */
+    
+    /* 4개 일때 : top right bottom left */
+    margin: 50px 40px 30px 20px;
+
+    /* 3개 일떄 : top 좌우 bottom */
+    margin: 50px 40px 30px;
+
+    /* 2개 일떄 : 상하 좌우 */
+    margin: 50px 40px;
+
+    /* 1개 일떄 : 상하좌우 */
+    margin: 30px;
+
+    padding-top : 20px;
+
+    padding-right : 15px;
+
+    padding-bottom : 10px;
+
+    padding-left : 5px;
+
+    padding: 30px;
+
+    border-top-width: 3px;
+    border-top-style: dotted;
+    border-top-color: blue;
+
+    border-left: 2px dashed green;
+
+    border: 1px solid red;
+
+    border-radius: 50%;
+}
+
+.profile img {
+    border : 2px solid #000;
+    width : 200px;
+    height : 200px;
+
+    border-radius: 50%;
+    
+}
+
+.chat.right {
+    border: 1px solid black;
+    background-color: yellow;
+
+    width: 100px;
+    padding: 5px;
+    margin: 10px;
+
+    border-radius: 10px 0 10px 10px;
+}
+
+.chat.left {
+    border: 1px solid black;
+    background-color: lightblue;
+
+    width: 100px;
+    padding: 5px;
+    margin: 10px;
+
+    border-radius: 0 10px 10px 10px;
+
+}
+
+.width {
+    border: 1px solid red;
+    width: 70%;
+
+    min-width: 400px;
+    max-width: 600px;
+}
+
+#auto {
+    border: 1px solid red;
+    width: 150px;
+    margin: 10px auto;
+
+}
+
+.box {
+    border: 1px solid red;
+    width: 300px;
+    height: 300px;
+    margin: 50px;
+}
+
+.box-sizing {
+    padding : 50px;
+
+    box-sizing:border-box;
+}
+
+.orig {
+    border: 1px solid red;
+}
+
+body {
+    margin : 0;
+    padding : 0;
+
+}
+/* 
+    마진 중첩 
+    세로 방향으로 붙어 있을 때 또는 부모와 첫번째 자식간에 
+    margin이 큰 값 하나만 적용되는 현상.
+
+    해법
+    사이에 컨텐츠 넣기
+    border를 이용해서 부모와 첫번째 자식간의 마진 중첩 해결 가능 
+    border, padding 등을 이용해서 부모와 첫번쨰 자식간의 마진 중첩 해결 가능
+    부모에 overflow: hidden; 주기
+    
+
+*/
+#div2, #div3 {
+    margin: 30px;
+}
+
+#div3 {
+    margin: 50px;
+}
+
+#div1{
+    /* border: 1px solid red; */
+
+    /* padding-top: 1px; */
+    
+    overflow:hidden;
+}
+/* 
+#div2 {
+    margin-top: -1px;
+} */

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <!--PC버전과 모바일버전을 구분-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="top">맨 위</h1>
+    <a href="#bottom">맨 아래로</a>
+    <br>
+    <br>
+    <a href="https://naver.com">네이버</a>
+    <br>
+    <!--href : hypertext reference ; 하이퍼텍스트 참조-->
+    <!--target : _blank ; 새 탭에서 열기-->
+    <a href="https://google.com" target="_blank">구글</a>
+    <br>
+    <!--URL 스킴(scheme)-->
+    <a href="tel:114">전화걸기</a>
+    <br>
+    <a href="mailto:please@mail.com">메일보내기</a>
+    <br>
+    <a href="https://comic.naver.com/webtoon/list?titleId=849352"target="_blank">
+         <img src="https://image-comic.pstatic.net/webtoon/849352/thumbnail/thumbnail_IMAG21_0049830d-3474-462a-96b8-7cd0b8be1b52.jpg">
+    </a>
+    <br>
+    <a href="../01_hello.html" target="_blank">01_hello.html</a>
+    <br>
+    <!--
+        상대 주소 
+        내 위치를 기준으로 삼는 주소
+        현재 주소의 가장 마지막 / 이후의 주소를 변경한다.
+        . : 내 폴더
+        .. : 부모 폴더
+    -->
+    <a href="../asset/detail.html" target="_blank">디테일페이지 이동</a>
+
+    <!--
+        절대 주소
+        1. 프로토콜로 시작 (http:// , https:// , ftp://)
+        2. // 로 시작 (프로토콜의 마지막 //)
+        3. / 로 시작 
+            3.1 ip:port/ <<< 여기를 뜻함
+        * 절대 주소가 아닌 모든 주소는 상대 주소를 뜻함
+    -->
+    <br>
+    <a href="/asset/detail.html" target="_blank">절대주소 디테일페이지</a>
+
+    <!--br*50-->
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <strong id="bottom">여기 맨 아래임</strong><br>
+    <a href="#top">맨 위로</a>
+</body>
+</html>

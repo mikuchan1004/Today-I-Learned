@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02_단위</title>
+    <style>
+        /* px : pixel, 디스플레이의 절대적인 크기 */
+        #pixel .box1{
+            /* font-size : 폰트 크기, 상속됨 */
+            font-size: 16px;
+
+            background-color: rgb(255,0,0);
+
+            /* color:#f0eee9; */
+            color:#00ffaa;
+            color:#0fa;
+        }
+        #pixel .box1 .box2 {
+            font-size: 32px;
+
+            background-color:rgb(0,0,255,0.5);
+        }
+        #pixel .box1 .box2 .box3 {
+            font-size: 16px;
+
+            background-color: #00ff00a0;
+        }
+        /* % : 상대적인 크기, 상속된다 */
+        #percent .box1 {
+            font-size : 150%;
+        }
+        #percent .box1 .box2 {
+            font-size: 150%;
+        }
+        #percent .box1 .box2 .box3 {
+            font-size: 150%;
+        }
+        /* em : 상대적인 크기, 상속된다. */
+        #em .box1 {
+            font-size : 1.5em;
+        }
+        #em .box1 .box2 {
+            font-size: 1.5em;
+        }
+        /* rem : root em, body의 크기를 활용한다 */
+        #em .box1 .box2 .box3 {
+            font-size: 1.5rem;
+        }
+
+        #v1, #v2, #v3, #v4 {
+            border: 1px solid green;
+            margin: 10px;
+        }
+
+        /* vh : viewpoint(화면)의 height(높이)를 1/100로 쪼갠 크기 */
+        #v1 {
+            height: 100vh;
+        }
+        /* vw : 화면의 width(너비)를 1/100로 쪼갠 크기 */
+        #v2 {
+            height: 20px;
+            width: 50vw;
+        }
+        
+        /* vmin : 화면의 width(너비) 또는 height(높이) 중 작은 쪽을 1/100로 쪼갠 크기 */
+        #v3 {
+            height: 90vmin;
+        }
+        /* vmax : 화면의 width(높이) 또는 heigth(높이) 중 큰 쪽을 1/100로 쪼갠 크기 */
+        #v4 {
+            height: 90vmax;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    기본글씨 abc ABC 123 Wi<br>
+    <div id="pixel">
+        <div class="box1">
+            box1
+            <div class="box2">
+                box2
+                <div class="box3">
+                    box3
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div id=percent>
+        <div class="box1">
+            box1-150%
+            <div class="box2">
+                box2-150%
+                <div class="box3">
+                    box3-150%
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div id=em>
+        <div class="box1">
+            box1-1.5em
+            <div class="box2">
+                box2-1.5em
+                <div class="box3">
+                    box3-1.5rem
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="v1"></div>
+    <div id="v2"></div>
+    <div id="v3"></div>
+    <div id="v4"></div>
+    
+
+</body>
+</html>
