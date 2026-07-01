@@ -27,5 +27,5 @@
 * [2026-06-30 (화) — HTML ~ CSS 디스플레이 복습 + 실습 , CSS visibility , opacity, background (1)](./2026.06/2026.06.30(화).md)
 
 ### 2026년 07월
-* [2026-07-01 (화) — Git, CSS background (2), font ](./2026.07/2026.07.01(화).md)
+* [2026-07-01 (화) — Git, CSS background (2), font & text](./2026.07/2026.07.01(화).md)
 
