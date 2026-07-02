@@ -6,22 +6,22 @@
     <title>문제6</title>
     <style>
         .img_box1 {
-            border: 1px solid red;
+            /* border: 1px solid red; */
             width: 70px;
             height: 70px;
         }
         .img_box2 {
-            border: 1px solid red;
+            /* border: 1px solid red; */
             width: 70px;
             height: 70px;
         }
         .img_box3 {
-            border: 1px solid red;
-            width: 556px;
-            height: 546px;
+            /* border: 1px solid red; */
+            width: 338px;
+            height: 338px;
             position:relative;
             left:82px;
-            top:-140px;
+            top: -145px;
         }
         .img_box3 img {
             position: absolute;
@@ -30,6 +30,17 @@
             width: 100%;
             height: 100%;
         }
+        .img_box3 .main_img1 {z-index: 1;}
+        .img_box3 .main_img2 {z-index: 0;}
+
+        .img_box1:hover ~ .img_box3 .main_img1 {
+            z-index: 2;
+        }
+
+        .img_box2:hover ~ .img_box3 .main_img2 {
+            z-index: 2;
+        }
+    
     </style>
 </head>
 <body>
@@ -43,7 +54,10 @@
             width="70" height="70">
         </div>
         <div class="img_box3">
-
+            <img src="https://thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/1f2d/f78d93b4a7cb8c81b9bcc6f1c94598e9b5a9f91e83e16e00682400f23c94.jpg" class="main_img1"
+            width="338" height="338">
+            <img src="https://thumbnail.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/beb6/74555503a6f6ee7c66bbfd3ea93c61da2a470d41b1934f8188163daf55af.jpg" class="main_img2"
+            width="338" height="338">
         </div>
 </body>
 </html>
