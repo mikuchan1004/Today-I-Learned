@@ -116,5 +116,5 @@ body {
 
 .rel:hover {
     z-index: 999;
-    left: 300px;
+    /* left: 300px; */
 }
