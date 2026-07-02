@@ -1,0 +1,120 @@
+.parent {
+    margin-bottom: 30px;
+}
+
+.parent div {
+    display:inline-block; 
+    height : 50px; 
+    width : 50px; 
+    border: 1px solid red;
+    line-height: 50px;
+    text-align:center;
+    background: aqua;
+}
+
+.parent .relative {
+    background-color: #f007;
+    /* 
+        원래 위치를 기준으로 이동한다.
+        내가 가지고 있던 공간이 유지된다. 
+    */
+    position: relative;
+    /* top: 20px; */
+    top : -20px;
+    left: 10px;
+    /* left: -20px; */
+    /* left: 50%; */
+}
+
+.parent .absolute {
+    background-color: #f007;
+    /* 
+        내가 가지고 있던 공간이 없어진다.
+        부모중에 relative 등 static이 아닌 것 기준으로 이동
+        - 없으면 body 기준.
+        자동으로 inline-block으로 바뀐다.
+    */
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    top: 30px;
+    /* left: 300px; */
+}
+
+.parent .abs-b {
+    position: absolute;
+
+    bottom : 0;
+    right: 0;
+}
+
+body {
+    height : 200vh;
+    width : 200vw;
+}
+
+.rel {
+    position: relative;
+}
+
+.fixed {
+    position: fixed;
+    right: 10px;
+    bottom : 10px;
+    border: 1px solid red;
+    width: 60px;
+    height: 60px;
+    text-align: center; 
+    line-height: 60px;
+}
+
+.sticky {
+    position: sticky;
+    top: 0;
+    top: 50px;
+}
+
+.parent2 {
+    border: 1px solid red;
+    width : 100px;
+    background-color: green;
+    color: #fff;
+}
+
+.parent2 div {
+    border: 1px solid red;
+    width : 50px;
+    height: 50px;
+}
+
+.z1 {
+    background-color: hotpink;
+    top: 5px;
+    left: 20px;
+
+    z-index: 2;
+}
+
+.z2 {
+    background-color: yellow;
+    color: black;
+    top: -10px;
+    left : 10px;
+
+    z-index: 3;
+}
+
+.z3 {
+    background-color: orange;
+    color: black;
+    top: -70px;
+    left: 40px;
+
+    z-index: 99;
+}
+
+.rel:hover {
+    z-index: 999;
+    left: 300px;
+}
