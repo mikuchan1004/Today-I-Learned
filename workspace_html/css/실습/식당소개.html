@@ -77,11 +77,11 @@
         }
 
         /* ------------------------------------------------
-           [섹션 2] Cafe Food Menu 영역 (정밀 좌표 수정본)
+           [섹션 2] Cafe Food Menu 영역 (노란 배경 수정본)
         --------------------------------------------------- */
         .menu-section {
             width: 100%;
-            padding: 120px 0; /* 위아래 여백을 주어 배너와 확실히 분리 */
+            padding: 120px 0; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -92,7 +92,7 @@
             flex-direction: row; 
             align-items: center;
             justify-content: space-between;
-            max-width: 1000px;
+            max-width: 1050px; /* 노란 박스가 커진 만큼 전체 영역 조절 */
             width: 100%;
             padding: 0 4%;
             box-sizing: border-box;
@@ -124,33 +124,33 @@
             color: #000000;
         }
 
-        /* [오른쪽] 절대 좌표(absolute) 컴포넌트들을 통제할 기준 박스 */
+        /* [오른쪽] 절대 좌표 컴포넌트들을 통제할 기준 박스 */
         .menu-visual-box {
             position: relative;
-            width: 440px;
-            height: 500px; /* 내부 요소들이 놀 수 있는 명확한 높이 지정 */
+            width: 480px;  
+            height: 520px; 
         }
 
-        /* 맨 뒤에 배치되는 노란색 백드롭 (정밀 좌표 지정) */
+        /* 🛠️ 수정: 크기를 더 키우고, 중앙 정렬에 맞춰 범위를 넓힌 노란색 배경 */
         .yellow-backdrop {
             position: absolute;
-            top: -20px;         /* 사진보다 30px 위로 삐져나옴 */
-            right: 0;           /* 우측 벽에 밀착 */
-            width: 320px;
-            height: 540px;      /* 사진보다 30px 아래로 더 내려감 */
+            top: -40px;         /* 위로 더 크게 확장 */
+            right: 0;           
+            width: 380px;       /* 가로 크기 확장하여 정중앙 쪽으로 밀어 넣음 */
+            height: 580px;      /* 세로 높이도 아래로 든든하게 확장 */
             background-color: #f2c029;
             z-index: 1;         
         }
 
-        /* 노란색 위에 정교하게 얹어지는 실제 타르트 음식 사진 */
+        /* 🔒 철저하게 고정: 이미지는 크기나 위치 절대 변경 없음 */
         .menu-image {
             position: absolute;
-            top: 10px;          /* 노란 박스보다 약간 아래에서 시작 */
-            left: 0;            /* 노란 박스보다 왼쪽으로 삐져나옴 */
+            top: 10px;          
+            left: 0;            
             width: 340px;
             height: 480px;
             object-fit: cover;
-            z-index: 2;         /* 노란색보다 위로 레이어 쌓기 */
+            z-index: 2;         
         }
     </style>
 </head>
@@ -174,7 +174,7 @@
             
             <div class="menu-visual-box">
                 <div class="yellow-backdrop"></div>
-                <img class="menu-image" src="https://images03.nicepage.com/c461c07a441a5d220e8feb1a/e07fd7349a87546e950fb324/photo1564305564045c62d40dd0123.jpg" alt="Menu Tart Image">
+                <img class="menu-image" src="https://images03.nicepage.com/a1389d7bc73adea1e1c1fb7e/9b22e6f1444b5ae785f3a267/pexelsphoto3326103.jpeg" alt="Menu Image">
             </div>
 
         </div>
