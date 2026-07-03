@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>transform</title>
+    <style>
+        .box {
+            border: 1px solid red;
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            color: white;
+            margin: 30px;
+        }
+        .translate:hover {
+            /* transform: translate(10px, 20px); */
+            transform: translate(50%, 50%);
+            transition: all 0.5s;
+        }
+        .scale:hover {
+            transform: scaleX(1.5);
+        }
+        .rotate:hover {
+            /* transform: rotate(30deg); */
+            transform: rotate(-30deg);
+        }
+
+        .total:hover {
+            transform: translate(50%, 50%) scale(1.5) rotate(-30deg);
+        }
+
+        .parent {
+            border: 1px solid red;
+            width: 40%;
+            height: 40vh;
+
+            position: relative;
+        }
+
+        .parent.child {
+            border: 1px solid blue;
+            width: 30%;
+            height: 30%;
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            transform: translate(50%, 50%);
+        }
+
+    </style>
+</head>
+<body>
+        <div class="box">비교</div>
+        <div class="box translate">translate</div>
+        <div class="box scale">scale</div>
+        <div class="box rotate">rotate</div>
+        <div class="box total">total</div>
+
+        <hr>
+
+        <div class="parent">
+            <div class="child"></div>
+        </div>
+</body>
+</html>
