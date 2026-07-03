@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shadow</title>
+    <style>
+        .red {
+            /* offset-x offset-y  blur-radius color */
+            text-shadow: 10px 3px red;
+        }
+        .blur {
+            text-shadow: 1px 1px 2px red;
+            color:white;
+            font-size: 2em;
+        }
+        .box {
+            border: 1px solid red;
+            width: 100px;
+            box-shadow: 4px 4px 6px grey;
+        }
+        
+        .box2 {
+            border : 1px solid black;
+            width: 150px;
+            height: 200px;
+            margin: 10px;
+        }
+
+        .box2:hover {
+            box-shadow: 4px 4px 6px gray;
+
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+        <div class="red">
+            한글 Shadow
+        </div>
+
+        <div class="blur">
+            한글 Shadow
+        </div>
+
+        <div class="box">
+            박스 Shadow
+        </div>
+
+        <div class="box2">
+            마우스 올려보세요
+        </div>
+
+</body>
+</html>
