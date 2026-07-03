@@ -29,6 +29,6 @@
 ### 2026년 07월
 * [2026-07-01 (수) — Git, CSS background (2), font & text](./2026.07/2026.07.01(수).md)
 * [2026-07-02 (목) — CSS position, float (1)](./2026.07/2026.07.02(목).md)
-* [2026-07-03 (금) — CSS float (2), shadow, transition, transform, 반응형 웹 디자인](./2026.07/2026.07.03(금).md)
+* [2026-07-03 (금) — CSS float (2), shadow, transition, transform, 반응형 웹 디자인, 플렉스박스](./2026.07/2026.07.03(금).md)
 
 
