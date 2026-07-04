@@ -1,143 +1,222 @@
+<!-- =========================
+     HTML5 문서 선언
+     브라우저에게 "최신 HTML 문서"라고 알려줌
+========================= -->
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+
+    <!-- 브라우저 탭에 표시되는 제목 -->
     <title>Cook Your Favorite Food</title>
+
+    <!-- 외부 CSS 연결
+         → HTML(구조)과 CSS(디자인)를 분리해서 유지보수 쉽게 함 -->
     <link rel="stylesheet" href="/workspace_html/css/실습/식당소개.css">
 </head>
+
 <body>
 
+<!-- =========================
+     HEADER 영역
+     - 사이트 상단 고정 구조
+     - 로고 + 네비게이션 메뉴
+========================= -->
 <header>
-    <div class="logo">
-        Cook Your Favorite Food
+
+    <div class="container">
+
+        <!-- 사이트 로고 (브랜드 이름 역할) -->
+        <div class="logo">
+            Cook Your Favorite Food
+        </div>
+
+        <!-- 네비게이션 메뉴
+             → 페이지 이동용 링크들 -->
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Menu</a>
+            <a href="#">Contact</a>
+        </nav>
+
     </div>
-    <nav>
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Menu</a>
-        <a href="#">Contact</a>
-    </nav>
 </header>
 
 <main>
 
-    <section class="hero">
+<!-- =========================
+     HERO SECTION
+     - 첫 화면 (가장 중요한 영역)
+     - 사용자 첫 인상 담당
+========================= -->
+<section class="hero">
 
+    <div class="container hero-inner">
+
+        <!-- 왼쪽 텍스트 영역 -->
         <div class="hero-text">
 
+            <!-- 메인 타이틀 (페이지 핵심 메시지) -->
             <h1>Cook Your Favorite Food</h1>
+
+            <!-- 설명 문장 (서비스 소개) -->
             <p>
-            Discover delicious recipes and learn how to make 
-            restaurant-quality meals right in your own kitchen.
+                Discover delicious recipes and learn how to make 
+                restaurant-quality meals right in your own kitchen.
             </p>
 
+            <!-- CTA 버튼 (행동 유도 버튼) -->
             <button>Learn More</button>
 
-            </div>
+        </div>
 
-            <div class="hero-image">
-                <img src="/workspace_html/asset/hero-image.png" alt="hero_image">
-            </div>
+        <!-- 오른쪽 이미지 영역
+             → 시각적 강조 요소 -->
+        <div class="hero-image">
+            <img src="/workspace_html/asset/hero-image.png" alt="hero_image">
+        </div>
 
-    </section>
+    </div>
+</section>
 
-    <section class="recipes">
+<!-- =========================
+     RECIPES SECTION
+     - 카드형 콘텐츠 (Grid 사용)
+     - 음식 리스트 보여주는 영역
+========================= -->
+<section class="recipes">
 
     <h2>Popular Recipes</h2>
 
+    <!-- 카드 전체 컨테이너 -->
     <div class="recipe-list">
 
+        <!-- 카드 1 -->
         <div class="recipe-card">
             <img src="/workspace_html/asset/recipe_card_1.jpg" alt="recipe-card_1">
             <h3>Grilled Steak</h3>
-            <p>Perfectly grilled steak served with seasonal
-                vegetables and herbs.
-            </p>
+            <p>Perfectly grilled steak served with seasonal vegetables and herbs.</p>
         </div>
 
+        <!-- 카드 2 -->
         <div class="recipe-card">
             <img src="/workspace_html/asset/recipe_card_2.jpg" alt="recipe-card_2">
-        <h3>Italian Pasta</h3>
-        <p>
-            A classic pasta dish made with fresh ingredients
-            and rich homemade sauce.
-        </p>
+            <h3>Italian Pasta</h3>
+            <p>A classic pasta dish made with fresh ingredients and rich homemade sauce.</p>
         </div>
 
+        <!-- 카드 3 -->
         <div class="recipe-card">
             <img src="/workspace_html/asset/recipe_card_3.jpg" alt="recipe_card_3">
             <h3>Fresh Salad</h3>
-            <p>A healthy combination of vegetables with a light 
-                and refreshing dressing.
-            </p>
+            <p>A healthy combination of vegetables with a light and refreshing dressing.</p>
         </div>
 
     </div>
+</section>
 
-    </section>
-
+<!-- =========================
+     ABOUT SECTION
+     - 서비스/브랜드 소개 영역
+========================= -->
 <section class="about">
 
-    <div class="about-image">
-        <img src="/workspace_html/asset/about_us.jpg" alt="about_us">
-    </div>
+    <div class="container about-inner">
 
-    <div class="about-text">
-        <h2>About Us</h2>
-        <p>
-            We believe that cooking should be simple, enjoyable,
-            and accessible to everyone. Our mission is to share
-            delicious recipes, cooking tips, and inspiration that
-            help people create memorable meals at home.
-        </p>
-    </div>
-
-</section>
-
-<section class="gallery">
-
-    <h2>Gallery</h2>
-
-    <div class="gallery-grid">
-        <img src="/workspace_html/asset/gallery_1.jpg" alt="gallery_1">
-        <img src="/workspace_html/asset/gallery_2.jpg" alt="gallery_2">
-        <img src="/workspace_html/asset/gallery_3.jpg" alt="gallery_3">
-        <img src="/workspace_html/asset/gallery_4.jpg" alt="gallery_4">
-        <img src="/workspace_html/asset/gallery_5.jpg" alt="gallery_5">
-        <img src="/workspace_html/asset/gallery_6.jpg" alt="gallery_6">
-    </div>
-
-</section>
-
-<section class="contact">
-    <h2>Contact Us</h2>
-
-    <div class="contact-container">
-
-        <div class="contact-info">
-            <h3>We'd Love to Hear From You</h3>
-
-            <p>Email: hello@example.com</p>
-            <p>Phone: +1 234 567 890</p>
-            <p>Address: 123 Food Street</p>
-            <p>Feel free to contact us with any questions or feedback.</p>
+        <!-- 소개 이미지 -->
+        <div class="about-image">
+            <img src="/workspace_html/asset/about_us.jpg" alt="about_us">
         </div>
 
-    <form class="contact-form">
-        <input type="text" placeholder="Your Name">
+        <!-- 소개 텍스트 -->
+        <div class="about-text">
 
-        <input type="email" placeholder="Your Email">
+            <h2>About Us</h2>
 
-        <textarea placeholder="Your Message"></textarea>
+            <p>
+                We believe that cooking should be simple, enjoyable,
+                and accessible to everyone. Our mission is to share
+                delicious recipes, cooking tips, and inspiration that
+                help people create memorable meals at home.
+            </p>
 
-        <button type="submit">Send Message</button>
-    </form>
+        </div>
+    </div>
+</section>
 
+<!-- =========================
+     GALLERY SECTION
+     - 이미지 모음 (Grid 레이아웃)
+========================= -->
+<section class="gallery">
+
+    <div class="container">
+
+        <h2>Gallery</h2>
+
+        <!-- 3x2 이미지 그리드 -->
+        <div class="gallery-grid">
+
+            <img src="/workspace_html/asset/gallery_1.jpg" alt="gallery_1">
+            <img src="/workspace_html/asset/gallery_2.jpg" alt="gallery_2">
+            <img src="/workspace_html/asset/gallery_3.jpg" alt="gallery_3">
+            <img src="/workspace_html/asset/gallery_4.jpg" alt="gallery_4">
+            <img src="/workspace_html/asset/gallery_5.jpg" alt="gallery_5">
+            <img src="/workspace_html/asset/gallery_6.jpg" alt="gallery_6">
+
+        </div>
+
+    </div>
+</section>
+
+<!-- =========================
+     CONTACT SECTION
+     - 정보 + 입력 폼 영역
+========================= -->
+<section class="contact">
+
+    <div class="container">
+
+        <h2>Contact Us</h2>
+
+        <div class="contact-container">
+
+            <!-- 왼쪽: 연락 정보 -->
+            <div class="contact-info">
+
+                <h3>We'd Love to Hear From You</h3>
+
+                <p>Email: hello@example.com</p>
+                <p>Phone: +1 234 567 890</p>
+                <p>Address: 123 Food Street</p>
+                <p>Feel free to contact us with any questions or feedback.</p>
+
+            </div>
+
+            <!-- 오른쪽: 입력 폼 -->
+            <form class="contact-form">
+
+                <input type="text" placeholder="Your Name">
+                <input type="email" placeholder="Your Email">
+
+                <textarea placeholder="Your Message"></textarea>
+
+                <button type="submit">Send Message</button>
+
+            </form>
+
+        </div>
     </div>
 </section>
 
 </main>
 
+<!-- =========================
+     FOOTER 영역
+     - 사이트 저작권 정보
+========================= -->
 <footer>
     <p>© 2026 Cook Your Favorite Food. All Rights Reserved.</p>
 </footer>
