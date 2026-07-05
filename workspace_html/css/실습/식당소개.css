@@ -1,7 +1,7 @@
 /* =========================
    1. RESET (가장 먼저 실행됨)
-   브라우저 기본 스타일 제거
-   → 모든 요소를 동일한 기준으로 시작
+   브라우저마다 기본 스타일이 다르기 때문에
+   margin, padding을 모두 제거하고 시작
 ========================= */
 @import url('https://cdn.jsdelivr.net/gh/MonadABXY/mona-font/web/mona.css');
 
@@ -26,17 +26,24 @@ h1, h2, h3 {
 
 
 /* =========================
-   2. LAYOUT BASE (전체 구조 기준)
-   → 페이지 폭 / 섹션 기본 규칙
+   2. 공통 레이아웃 설정
+   → 사이트 전체 폭과 기본 여백 관리 
 ========================= */
 
-/* 전체 콘텐츠 최대 폭 제한 + 중앙 정렬 */
+/* 
+    화면이 너무 넓어지지 않도록 제한하고
+    가운데 정렬
+ */
 .container {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 0 20px;
 }
 
-/* 모든 섹션 기본 여백 (페이지 리듬) */
+/* 
+    각 세션 위아래 여백
+    화면이 답답해 보이지 않도록 공간 확보
+*/
 section {
     padding: 90px 0;
 }
@@ -48,71 +55,55 @@ button {
 
 
 /* =========================
-   3. COMMON UI (공통 요소)
-   → 반복되는 UI 스타일 (네비게이션 등)
+   3. 공통 UI
+   여러 곳에서 반복 사용하는 스타일
 ========================= */
 
-/* 네비게이션 링크 기본 스타일 */
+/* 
+    메뉴 링크 기본 스타일
+    밑줄 제거 및 글자색 지정 
+*/
 nav a {
     margin-left: 20px;
     text-decoration: none;
     color: #333;
     font-weight: 500;
-    transition: 0.3s;
 
     position: relative;
     display: inline-block;
     padding-bottom: 5px;
 }
 
-/* 밑줄 애니메이션 (hover 전 상태) */
-nav a::after {
-    content: " ";
-    position: absolute;
-    bottom: -5px;
-    left : 0;
-    width: 0;
-    height: 2px;
-    background: #f4a261;
-    transition: width 0.3s ease;
-}
-
-/* hover 상태 변화 */
+/* 
+    마우스를 올렸을 때 
+    살짝 흐려지는 효과 
+*/
 nav a:hover {
     opacity: 0.7;
 }
 
-nav a:hover::after {
-    width: 100%;
-}
-
-
 /* =========================
-   4. HEADER (상단 영역)
-   → 로고 + 메뉴 배치
+   4. HEADER 
+   사이트 최상단 영역
+   로고와 메뉴 배치 
 ========================= */
 
 header {
     padding: 20px 0;
     background: white;
-
-    /* 스크롤 시 상단 고정 */
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-
-    /* 떠 있는 느낌 */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #eee;
 }
 
-/* header 내부 정렬 (좌우 배치) */
+/* 
+    로고와 메뉴를 양쪽 끝으로 배치 
+*/
 header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-/* 로고 강조 */
+/* 사이트 이름 강조 */
 .logo {
     font-size: 24px;
     font-weight: bold;
@@ -120,16 +111,21 @@ header .container {
 
 
 /* =========================
-   5. HERO SECTION (첫 화면)
-   → 가장 중요한 시각 중심 영역
+   5. HERO SECTION 
+   사용자가 가장 먼저 보는 영역
 ========================= */
-
+/*
+    화면 높이를 크게 사용하여 
+    첫 인상을 강조
+*/
 .hero {
-    padding: 140px 0;
-    background:#f8f8f8;
+  min-height: 800px;
+  display: flex;
+  align-items: center;
+  background: #fafafa;
 }
 
-/* 텍스트 + 이미지 2분할 구조 */
+/* 텍스트와 이미지를 좌우로 배치 */
 .hero-inner {
     display: flex;
     justify-content: space-between;
@@ -137,66 +133,65 @@ header .container {
     gap: 80px;
 }
 
-/* CTA 버튼 (행동 유도) */
+/* 강조 버튼 */
 .hero button {
-    background: #f4a261;
+    background-color: #f4a261;
     color: white;
     border: none;
-
-    padding: 14px 28px;
-    border-radius: 6px;
-
+    padding: 16px 42px;
+    border-radius: 0;
+    box-shadow: none;
     font-size: 14px;
-    cursor: pointer;
-
-    transition: all 0.3s ease;
-
-    box-shadow: 0 6px 15px rgba(244, 162, 97, 0.3);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 /* 버튼 hover 효과 */
 .hero button:hover {
     opacity: 0.9;
-    transform: translateY(-2px);
+    transform: none;
 }
 
 /* 왼쪽 텍스트 영역 */
 .hero-text {
-    flex: 1;
+    flex: 1.1;
 }
 
-/* 메인 타이틀 */
+/* 대표 제목 */
 .hero-text h1 {
-    font-size: 52px;
-    line-height: 1.1;
+    font-size: 76px;
+    line-height: 1.05;
     font-weight: 700;
+    margin-bottom: 25px;
 }
 
-/* 설명 텍스트 */
+/* 설명 문장 */
 .hero-text p {
-    font-size: 16px;
+    max-width: 500px;
+    font-size: 18px;
     line-height: 1.8;
-    margin-bottom: 30px;
-    color: #555;
+    margin-bottom: 35px;
+    color: #666;
 }
 
 /* 오른쪽 이미지 영역 */
 .hero-image {
-    flex: 1;
+    flex: 0.9;
     display: flex;
     justify-content: center;
 }
 
-/* 이미지 크기 제한 */
+/* 메인 음식 이미지 */
 .hero-image img {
     width: 100%;
-    max-width: 520px;
+    max-width: 650px;
 }
 
 
 /* =========================
-   6. RECIPES (카드 Grid)
-   → 콘텐츠 반복 구조
+   6. RECIPES 
+   인기 메뉴 소개 영역
 ========================= */
 
 .recipes {
@@ -204,14 +199,14 @@ header .container {
     text-align: center;
 }
 
-/* 섹션 제목 */
+/* 세션 제목 */
 .recipes h2 {
     font-size: 32px;
     margin-bottom: 50px;
     font-weight: 700;
 }
 
-/* 3열 Grid 구조 */
+/* 카드 3개를 가로로 배치 */
 .recipe-list {
     max-width: 1100px;
     margin: 0 auto;
@@ -223,74 +218,68 @@ header .container {
 
 /* 카드 기본 스타일 */
 .recipe-card {
-    background: #fff;
-    border-radius : 12px;
-    overflow: hidden;
-
-    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-    transition: 0.3s ease;
+   box-shadow: none;
+   border-radius: 0;
 }
 
-/* 카드 hover */
-.recipe-card:hover {
-    transform:translateY(-10px);
-    box-shadow: 0 18px 40px rgba(0,0,0,0.15);
-}
-
-/* 이미지 hover 확대 */
-.recipe-card:hover img {
-    transform: scale(1.05);
-}
-
-/* 카드 이미지 */
+/* 
+    음식 사진
+    이미지 배율을 유지하면서 영역을 꽉 채움
+ */
 .recipe-card img {
     width: 100%;
     height: 220px;
     object-fit: cover;
     display: block;
-    border-radius: 10px;
-    transition: transform 0.4s ease;
+    border-radius: 0;
 }
 
-/* 카드 제목 */
+/* 음식 이름 */
 .recipe-card h3 {
     font-size: 18px;
     font-weight: 600;
-    margin: 15px 0 10px;
+    margin: 20px 0 12px;
 }
 
-/* 카드 설명 */
+/* 음식 설명 */
 .recipe-card p {
     font-size: 14px;
     color: #777;
     line-height: 1.5;
     padding: 0 15px 20px;
+    max-width: 280px;
+    margin: 0 auto;
 }
 
 
 /* =========================
-   7. ABOUT (소개 영역)
-   → 이미지 + 텍스트 구조
+   7. ABOUT 
+   사이트 소개 영역
 ========================= */
 
 .about {
     padding: 110px 0;
 }
 
-/* 2분할 구조 */
+/* 이미지와 설명을 좌우로 배치 */
 .about-inner {
     display: flex;
     align-items: center;
-    gap: 60px;
+    gap: 100px;
 }
 
 /* 이미지 영역 */
 .about-image {
     flex:1;
 }
-
+/*  
+    소개 이미지 
+    이미지 비율을 유지하면서 영역을 꽉 채움
+*/
 .about-image img {
     width: 100%;
+    height: 450px;
+    object-fit: cover;
     display: block;
 }
 
@@ -299,52 +288,61 @@ header .container {
     flex:1;
 }
 
-/* 제목 */
+/* 소개 제목 */
 .about-text h2 {
-    font-size: 32px;
-    margin-bottom: 20px;
+    font-size: 38px;
+    margin-bottom: 25px;
 }
 
-/* 설명 */
+/* 소개 문장 */
 .about-text p {
     color: #555;
     line-height: 1.8;
+    max-width: 500px;
 }
 
-
 /* =========================
-   8. GALLERY (이미지 Grid)
+   8. GALLERY 
+   음식 사진 모음
 ========================= */
-
+/* 갤러리 제목 */
+.gallery h2 {
+    text-align: center;
+    font-size: 38px;
+    margin-bottom: 40px;
+}
+/* 사진을 3열로 정렬 */
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 8px;
 }
 
-/* 이미지 hover */
+/* 
+    사진 비율 유지
+    이미지가 찌그러지지 않도록 설정
+*/
 .gallery-grid img {
     width: 100%;
-    height: 250px;
+    height: 280px;
     object-fit: cover;
-    transition: 0.3s;
 }
-
-.gallery-grid img:hover {
-    transform:scale(1.03);
-}
-
 
 /* =========================
-   9. CONTACT (폼 + 정보)
+   9. CONTACT 
+   문의하기 영역
 ========================= */
 
 .contact h2 {
-    margin-bottom: 40px;
+    font-size: 38px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
-/* 좌/우 2분할 */
+/* 
+    연락처 정보와 입력 폼을 
+    좌우로 배치 
+*/
 .contact-container {
     display: flex;
     justify-content: space-between;
@@ -357,19 +355,20 @@ header .container {
     flex: 1;
 }
 
-/* 입력 영역 */
+/* 입력칸들을 세로로 정렬 */
 .contact-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-/* input 기본 스타일 */
+/* 이름, 이메일, 메시지 입력칸 */
 .contact-form input,
 .contact-form textarea {
-    padding: 12px;
+    padding: 0 15px;
+    height: 55px;
     border: 1px solid #ddd;
-    border-radius: 6px;
+    border-radius: 0;
     outline: none;
 }
 
@@ -379,20 +378,20 @@ header .container {
     border-color: #f4a261;
 }
 
-/* textarea 크기 */
+/* 메시지를 길게 입력할 수 있는 영역 */
 .contact-form textarea {
-    height: 150px;
+    height: 220px;
+    padding: 15px;
     resize: none;
 }
 
-/* submit 버튼 */
+/* 전송 버튼 */
 .contact-form button {
-    padding: 12px;
-    cursor: pointer;
-    background: #f4a261;
-    color: white;
-    border: none;
-    border-radius: 6px;
+    border-radius: 0;
+    height: 55px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 /* hover */
@@ -402,23 +401,42 @@ header .container {
 
 
 /* =========================
-   10. FOOTER (하단)
+   10. FOOTER 
+   사이트 하단 정보 영역
 ========================= */
-
+/* 저작권 문구 표시 */
 footer {
-    padding: 30px;
+    padding: 40px 20px;
+    background: #fafafa;
+    color: #777;
     text-align: center;
 }
 
 
 /* =========================
-   11. RESPONSIVE (모바일 대응)
-   → 화면이 작아질 때 구조 변경
+   11. 반응형 디자인
+   화면 폭이 768px 이하일 때 적용
+   (스마트폰 대응)
 ========================= */
 
 @media (max-width:768px) {
+    /*
+        모바일에서는
+        로고와 메뉴를 세로 배치 
+    */
+    header .container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    /* 모바일에서는 화면 높이를 강제로 채우지 않음 */
+    .hero {
+        min-height: auto;
+    }
 
-    /* HERO 세로 구조 */
+    /* 
+        모바일에서는
+        텍스트와 이미지를 세로 배치
+    */
     .hero-inner {
         flex-direction: column;
         text-align: center;
@@ -435,27 +453,32 @@ footer {
     }
 
     .hero-text h1 {
+        font-size: 56px;
         word-break: keep-all;
     }
 
-    /* 카드 1열 */
+    /* 카드 3열 -> 1열 */
     .recipe-list {
         grid-template-columns: 1fr;
     }
 
-    /* ABOUT 세로 */
+    /* 소개 영역 세로 배치 */
     .about-inner {
         flex-direction: column;
         gap: 30px;
         text-align: center;
     }
 
-    /* GALLERY 1열 */
+    .about-image img {
+        height: 300px;
+    }
+
+    /* 갤러리 3열 -> 1열 */
     .gallery-grid {
         grid-template-columns: 1fr;
     }
 
-    /* CONTACT 세로 */
+    /* 연락처 영역 세로 배치 */
     .contact-container {
         flex-direction: column;
         text-align: center;
