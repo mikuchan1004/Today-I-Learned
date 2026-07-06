@@ -1,0 +1,114 @@
+/*==========================
+    RESET
+==========================*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/*==========================
+    TOP BAR
+==========================*/
+
+.topbar {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 10px 30px;
+   background: #111;
+   color: #fff;
+   gap: 20px;
+}
+
+.top-left {
+    flex: 1;
+}
+
+.top-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.top-center input {
+    width: 180px;
+    padding: 6px 10px;
+    border-radius: 3px;
+    border: none;
+}
+
+.top-center button {
+    padding: 6px 12px;
+    background: #ff6b00;
+    color: white;
+    border-radius: 3px;
+}
+
+.top-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.top-right button {
+    color: #fff;
+    font-size: 13px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    transition: 0.2s;
+}
+
+.top-right button:hover {
+    opacity: 0.7;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/*==========================
+    HEADER
+==========================*/
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    background: #fff;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #111;
+    letter-spacing: 1px;
+}
