@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>var</title>
+</head>
+<body>
+    <script>
+        console.log("hello world")
+        alert('hello world')
+        // confirm('hello world2')
+        // prompt('hello world')
+
+        a = 15;
+        console.log(a);
+        console.log(11);
+
+        // 변수 선언
+        // 방법 1
+        var a = 10;
+        console.log('a:'+ a);
+
+        var b = 20;
+        console.log('b:', b);
+
+        a = 30;
+        console.log('a:'+ a);
+
+        // 중복해서 같은 변수명으로 선언해도 오류가 없다.
+        var a = 40;
+        console.log('a:' + a);
+
+        // 선언 방법 2
+        // 타입 없음
+        c = 50;
+        console.log('c:' + c);
+
+        // 선언 방법 3
+        let d = 60;
+        console.log('d:' + d);
+
+        // 같은 변수명으로 다시 선언하는 것을 막아준다.
+        // let d = 70;
+
+        d = 65;
+        console.log('d:'+ d);
+
+        // 선언 방법 4
+        const e = 70;
+        console.log('e:' + e);
+
+        d='문자'
+        console.log('d:' + d);
+
+        // const는 선언과 동시에 값을 넣어야 한다
+        // const f;
+        // f = 80;
+        // console.log('f:' + f);
+
+        // camel case
+        let salesCount = 1;
+        // snake case
+        let sales_Count = 1;
+        // kebab case
+        // let font-size = 1;
+        // not defined
+        // console.log(z);
+        let y;
+        console.log(y);
+
+        // infinity
+        console.log(7 / 0);
+
+        // NaN : Not a Number
+        console.log(7 / '문자');
+
+        console.log(`백틱
+        엔터 가능
+        $(a)
+        `)
+        console.log('a:'+ a);
+        console.log(`a : $(a)`);
+
+        let f = true;
+        let g = false;
+
+        let strA = '10.1'
+        let strB = '10개'
+        console.log(strA + 2); // 10.12
+        let numA = Number(strA + 2);
+        console.log(numA)
+        console.log(Number(strB))
+
+        numA = parseInt(strA)
+        console.log('numA: ' + numA)
+        console.log(parseInt(strB))
+
+        // console.log(string(numA))
+        console.log('' + numA)
+
+        // 평 
+        let py = 3.3
+        let acre = 4046.8
+        let 밭 = 10
+        console.log('단위가 평일 때 :'+ py*밭)
+        console.log('단위가 에이커일 때 :' + acre*밭)
+        // 82제곱미터는 몇 평?
+        console.log(82 / py)
+
+        a = 10
+        a = a + 1 // = 의 오른쪽부터 계산한다! (대입 연산자)
+
+        let 잔고 = 15000
+        let 번돈 = 100000
+
+        let number = 10;
+        let string = "20";
+
+        const result = number + string;
+        console.log(result);
+
+        let varA = "하이";
+        let varB = 0;
+        let varC = "";
+
+        let boolA = Boolean(varA);
+        let boolB = Boolean(varB);
+        let boolC = Boolean(varC);
+
+        console.log(boolA);
+        console.log(boolB);
+        console.log(boolC);
+
+    </script>
+</body>
+</html>
