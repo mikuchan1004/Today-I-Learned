@@ -58,6 +58,200 @@
             console.log('D')
         }
 
+        /*
+            js에서 
+            참(true)의 정의 : 거짓이 아닌 것
+            
+            거짓 : false, 0, undefined,  null, NaN
+
+        */
+
+        let ac = 17
+        if (ac < 18) ac = 18
+
+        let fruit = "apple"
+        if (fruit == 'apple') {
+            console.log('사과')
+        }else if (fruit == 'banana') {
+            console.log('바나나')
+        }
+
+        switch(fruit) {
+            case 'apple' : 
+                console.log('사과')
+                break
+            case 'banana' :
+                console.log('바나나')
+                break
+            default : 
+                console.log('모름')
+                break
+        }
+        
+        // let phone = prompt('기종을 입력해주세요')
+        // if (phone == 's23') {
+        //     console.log('삼성')
+        // }else if (phone == 's24') {
+        //     console.log('삼성')
+        // }
+
+        // if (phone == 's23' || phone == 's24') {
+        //     console.log('삼성')
+        // }
+
+        // switch(phone) {
+        //     case 's23' :
+        //     case 's24' :
+        //     case 's25' :
+        //     case 's26' :
+        //         console.log('삼성')
+        //         break
+        //     case 'i15' :
+        //     case 'i16' :
+        //     case 'i17' :
+        //         console.log('애플')
+        //         break
+        //     default : 
+        //         console.log('삼성, 애플 아님')
+        // }
+
+        // 문제 1  
+        // 아무 숫자나 받아서 다음 형식으로 출력 
+        // '양수' 또는 0 또는 '음수' 
+        let num = prompt('아무 숫자나 입력해주세요')
+        if(num > 0) {
+            console.log('양수')
+        } else if (num == 0) {
+            console.log('0')
+        } else if (num < 0) {
+            console.log('음수')
+        }
+        
+        // 문제2
+        // '홀수' 또는 '짝수' 출력 
+
+        let num_2 = prompt ('아무 숫자나 입력해주세요')
+        if (num_2 % 2) {
+            console.log('홀수')
+        } else {
+            console.log('짝수')
+        }
+
+        // 문제3 
+        // 두 수를 받아서 둘 중에 큰 값을 출력 
+        // 3과 5중에 큰 수 : 5 
+
+       let first_number = 3
+       let second_number = 5
+
+       if (first_number < second_number) {
+            console.log('3과 5중에서 큰 수 : ' + second_number) // 3과 5중에서 큰 수 : 5
+       }
+        
+        // 문제4    
+        // 임의의 money가 있을 때 
+        // 7000원 이상이면 "택시 타자" 출력 
+        // 7000원 미만 ~ 3000원 이상이면 "버스 타자" 출력
+        // 3000원 미만이면 "걸어 가자" 출력 
+
+        let money = prompt('현재 소지금을 입력해주세요')
+
+        if (money >= 7000) {
+            console.log('택시 타자')
+        } else if (money < 7000 , money >= 3000) {
+            console.log('버스 타자')        
+        } else if (money < 3000) {
+            console.log("걸어가자")
+        }
+
+        // 문제5
+        // '가위' '바위' '보' 중에 하나만 입력
+        // 문제5-1 
+        // 컴퓨터는 항상 '바위'만 내는 경우
+        // 문제5-2
+        // 이겼다 졌다 비겼다 출력 
+
+        let rps = prompt('뭘 낼꺼니?')
+        switch(rps) {
+            case '가위' : 
+            console.log('졌다')
+            break
+            case '바위' :
+            console.log('비겼다')
+            break
+            default: 
+            console.log('이겼다')
+        }
+
+        // 문제6
+        // 임의의 수 3개 x, y, z 
+        // z가 x와 y 사이에 있는지 판단
+
+        let x = 10;
+        let y = 20;
+        let z = 15;
+        const result = z >= x && z <= y || z >= y && z <= x ? console.log('z는 x와 y 사이에 있습니다.') : console.log('z는 x와 y 사이에 없습니다')
+
+        // 문제7
+        // 月을 입력받아서 계절 출력 
+        // 단, 13이나 -1 같은걸 받으면 "다시 입력하세요" 출력 
+
+        let month = prompt('월을 입력해주세요')
+        if (month >= 3 && month <=5) {
+            console.log('봄')
+        } else if (month >=6 && month <= 8) {
+            console.log('여름')
+        } else if (month >= 9 && month <= 11) {
+            console.log('가을')
+        } else if (month === 12 , 1, 2) {
+            console.log('겨울')
+        } else {
+            console.log('다시 입력해주세요')
+        }
+
+        // 문제8
+        // 온도를 입력받아 다음처럼 출력
+        // 예: 32 입력
+        // "영상 32도 입니다"
+        // 예: -3 입력
+        // "영하 3도 입니다"
+
+        let temp = prompt ('현재 온도를 입력해주세요')
+        if (temp >= 0) {
+            console.log('영상' , temp + '도 입니다');
+        } else if (temp < 0) {
+            console.log('영하' , temp + '도 입니다');
+        }
+
+        // -- 멘탈 챙길 자신 있으면 도전
+        // 문제9
+        // 시와 분을 입력 받아서 35분 후의 시간 출력
+        // 3, 51 입력
+        // 출력 : 4시 26분
+
+        // 문제10
+        // 두자리 숫자를 받아서
+        // 10의 자리와 1의 자리가 같은지 판단
+        // 예: 88 => 같음, 89 => 다름
+
+        // 문제11
+        // 369게임
+        // 어떤 수를 받아서 3,6,9가 있으면 "박수" 출력, 없으면 그 숫자 출력
+        // 예: 31=>박수 12=>12
+
+        // 문제12
+        // 사각형에서
+        // 좌상단 좌표 : x1:10, y1:20
+        // 우하단 좌표 : x2:90, y2:100
+        // 입력받은 좌표가 사각형에 겹치는가?
+
+        let rand =  Math.random()
+        console.log(rand)
+
+        // 0 <- 숫자 < 1
+        rand = parseInt(Math.random() * 10) % 3
+        console.log(rand)
+
     </script>
 </body>
 </html>
