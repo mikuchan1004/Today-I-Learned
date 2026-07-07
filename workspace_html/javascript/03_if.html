@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>조건문</title>
+</head>
+<body>
+    <script>
+        let vaule = true;
+
+        if(!vaule) {
+            console.log('이거 true임')
+        } 
+
+        let vaule2 = true;
+
+        if (vaule2) {
+            console.log('참')
+        }
+        if(!vaule2) {
+            console.log('거짓')
+        }
+
+        let vaule3 = true;
+        if(vaule3) {
+            console.log('참')
+        } else {
+            console.log('거짓')
+        }
+
+        let score = 85
+        if(score >= 60) {
+            console.log('합격')
+        }else{
+            console.log('불합격')
+        }
+        if(score < 60){}
+        if(!(score >= 60)){}
+
+        if(score >= 90) {
+            console.log('A')
+        }else {
+            if(score >= 80) {
+                console.log('B')
+            }else{
+                console.log('C')
+            }
+        }
+
+    </script>
+</body>
+</html>
