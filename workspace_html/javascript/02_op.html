@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연산자</title>
+</head>
+<body>
+    <script>
+        let j = 10;
+    j = j + 1;
+    j += 1;
+    j++;
+
+    j--;
+
+    ++j;
+    --j;
+
+    let k = 10;
+    k++;
+    console.log('k++ 이후 : ' + k ); 
+    ++k;
+    console.log('++k 이후 : ' + k );
+
+    k = 10;
+    console.log('k++' , k++);
+    console.log('k' , k);
+
+    k = 10;
+    console.log('++k' , ++k);
+    console.log('k' , k);
+
+    k = 10;
+    let m = k++ + 1;
+    console.log('k++ :' , m);
+
+    k = 10;
+    m = ++k + k++ 
+    console.log(`m: ${m} , k: ${k}`);
+
+    k = 10;
+    m = k-- + ++k - --k;
+    console.log(` m: ${m} , k: ${k}` );
+
+    k= 10;
+    ++k;
+    k++;
+
+    console.log('-------------------------')
+
+    let boolA = true;
+    let boolB = false;
+    let result = boolA && boolB;
+    console.log ('and : ' , result);
+
+    result = boolA || boolB ;
+    console.log ('or : ' , result);
+
+    console.log ('!boolA' , !boolA);
+
+    console.log(' 같은가? ' ,  boolA == boolB );
+    console.log(' 같지않은가?' , boolA != boolB);
+
+    let n = 3;
+    let o = '3';
+    console.log('n == o' , n == o);
+    console.log(typeof n );
+    console.log(typeof o );
+    console.log('n === o' , n === o);
+    console.log('n !== o' , n !== o);
+
+    console.log(typeof o == 'string');
+
+    let num = 2;
+    result = (num % 2) == 0 ? '짝수' : '홀수';
+    console.log(result);
+
+    // 문제 1 
+    // 돈이 10,000원 있음
+    // 1. 4800원 피스타치오를 최대 몇 잔 살 수 있는가
+    // 2. 그리고 남은 돈은? 
+
+    // 1. 최대 몇 잔?
+    let money  = 10000;
+    let pistachio = 4800
+    console.log('최대 몇 잔? : ' , parseInt (money / pistachio) ); // 2잔
+
+    // 2. 남은 돈 
+    console.log('남은 돈 : ' , money % pistachio  ); // 400원
+
+    // 문제 2
+    // 올리브영에 꿀홍차가 8000원.
+    // 15% 세일!! 그렇다면 가격은? 
+    let honeyredtea  = 8000;
+    let sale = 15;
+    let sale_price = 1200;
+    console.log('할인 : ' , honeyredtea * (15 / 100) ); // 1200원 
+    console.log('최종 가격 : ' , honeyredtea - sale_price); // 6800원
+
+    // 문제 3 
+    // 1234를 10의 자리 이하 버림 
+    // 결과 : 1200
+
+    // 문제 4
+    // 두 값 1000, 794가 있을 떄 
+    // 1000 / 794의 결과를 소수점 2자리 까지만 출력
+    // 결과 : 1.25
+    let a = 1000;
+    let b = 794;
+    console.log('결과 : ' , parseInt(a / b)); 
+
+    // 문제 5 
+    // 17,000원을 줄 때
+    // 5천원과 1천원자리 밖에 없을 때 각각 몇 장씩 줄 수 있는가?
+    // 단, 최대한 5000원을 많이 준다.
+    let funds = 17000;
+    let paper1 = 5000;
+    let paper2 = 1000;
+    console.log('5천원 짜리 : ' , parseInt(funds / paper1)); // 3장
+    console.log('1천원 짜리 : ' , parseInt(funds / paper2));
+    </script>
+</body>
+</html>
