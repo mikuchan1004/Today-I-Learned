@@ -203,7 +203,7 @@
             console.log('여름')
         } else if (month >= 9 && month <= 11) {
             console.log('가을')
-        } else if (month === 12 || month === 1 || month === 2) {
+        } else if (month === 12 || 1 || 2) {
             console.log('겨울')
         } else {
             console.log('다시 입력해주세요')
@@ -229,15 +229,48 @@
         // 3, 51 입력
         // 출력 : 4시 26분
 
+        let hour = parseInt( prompt ('시를 입력해주세요') ) 
+        let minute = parseInt( prompt ('분을 입력해주세요') ) 
+
+        minute = minute + 35;
+
+        if (minute >= 60) {
+            minute = minute - 60;
+
+            hour++;
+        }
+
+        if (hour >= 24) {
+            hour = hour - 24;
+        }
+
+        console.log('35분 후의 시간은' , hour + '시' , minute + '분 입니다.')
+
         // 문제10
         // 두자리 숫자를 받아서
         // 10의 자리와 1의 자리가 같은지 판단
         // 예: 88 => 같음, 89 => 다름
 
+       let num_a = prompt ('두자리 숫자를 입력해주세요')
+     
+       if (num_a [0] === num_a [1]) {
+            console.log ('10의 자리와 1의 자리가 같습니다')
+       } else {
+            console.log('10의 자리와 1의 자리가 다릅니다')
+       }
+
         // 문제11
         // 369게임
         // 어떤 수를 받아서 3,6,9가 있으면 "박수" 출력, 없으면 그 숫자 출력
         // 예: 31=>박수 12=>12
+
+        let game_num = parseInt ( prompt('숫자를 입력해주세요') )
+
+        if ( game_num === 3 || game_num === 6 || game_num === 9 ) {
+            console.log ('박수')
+        } else {
+            console.log(game_num)
+        }
 
         // 문제12
         // 사각형에서
@@ -245,12 +278,49 @@
         // 우하단 좌표 : x2:90, y2:100
         // 입력받은 좌표가 사각형에 겹치는가?
 
+        let x1 = 10
+        let y1 = 20
+        let x2 = 90
+        let y2 = 100
+
+        let inputX = parseInt ( prompt('X 좌표를 입력해주세요') )
+        let inputY = parseInt ( prompt('Y 좌표를 입력해주세요') )
+
+        if (inputX >= x1 && inputX <= x2 && inputY >= y1 && inputY <= y2) {
+            console.log('입력하신 좌표가 사각형에 겹칩니다')
+        } else {
+            console.log('입력하신 좌표가 사각형에 겹치지 않습니다')
+        }
+
         let rand =  Math.random()
         console.log(rand)
 
         // 0 <- 숫자 < 1
         rand = parseInt(Math.random() * 10) % 3
         console.log(rand)
+
+        // 0~2
+
+        let a = 10
+        // if (3 < a < 20) {
+        if (3 < a && a < 20) {
+
+        }
+
+        // 0 <- a < 1
+        // 0.46234
+
+        let min = 0 
+        let max = 2
+        Math.random() * 3
+
+       min = 1
+       max = 45
+
+       min = 5
+       max = 8
+       parseInt ( Math.random() * (max - min + 1) ) + min
+        
 
     </script>
 </body>
