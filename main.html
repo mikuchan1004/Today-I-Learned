@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>main</title>
     <style>
+
          body {
             margin: 0;
             display: flex;
@@ -12,28 +13,99 @@
             align-items: center;
             min-height: 100vh;
         }
-        table {
-            border-top: 1px solid black;
-            width: 100%;
-            table-layout: fixed;
-            border-collapse: collapse;
-        }
-        caption {
-            font-size: 1.5rem;
+
+        .board-container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
         }
 
+       /*  테이블 전체 스타일 */
+        .cafe-table {
+            width: 100%;
+            border-collapse: collapse; /* 선을 하나로 합침 */
+            border-top: 2px solid #555; /* 맨 위 굵은 선 */
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* 헤더 스타일 */
+        .cafe-table thead th {
+            padding: 12px 0;
+            border-bottom: 1px solid #ddd;
+            font-weight: normal; /* 제목 굵기 보통으로 */
+            color: #666;
+        }
+
+        /* 내용 스타일 */
+        .cafe-table tbody td {
+            padding: 12px 5px;
+            border-bottom: 1px solid #eee;
+            text-align: center; /* 기본은 가운데 정렬 */
+        }
+
+        .cafe-table tbody th:nth-child(1) { width: 5%;}
+        .cafe-table tbody th:nth-child(2) { width: 50%;}
+        .cafe-table tbody th:nth-child(3) { width: 15%;}
+        .cafe-table tbody th:nth-child(4) { width: 20%;}
+        .cafe-table tbody th:nth-child(5) { width: 10%;}
+
+        /* '제목' 칸만 왼쪽 정렬 */
+        .cafe-table tbody td:nth-child(2) {
+            text-align: left;
+        }
+        /* 마우스 올렸을 때 효과 */
+        .cafe-table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .board-title {
+            display: inline-block;
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #333;
+        }
+
+        .page-nav {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .page-nav span {
+            padding: 5px 8px;
+            margin: 0 2px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+        }
+
+        .page-nav span.active {
+            font-weight: bold;
+            border: 1px solid #333;
+            color: #888;
+        }
+
+        .page-nav .btn {
+            color: #888;
+        }
     </style>
 </head>
 <body>
-    
-    <table>
+    <div class="board-container">
+        <h2 class="board-title">자유게시판</h2>
+
+         <table class="cafe-table">
         <thead>
         <tr>
-            <th width="20"></th>
-            <th width="200">제목</th>
-            <th width="50">작성자</th>
-            <th width="120">작성일</th>
-            <th width="50">조회</th>
+            <th></th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회</th>
         </tr>
         </thead>
 
@@ -76,5 +148,18 @@
         </tbody>
 
     </table>
+
+    <div class="page-nav">
+        <span class="btn">&lt; 이전</span>
+        <span class="active">1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+        <span class="btn">다음 &gt;</span>
+    </div>
+
+    </div>
+   
 </body>
 </html>

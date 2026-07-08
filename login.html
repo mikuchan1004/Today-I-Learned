@@ -11,48 +11,60 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            background-color: rgb(68, 97, 126);
         }
 
-        .login_box {
-            /* border: 1px solid red; */
+       .login_box {
             width: 500px;
             display: flex;
             flex-direction: column;
-            align-items : center;
+            align-items: center; /* 박스 내부 요소를 가로 중앙 정렬 */
             justify-content: center;
             background-color: rgb(44, 62, 80);
             color: #ffffff;
-
-        }
-        h3 {
-            text-align:center;
-            
-        }
-
-        button h3 {
-            line-height: 0;
-        }
-        
-        button {
-            cursor: pointer;
-        }
-
-        .email , .password {
+            padding: 20px 0;
             box-sizing: border-box;
+        }
+
+        .login_box form {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* form 안의 input/button도 중앙 정렬 */
+            width: 100%;        /* 박스 폭을 다 쓰게 함 */
+        }
+
+        /* 2. 제목: 기존 설정 유지 */
+        h3 {
+            text-align: center;
+            margin-top: 0;  
+        }
+
+        input {
             width: 450px;
             height: 35px;
             padding: 10px;
-            margin: 10px;
+            /* 기존 margin: 10px 에서 0으로 바꾸면 정렬이 맞습니다 */
+            margin: 10px 0; 
+            box-sizing: border-box;
             border: 1px solid #ddd;
             outline: none;
         }
 
-        .log-in {
-            box-sizing: border-box;
+      .log-in {
             width: 450px;
             height: 35px;
-            margin: 10px;
+            /* 기존 margin: 10px 에서 0으로 바꾸면 정렬이 맞습니다 */
+            margin: 10px 0; 
             background-color: rgb(54, 199, 54);
+            border: none;
+            cursor: pointer;
+        }
+
+        .log-in h3 {
+            margin: 0;
+            padding: 0;
+            line-height: 35px;
+            font-size: 16px;
         }
 
     </style>
@@ -60,9 +72,9 @@
 <body>
      <div class="login_box">
         <h3>Welcome Back!</h3>
-        <input class="email" type="email" placeholder="Email">
-        <input class="password" type="password" placeholder="Password">
         <form action="main.html" method="get">
+            <input class="email" type="email" placeholder="Email" required>
+            <input class="password" type="password" placeholder="Password" required>
             <button type="submit" class="log-in"><h3>LOGIN</h3></button>
         </form>
      </div>
