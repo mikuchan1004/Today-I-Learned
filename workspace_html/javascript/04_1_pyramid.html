@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pyramid</title>
+    <script>
+        // 1단계 
+        // +++++ 
+        let string  = ' '
+        for(let i = 1; i <=5; i++) {
+            string = string + '+'
+        }
+        console.log(string)
+
+        // 2단계 
+        // +_+_+_+_+_
+        let m = '+'
+        let s = '_'
+        string = ' '
+        for(let i = 1; i <=5; i++) {
+            string += m
+            string += s
+        }
+        console.log(string)
+
+        // 3단계
+        for(let j = 1; j <= 5; j++) {
+            string = ' '
+            for(let i = 1; i <= 5; i++) {
+                string = string + m
+            }
+            console.log(string)
+        }
+
+        // 4단계
+        string = ' '
+        for(let j =1; j<=5; j++) {
+            string = ' '
+            for(let i = 1; i <=5; i++) {
+                string = string + j
+            }
+            console.log(string)
+        }
+
+        // 5단계
+        /*
+            1
+            22
+            333
+            4444
+            55555
+        */
+        string = ' '
+        for(let j =1; j<=5; j++) {
+            string = ' '
+            for(let i = 1; i <=j; i++) {
+                string = string + j  
+            } 
+            console.log(string) 
+        }
+        
+        // 6단계
+        /*
+            +
+            ++
+            +++
+            ++++
+            +++++
+        */
+        string = ' '
+        for(let j =1; j<=5; j++) {
+            string = ' '
+            for(let i = 1; i <=j; i++) {
+                string = string + m 
+            } 
+            console.log(string) 
+        }
+
+        // 7단계
+        /*
+            11111
+            2222
+            333
+            44
+            5
+        */
+        string = ' '
+        for(let j =1; j<=5; j++) {
+            string = ' '
+            for(let i = j; i <= 5; i++) {
+                string = string + j  
+            } 
+            console.log(string) 
+        }
+
+        // 8단계
+        /*
+            +____
+            ++___
+            +++__
+            ++++_
+            +++++
+        */
+        string = ' '
+        for(let j =1; j<=5; j++) {
+            string = ' '
+            for(let i = 1; i <=j; i++) {
+                string = string + m 
+            }
+            for(let i = 1; i <= 5 -j; i++)  {
+                string = string + s
+            }
+            console.log(string) 
+        }
+
+        // 9단계
+        /*
+            ____+
+            ___++
+            __+++
+            _++++
+            +++++
+        */
+        string = ' '
+        for(let j =1; j<=5; j++) {
+            string = ' '
+            for(let i = 1; i <= 5 - j; i++) {
+                string = string + s 
+            }
+            for(let i = 1; i <= j; i++)  {
+                string = string + m
+            }
+            console.log(string) 
+        }
+
+        // 10단계
+        /*
+            ____+
+            ___+++
+            __+++++
+            _+++++++
+            +++++++++
+        */
+        string = ' '
+        for(let j =1; j<=5; j++) {
+            string = ' '
+            for(let i = 1; i <= 5 - j; i++) {
+                string = string + s 
+            }
+            for(let i = 1; i <= j; i++)  {
+                string = string + m
+            }
+            for(let i = 1; i <= j -1; i++) {
+                string = string + m
+            }
+            console.log(string) 
+        }
+
+        // 11단계
+        /*
+            ____+____
+            ___+++___
+            __+++++__
+            _+++++++_
+            +++++++++
+        */
+        string = ' '
+        for(let j =1; j<=5; j++) {
+            string = ' '
+            for(let i = 1; i <= 5 - j; i++) {
+                string = string + s 
+            }
+            for(let i = 1;  i <= (j * 2) - 1; i++) {
+                string = string + m
+            }
+            for(let i = 1; i <= 5 - j; i++) {
+                string = string + s
+            }
+            
+            console.log(string) 
+        }
+
+        // 12단계
+        // 입력 받은 줄 수 대로 출력
+        
+        let linecount = parseInt(prompt('몇 줄짜리 피라미드를 만들까요?'))
+        string = ' '
+        for(let j =1; j<=linecount; j++) {
+            string = ' '
+            for(let i = 1; i <= linecount - j; i++) {
+                string = string + s 
+            }
+            for(let i = 1;  i <= (j * 2) - 1; i++) {
+                string = string + m
+            }
+            for(let i = 1; i <= linecount - j; i++) {
+                string = string + s
+            }
+            
+            console.log(string) 
+        }
+        
+        
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
