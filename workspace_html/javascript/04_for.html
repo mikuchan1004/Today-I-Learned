@@ -141,15 +141,17 @@
         */  
         
         for (let k = 2; k <= 12; k++) {
-            let result = '합' + k + ':'
+            console.log(' =-=-= 합이 '+k+' 인 것 =-=-= ')
+            // 주사위 두개 도는 곳
             for(let i = 1; i <= 6; i++) {
                 for (let j = 1; j <= 6; j++) {
+                    // 합이 k인 것만 출력
                     if (i + j == k) {
-                        result += '[' + i + ',' + j + ']';
+                        console.log( '[' + i + ',' + j + ']' ) 
                     }
                 }
             }
-            console.log(result)
+            console.log()
         } 
         
       
