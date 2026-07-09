@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>while</title>
+    <script>
+        let i = 1
+        while(i <= 10) {
+            console.log(i)
+            i++
+        }
+
+        // 메뉴 입력받기
+        // "1: 커피 , 2: 홍차 , 0: 종료"
+        let menu = -1
+        // menu = prompt('1: 커피, 2: 홍차, 0: 종료')
+        // if(menu == 1){
+        //     console.log('커피 드릴게요')
+        // } else if (menu == 2) {
+        //     console.log('홍차 드릴게요')
+        // } else if (meun == 0) {
+        //     console.log('종료 할게요')
+        // } else {
+        //     console.log('정확히 입력해 주세요')
+        // }
+
+        // while(menu !=0) {
+        //     menu = prompt('1: 커피, 2: 홍차, 0: 종료')
+
+        //     if(menu == 1){
+        //         console.log('커피 드릴게요')
+        //     } else if (menu == 2) {
+        //         console.log('홍차 드릴게요')
+        //     } else if (menu == 0) {
+        //         console.log('종료합니다')
+        //     } else {
+        //         console.log('정확히 입력해 주세요')
+        //     }
+        // }
+
+        do {
+            menu = prompt('1: 커피, 2: 홍차, 0: 종료')
+            
+            if(menu == 1){
+                console.log('커피 드릴게요')
+            } else if (menu == 2) {
+                console.log('홍차 드릴게요')
+            } else if (menu == 0) {
+                console.log('종료합니다')
+            } else {
+                alert('정확히 입력해 주세요')
+                console.log('정확히 입력해 주세요')
+            }
+        } while(menu != 0)
+        
+        // ATM 만들기
+        // 메뉴 : '1: 입금, 2. 출금, 3. 잔액보기, 4. 종료'
+        
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
