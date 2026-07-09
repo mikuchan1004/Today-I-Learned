@@ -157,7 +157,7 @@
         // 로또 번호 추출 
         for (let i = 1; i <=6; i++) {
             // 1 ~ 45의 숫자 랜덤으로 뽑기
-         let rand = parseInt (Math.random() * 45) + 1
+        let rand = parseInt (Math.random() * 45) + 1
         console.log(rand)
         }
        
@@ -170,6 +170,37 @@
             console.log(i);
         }  
 
+        // 총 4층의 주차 건물이 있다.
+        // 각 자리에는 10대의 자리가 있다.
+        // 내 차는 1층 첫번째부터 17번쨰 자리에 있다.
+        let cnt = 0;
+        let flag = false
+        for (let i = 1; i <= 4; i++) {
+            
+            for(let j = 1; j <= 10; j++) {
+                cnt++;
+                console.log(i, j, cnt + '번쨰');
+
+                if (cnt >= 17) {
+                    flag = true
+                    break;
+                }
+            }
+            //if(cnt >= 17)
+            //if(flag == true)
+            if(flag) {
+                break;
+            }
+            console.log('한층 끝')
+        }
+
+        for(let i=1; i <= 10; i++) {
+            if ( i %2 == 0) {
+                continue;
+            }
+            
+            console.log(i)
+        }
     
     </script>
 </body>
