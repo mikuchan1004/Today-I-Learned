@@ -183,6 +183,40 @@
             console.log('이겼다')
         }
 
+        // 가위바위보 - 랜덤 버전
+        // 1. 컴퓨터가 랜덤으로 선택하게 만들기
+        // 2. 사용자의 선택 받기
+        // 3. 승패 결정하기
+        let rand = Math.random( ) // 0 <- rand < 1
+        rand = parseInt(rand * (2 + 1)) // 0~2까지 랜덤
+        // 0: 가위 1: 바위 2: 보 
+        let user = prompt('가위, 바위, 보 중에 하나 적으시오.')
+        if (rand == 0) { // 컴퓨터가 가위
+            if(user == '가위') {
+                console.log('비겼다')
+            } else if (user == '바위') {
+                console.log('이겼다')
+            } else {
+                console.log('졌다')
+            }
+        } else if (rand == 1) { // 컴퓨터가 바위
+            if(user == '바위') {
+                console.log('비겼다')
+            } else if (user == '보') {
+                console.log('이겼다')
+            } else {
+                console.log('졌다')
+            }
+        } else if (rand == 2) { // 컴퓨터가 보
+            if(user == '바위') {
+                console.log('졌다')
+            } else if (user == '보') {
+                console.log('비겼다')
+            } else {
+                console.log('이겼다')
+            }
+        }
+
         // 문제6
         // 임의의 수 3개 x, y, z 
         // z가 x와 y 사이에 있는지 판단
@@ -292,12 +326,12 @@
             console.log('입력하신 좌표가 사각형에 겹치지 않습니다')
         }
 
-        let rand =  Math.random()
-        console.log(rand)
+        // let rand =  Math.random()
+        // console.log(rand)
 
-        // 0 <- 숫자 < 1
-        rand = parseInt(Math.random() * 10) % 3
-        console.log(rand)
+        // // 0 <- 숫자 < 1
+        // rand = parseInt(Math.random() * 10) % 3
+        // console.log(rand)
 
         // 0~2
 
