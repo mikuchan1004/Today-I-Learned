@@ -196,24 +196,32 @@
                 console.log('비겼다')
             } else if (user == '바위') {
                 console.log('이겼다')
-            } else {
+            } else if (user == '보') {
                 console.log('졌다')
+            } else {
+                console.log('다시 정확한 선택을 하세요')
             }
+
         } else if (rand == 1) { // 컴퓨터가 바위
             if(user == '바위') {
                 console.log('비겼다')
             } else if (user == '보') {
                 console.log('이겼다')
-            } else {
+            } else if (user == '가위') {
                 console.log('졌다')
+            } else {
+                console.log('다시 정확한 선택을 하세요')
             }
+
         } else if (rand == 2) { // 컴퓨터가 보
             if(user == '바위') {
                 console.log('졌다')
             } else if (user == '보') {
                 console.log('비겼다')
-            } else {
+            } else if (user == '가위') {
                 console.log('이겼다')
+            } else {
+                console.log('다시 정확한 선택을 하세요')
             }
         }
 
