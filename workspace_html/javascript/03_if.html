@@ -309,7 +309,11 @@
 
         let game_num = parseInt ( prompt('숫자를 입력해주세요') )
 
-        if ( game_num === 3 || game_num === 6 || game_num === 9 ) {
+        let tens = parseInt(game_num / 10);
+
+        let ones = game_num % 10;
+
+        if ( tens === 3 || tens === 6 || tens === 9 || ones === 3 || ones === 6 || ones === 9 ) {
             console.log ('박수')
         } else {
             console.log(game_num)
