@@ -13,7 +13,7 @@
 
         // 메뉴 입력받기
         // "1: 커피 , 2: 홍차 , 0: 종료"
-        let menu = -1
+        // let menu = -1
         // menu = prompt('1: 커피, 2: 홍차, 0: 종료')
         // if(menu == 1){
         //     console.log('커피 드릴게요')
@@ -39,24 +39,149 @@
         //     }
         // }
 
-        do {
-            menu = prompt('1: 커피, 2: 홍차, 0: 종료')
+        // do {
+        //     menu = prompt('1: 커피, 2: 홍차, 0: 종료')
             
-            if(menu == 1){
-                console.log('커피 드릴게요')
-            } else if (menu == 2) {
-                console.log('홍차 드릴게요')
-            } else if (menu == 0) {
-                console.log('종료합니다')
-            } else {
-                alert('정확히 입력해 주세요')
-                console.log('정확히 입력해 주세요')
-            }
-        } while(menu != 0)
+        //     if(menu == 1){
+        //         console.log('커피 드릴게요')
+        //     } else if (menu == 2) {
+        //         console.log('홍차 드릴게요')
+        //     } else if (menu == 0) {
+        //         console.log('종료합니다')
+        //     } else {
+        //         alert('정확히 입력해 주세요')
+        //         console.log('정확히 입력해 주세요')
+        //     }
+        // } while(menu != 0)
         
         // ATM 만들기
         // 메뉴 : '1: 입금, 2. 출금, 3. 잔액보기, 4. 종료'
-        
+
+        let menu = prompt('1. 입금, 2. 출금, 3. 잔액보기, 4. 종료')
+        let money = 0;
+        while(menu != 4) {
+            if(menu == 1) {
+                let user = parseInt(prompt('입금을 원하는 잔액을 입력해주세요'));
+
+                if (user <= 0) { // 0원 이하 방어
+                    confirm('0원 이하의 금액은 입금되지 않습니다. 다시 시도해주세요');
+                } else {
+                    money += user; 
+                    confirm(`${user}원이 입금되었습니다`);
+                }
+
+            } else if(menu == 2) {
+                let user = parseInt(prompt('출금을 원하는 잔액을 입력해주세요'));
+
+                if (user <= 0) { 
+                    confirm(' 0원 이하의 금액은 출금할 수 없습니다.');
+                } else if (money < user) {
+                    confirm('잔액이 부족합니다')
+                } else {
+                    money -= user;
+                    confirm(`${user}원이 출금 되었습니다.`);
+                }
+
+            } else if (menu == 3) {
+                confirm(`현재 잔액은 ${money}원 입니다.`);
+            } 
+
+            menu = prompt('1. 입금, 2. 출금, 3. 잔액보기, 4. 종료');
+        }
+
+        // 주사위를 던져서 3이 나올 때까지 반복하고 몇번안에 나왔는가를 출력하기
+
+        let count = 0;
+
+        while (true) {
+            count++
+            let rand = parseInt(Math.random()*6) + 1;
+            console.log(count + '번째 주사위' + rand);
+
+            if (rand === 3) {
+                console.log('총' + count + '번 만에 3이 나왔습니다');
+                break;
+            }
+        }
+
+    // 정사각형의 border 구현
+    /*
+        입력 : 4
+        ++++
+        +__+
+        +__+
+        ++++
+
+        입력 : 5
+        +++++
+        +___+
+        +___+
+        +___+
+        +++++
+    */
+
+    
+    // 1단계 : border 입력 받기
+
+    let border_count = parseInt(prompt('원하는 테두리를 입력해주세요'))
+
+    // 2단계 : 변수 만들기
+    
+    let  m =  '+' // 정사각형의 테두리
+    let  s =  '_' // 빈칸 
+    let  string  = '' // 문자열 초기화
+
+    // 3단계 : 정사각형의 맨 위 테두리 그리기 
+
+    for(let i = 1; i <= border_count; i++) {
+        string = string + m
+    }
+    console.log(string)
+
+    // 4단계 : 정사각형의 중간 테두리 그리기 
+
+    for(let i = 1; i <= border_count -2; i++) {
+        let middle_string = ''
+        middle_string = middle_string + m; 
+
+        for (let j = 1; j <= border_count - 2; j++) {
+            middle_string = middle_string + s;
+        }
+
+        middle_string = middle_string + m;
+        console.log(middle_string);
+
+    }
+
+    // 5단계 : 정사각형의 맨 밑의 테두리 그리기 
+
+    console.log(string)
+
+
+    // 업다운 게임
+    // 1~100까지 임의의 정답이 있을 때
+    // 정답보다 낮은 숫자 : "UP"
+    // 정답보다 높은 숫자 : "DOWN"
+    // 정답까지 걸린 시도 횟수 출력
+
+
+
+
+
+    // 숫자야구 게임
+    // 임의의 3자리 숫자인 정답이 있을 때
+    // 스트라이크 : 숫자와 자리가 맞은 개수
+    // 볼 : 숫자는 정답에 있지만 자리가 틀린 수
+    // 아웃 : 하나도 안맞음
+    /*
+        예 : [123]이 정답일 때
+        145 : 1스트라이크
+        135 : 1스트라이크 1볼
+        367 : 1스트라이크
+        328 : 2볼
+    */
+
+
 
     </script>
 </head>
