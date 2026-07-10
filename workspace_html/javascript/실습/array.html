@@ -76,10 +76,11 @@
     let overfourCount = 0
 
     for (let i = 0; i < arr2.length; i++) {
+        // 배열에 홀수가 몇개 있는지 검사
         if (arr2[i] % 2 !== 0) {
             oddCount++
         } 
-        
+        // 배열에 4보다 큰 수가 몇개 있는지 검사
         if (arr2[i] > 4) {
             overfourCount++
         }
