@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>date</title>
+    <script>
+        const now = new Date()
+        console.log(now)
+
+        //년
+        const y = now.getFullYear()
+        console.log('년 :' , y)
+
+        // 월 (0 ~ 11) 주의!!
+        const M = now.getMonth()
+        console.log('월 : ' , M + 1)
+
+        // 일
+        const d = now.getDate()
+        console.log('일 : ' , d)
+
+        // 시간
+        const h = now.getHours()
+        console.log('시 : ' , h)
+
+        // 분 
+        const m = now.getMinutes()
+        console.log('분 : ' ,  m )
+
+        // 초 
+        const s = now.getSeconds()
+        console.log('초 : ' , s)
+
+        const iso = now.toISOString()
+        console.log(iso)
+        
+        // 년도만 추출
+        console.log(iso.split('T')[0])
+
+        const timestamp = now.getTime()
+        console.log(timestamp)
+
+        const before = new Date().getTime()
+        for(let i= 0; i < 1000; i++) {
+            console.log(i)
+        }
+        const after = new Date().getTime()
+        console.log('after - before :' , after - before)
+
+        let time = new Date('2026-06-29')
+        console.log(time.toISOString())
+
+        time.setHours(now.getHours() + 9)
+        console.log(time.toISOString())
+ 
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
