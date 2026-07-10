@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>array</title>
+    <script>
+
+    // 문제 1 
+    // 10개의 각 변수에 1~10까지 담기
+    // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 이걸 자동으로 만드시오.
+
+    // 1단계. 빈 배열 생성
+    // const arr1 = new Array()
+
+    // 2단계. 빈 배열에 1~10까지 담으려면 push를 사용!
+
+    // arr1.push('1' , '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9' , '10')
+    // console.log('[' + arr1 + ']') // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    // 3단계. 2단계를 자동화하려면.... for문!
+
+    // for (let i = 1; i <= 10; i++) {
+    //     arr1.push(i)
+    // }
+    // console.log(arr1)
+
+    // 4단계. 전체 코드 
+
+    const arr1 = []
+
+    for (let i = 1; i <= 10; i++) {
+        arr1.push(i)
+    }
+    console.log(arr1)
+
+    // 문제 2
+    // [3, 4, 7, 5, 1, 6]
+    // 문제 2-1
+    // 홀수의 갯수 구하기
+    // 문제 2-2 
+    // 4보다 큰 수의 갯수 구하기 
+
+    // 1단계. 배열 생성 + 홀수의 갯수를 저장할 바구니 그리고 4보다 큰 수의 갯수를 저장할 바구니 생성
+    
+    // const arr2 = [3, 4, 7, 5, 1, 6]
+    // let oddCount = 0
+    // let overfourCount = 0
+    // console.log(arr2)
+
+    // 2단계. 홀수의 갯수 구하기 -> for문을 쓰자
+
+    // for(let i = 0; i < arr2.length; i++) {
+    //     if (arr2[i] % 2 !== 0) {
+    //         oddCount++
+    //     }
+    // }
+
+    // console.log('홀수의 갯수는? :' + oddCount)
+
+    // 3단계. 4보다 큰 수를 구해보자 
+
+    // for (let i = 0; i < arr2.length; i++) {
+    //     if (arr2[i] > 4) {
+    //         overfourCount++
+    //     }
+
+    // }
+
+    // console.log('4보다 큰 수의 갯수는? :' + overfourCount)
+
+    // 4단계. 전체 코드 
+
+    const arr2 = [3, 4, 7, 5, 1, 6]
+    let oddCount = 0
+    let overfourCount = 0
+
+    for (let i = 0; i < arr2.length; i++) {
+        if (arr2[i] % 2 !== 0) {
+            oddCount++
+        } if (arr2[i] > 4) {
+            overfourCount++
+        }
+    }
+    console.log('홀수의 갯수는? :' + oddCount)
+    console.log('4보다 큰 수의 갯수는? :' + overfourCount)
+
+
+    // 문제 3
+    // 마라톤에 5명의 선수가 참가함. 등번호 1~5번까지 
+    // 대회가 끝났을 때 완주 목록 : [2, 4, 5, 1]
+    // 완주를 못한 사람은?
+    // 문제 3-1
+    // 참가목록: ['나미' , '우솝' , '조로' , '루피' , '상디']
+    // 완주목록: ['우솝' , '나미' , '상디' , '조로']
+
+    // 문제 4
+    // 소극장 예약 시스템 
+    // 자리는 10개, 자리 번호 : 1 ~ 10
+    // 메뉴: 1. 예약 2. 모든 좌석 현황 3. 잔여 좌석 4. 종료
+    // 조건 1 : 예약이 가능하다면 "n번 자리 예약 완료"
+    // 조건 2 : 예약이 이미 되어있다면 "이미 예약된 자리입니다."
+
+    // 문제 5
+    // 로또 (1 ~ 45) 6개 중복없이 출력.
+
+
+    // 숫자야구 게임
+    // 임의의 3자리 숫자인 정답이 있을 때
+    // 스트라이크 : 숫자와 자리가 맞은 개수
+    // 볼 : 숫자는 정답에 있지만 자리가 틀린 수
+    // 아웃 : 하나도 안맞음
+    /*
+        예 : [123]이 정답일 때
+        145 : 1스트라이크
+        135 : 1스트라이크 1볼
+        367 : 1스트라이크
+        328 : 2볼
+    */
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
