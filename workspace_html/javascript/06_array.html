@@ -169,9 +169,22 @@
     // https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=1234&ackey=8uqd1zcb
     // 답 : 1234
 
-    // 1. 배열 생성
-    arr = ['https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=1234&ackey=8uqd1zcb']
-    console.log(arr)
+    const url = 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=1234&ackey=8uqd1zcb'
+    let temp = url.split('?')
+    console.log(temp)
+    let qs = temp[1]
+    qs = qs.split('&')
+    console.log(qs)
+    for (let i= 0; i <qs.length; i++) {
+        let q = qs[i].split('=')
+        let name = q[0]
+        let vaule = q[1]
+        if (name == 'query') {
+            console.log(vaule)
+        }
+    }
+
+
 
     </script>
 </head>
