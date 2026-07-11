@@ -97,6 +97,60 @@
     // 참가목록: ['나미' , '우솝' , '조로' , '루피' , '상디']
     // 완주목록: ['우솝' , '나미' , '상디' , '조로']
 
+    // 1단계.   참가 선수 목록을 담을 배열과 완주 선수 목록을 담을 배열 생성
+
+    // const arr3 = [2, 3, 4, 5, 1]
+    // const finished = [2, 4, 5, 1]
+
+    //2단계. 완주 못한 선수를 담을 바구니 생성 (문제 3)
+
+    // let notfinished = [ ]
+
+    // 3단계. 완주를 못한 선수가 3번 선수라는걸 알지만, 이걸 컴퓨터에게 어떻게 설명을 하는게 좋을까... (문제 3)
+
+    // for (let i = 0; i < arr3.length; i++) {
+    //     let currentPlayer = arr3[i]
+    //     let isFinished = false
+
+    //     for (let j = 0; j < finished.length; j++) {
+    //             if (currentPlayer === finished[j]) {
+    //                 isFinished = true;
+    //                 break;
+    //             }
+    //     }
+    //     if (isFinished === false) {
+    //             notfinished.push(currentPlayer)
+    //     }
+
+    // }
+
+    // console.log(notfinished)
+
+    //  문제 3-1 전체 코드
+
+    const arr3 = ['나미' , '우솝' , '조로' , '루피' , '상디'] // 참가 선수를 담을 배열
+    const finished = ['우솝' , '나미' , '상디' , '조로'] // 완주한 선수를 담을 배열 
+
+    let notfinished = [] // 완주 못한 선수를 담을 바구니 
+
+    for (let  i = 0; i < arr3.length; i++) {
+        let currentPlayer = arr3[i]
+        let isFinished = false // 완주했는지를 기록하는 깃발. 처음에는 일단 false로 둠
+
+        //  완주자 목록을 처음부터 끝까지 탐색하면서 비교 
+        for (let j = 0; j < finished.length; j++) {
+            if (currentPlayer === finished[j]) {
+                isFinished = true // 완주자 명단에 똑같은 이름이 있다면 깃발을 true로 바꿈 
+                break // 이미 찾았다면 남은 완주자 명단을 더 볼 필요가 없으므로 반복문 종료
+            } 
+        }
+        // 완주자 명단 탐색이 끝났는데도 깃발이 여전히  false라면 완주자 명단에 없었다는 뜻 
+        if (isFinished === false) {
+            notfinished.push(currentPlayer) // 완주 못한 선수를 담을 바구니에 밀어 넣음 
+        }
+    }
+    console.log(notfinished) // ['루피']
+
     // 문제 4
     // 소극장 예약 시스템 
     // 자리는 10개, 자리 번호 : 1 ~ 10
@@ -104,8 +158,163 @@
     // 조건 1 : 예약이 가능하다면 "n번 자리 예약 완료"
     // 조건 2 : 예약이 이미 되어있다면 "이미 예약된 자리입니다."
 
+    // 1단계. 좌석을 담을 배열 + 변수 생성
+
+    // const arr4 = [1, 2, 3, 4,  5,  6,  7, 8, 9, 10]
+    
+    // let currentseats = arr4 // 얘는 굳이 안써도 될지도
+
+    // 2단계. 예약된 좌석 번호를 담을 바구니 생성
+
+    // let reserved_seat = [ ]
+
+    // 3단계. 메뉴 호출 
+
+    // let user  = parseInt(prompt(' 메뉴)  1. 예약 2. 모든 자석 현황 3. 잔여 좌석 4. 종료 '))
+
+    // 4단계. 사용자가 종료를 할때까지 계속 돌아야되기 때문에 while 문 사용 
+
+    // while (user != 4) {
+
+    // }
+
+    // 5단계. 예약 메뉴 
+
+    // user_reserve = parseInt(prompt('예약을 원하시는 좌석의 번호를 입력해주세요'))
+
+    // 5-1 단계. 예약 성공일 경우 
+
+    // alert (`${reserved_seat}번 좌석 예약 완료`)
+
+    //  5-2 단계. 예약에 실패했을 경우 
+
+    // alert (`이미 예약된 좌석입니다`)
+
+    // 6단계. 예약에 성공한 이후에, 
+
+    // 예약된 좌석  번호를 현재 좌석 번호 배열에서 빼서 예약된 좌석 번호 배열에 넣어야하고 
+
+    // 남은 좌석 번호는 남은 좌석 번호를 담는 배열에 넣는게 좋을까나...
+
+    // 7단계. 모든 좌석 현황
+
+    // 7-1. 예약된 좌석이 하나도 없을 경우 
+
+    // alert(`모든 좌석 : ${arr4}` )
+
+    // 7-2. 예약된 좌석이 하나라도 있을 경우
+
+    // alert(`모든 좌석 : ${arr4} , 예약된 좌석 : ${reserved_seat}`)
+
+    // 8단계. 잔여 좌석은 전체 좌석에서 예약된 좌석을 비교해서 보여주기
+    
+
+    // 전체 코드 
+
+    const arr4 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] // 전체 좌석 배열
+
+    let reserved_seat = [ ]  // 예약된 좌석을 담을 바구니 
+
+    let user = parseInt(prompt('메뉴) 1. 예약 2. 모든 좌석 현황 3. 잔여 좌석 4. 종료'))
+
+    while (user !== 4) {
+
+        if (user === 1) {
+            let user_reserve = parseInt(prompt('예약을 원하시는 좌석의 번호를 입력해주세요'))
+            
+            // 이미 예약된 좌석인지 확인
+            let isAlreadyReserved = false 
+            for (let i = 0; i < reserved_seat.length; i ++) {
+                if (reserved_seat[i] === user_reserve) {
+                    isAlreadyReserved = true // 예약된 바구니에 이미 번호가 있다면  깃발을 true로 지정
+                    break
+                }
+            }
+
+            if (isAlreadyReserved ===  true) {
+                alert('이미 예약된 좌석입니다')
+            } else {
+                reserved_seat.push(user_reserve)
+                alert(`${user_reserve}번 좌석 예약 완료`)
+            }
+        }
+
+        else if ( user === 2) {
+            alert(`모든 좌석 : ${arr4} \n 예약된 좌석 : ${reserved_seat}`)
+        }
+
+        // 전체 좌석을 처음부터 끝까지 탐색 
+        else if (user === 3) {
+            let seats_avaliable = [ ] // 잔여 좌석을 담을 바구니 
+
+            for (let i = 0; i < arr4.length; i++) {
+                let currentseats = arr4[i]
+                let isReserved = false // 예약되었는지를 확인하는 플래그 
+
+                // 예약된 좌석을 처음부터 끝까지 찾아보면서 똑같은 번호가 있는지 확인 
+                for (let j = 0; j < reserved_seat.length;  j++) {
+                        if (currentseats === reserved_seat[j]) {
+                            isReserved = true // 예약된 좌석에 포함이 되어있다면 깃발을 true로!
+                            break
+                        }
+                }
+                // 예약된 좌석을 처음부터 끝까지 찾아봐는데도 깃발이 false라면, 예약이 안 된 잔여 좌석이라는 의미 
+                if (isReserved === false) {
+                    seats_avaliable.push(currentseats) // 잔여 좌석 바구니에 넣기
+                }
+
+            }
+            alert(`잔여 좌석 : ${seats_avaliable}`)
+        }
+        user  = parseInt(prompt('메뉴) 1. 예약 2. 모든 좌석 현황 3. 잔여 좌석 4. 종료'))
+    }
+    alert('예약 시스템을 종료합니다')
+
+
     // 문제 5
     // 로또 (1 ~ 45) 6개 중복없이 출력.
+
+    // 1단계. 로또 번호 랜덤 생성!
+
+    // for (let i = 1; i <= 6; i++) {
+    //     let rand = parseInt(Math.random()* 45)  + 1
+    //     console.log(rand)
+    // }
+
+    // 2단계. 중복 제거는 for문을 사용해서...
+
+    // 3단계. 로또 번호를 담을 빈 바구니 
+
+    // let lotto = [ ]
+
+    // 4단계. 바구니 안에 숫자가 6개가 될 때까지 돌려야하니까 while 문!
+
+    // 5단계 . 전체 코드 
+
+    let lotto = [ ]  // 뽑은 로또 번호를 담을 빈 바구니 
+
+    // 바구니 안에 숫자가 6개가 될 때까지 반복 
+    while (lotto.length < 6) {
+        // 랜덤 번호 하나 뽑기
+        let rand = parseInt(Math.random( ) * 45) + 1
+
+        let isDuplicate = false; // 방금 뽑은 번호가 이미 있는지 확인
+
+        // 바구니를 처음부터 끝까지 찾아보면서 rand와 똑같은 게 있는지 확인
+        for (let i = 0; i < lotto.length; i++) {
+            if (lotto[i] === rand) {
+                isDuplicate = true // 이미 있는 번호라면  플래그를 true로 
+                break // 중복을 찾았다면 남은 바구니는 더 이상 볼 필요가 없음 
+            }
+        }
+        // 깃발이 안 올라갔다면 중복이 아니므로 바구니에 추가
+        if (isDuplicate === false) {
+            lotto.push(rand)
+        }
+
+    }
+    const sort = lotto.sort()
+    console.log(sort)
 
 
     // 숫자야구 게임
