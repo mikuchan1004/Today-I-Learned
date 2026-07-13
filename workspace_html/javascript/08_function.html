@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>function</title>
+    <script>
+
+        // 함수 선언 
+        function hello() {
+            console.log('hello world')
+        }
+
+        // 함수 호출
+        hello()
+
+        function getArea(width, height) {
+            console.log(`width : ${width} , height : ${height}`)
+            let area = width * height
+            console.log('면적 : ' , area)
+        }
+
+        getArea(10, 20)
+
+          function getArea2(width, height) {
+            console.log(`width : ${width} , height : ${height}`)
+            let area = width * height
+            return area
+        }
+
+        let result = getArea2(10, 20)
+        console.log(result)
+
+        function plus(x, y) {
+            console.log(`x : ${x} , y : ${y}`)
+            const  z = x + y
+            return z 
+        }
+
+        result = plus(15, 20)
+        console.log(result)
+
+        result = plus (2, plus(5, 6))
+        console.log(result)
+
+        const z = plus(2, 3)
+
+        {
+            const a = 10 
+            // const a = 10
+            {
+                console.log("a" , a)
+                const b = 20
+                console.log("b" , b)
+            }
+            // console.log(b)
+        }
+
+        for (let i=0; i<5; i++) {
+            for (let j=0; j<5; j++) {
+                let a = 10 
+            }
+        }
+        for (let i=0; i<5; i++) {
+            let i = 10
+        }
+
+        plus(2)
+
+        function plus2(x, y) {
+            console.log(`x : ${x} , y : ${y}`)
+            if( y == undefined) {
+                console.log('y값 입력못받음')
+                y = 0
+            }
+
+            const  z = x + y
+            return z 
+        }
+        let a = plus2(2)
+        console.log(a)
+
+        // 전달인자의 값이 undefined일 떄 기본값 지정 
+        // 전달받은 값이 있으면 사용하고 없으면 기본값 사용 
+        function plus3(x, y=0) {
+            console.log(`x : ${x} , y : ${y}`)
+            if( y == undefined) {
+                console.log('y값 입력못받음')
+                    y = 0
+            }
+
+            const  z = x + y
+            return z 
+        }
+        // 전달인자를 적게 줘도 에러 없음
+        // 값은 undefined 
+        a = plus3(2)
+        console.log(a)
+
+        // 전달인자를 많이 줘도 에러 없음
+        // 받은 만큼만 가져간다 
+        a = plus3(2, 3, 4)
+        console.log(a)
+
+    // 익명 함수
+    let noName =   function () {
+            console.log('익명 함수 ')
+        }
+        // function noName() {
+        //     console.log('익명 함수')
+        // }
+        noName()
+
+    let noName2 = noName
+    noName2()
+
+    function  test (fn) {
+        console.log('test 실행중')
+        console.log(typeof fn)
+        if (typeof fn == 'function') {
+            fn()
+        }
+    }
+    test (noName)
+
+    function print () {
+        console.log('print 실행')
+    }
+    function print () {
+        console.log('두번쨰  print 실행')
+    }
+    print()
+
+    console.log(print)
+    let p = print
+    p()
+
+    let c = console
+    c.log(123)
+    let c1 = console.log
+    c1 (1234)
+    console.log = 3
+    // console.log()
+    console.log = function(x) {
+        console.log('이거 해킹된거임')
+        c1(x)
+    }
+    console.log(123)
+    
+    function desc(arr) {
+        return arr.sort().reverse()
+    }
+    a = [1,6,2,9,3,4]
+    console.log(desc(a))
+
+
+    let yahoo = function() {
+        console.log('야호')
+    }
+    // setTimeout(함수, 지연시간ms  == 1/1000초)
+    setTimeout(yahoo, 3000)
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
