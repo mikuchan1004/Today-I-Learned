@@ -135,17 +135,17 @@
     let p = print
     p()
 
-    let c = console
-    c.log(123)
-    let c1 = console.log
-    c1 (1234)
-    console.log = 3
-    // console.log()
-    console.log = function(x) {
-        console.log('이거 해킹된거임')
-        c1(x)
-    }
-    console.log(123)
+    // let c = console
+    // c.log(123)
+    // let c1 = console.log
+    // c1 (1234)
+    // console.log = 3
+    // // console.log()
+    // console.log = function(x) {
+    //     console.log('이거 해킹된거임')
+    //     c1(x)
+    // }
+    // console.log(123)
     
     function desc(arr) {
         return arr.sort().reverse()
@@ -153,12 +153,69 @@
     a = [1,6,2,9,3,4]
     console.log(desc(a))
 
+    function test1() {
+        console.log('test1')
+        return 3
+    }
 
+    function test2(a) {
+        console.log('test2')
+        console.log(a)
+    }
+
+    test2(test1())
+    // 즉
+    x = test1()
+    test2(x)
+
+    test2(test1)
+    // 즉
+    x = test1
+    test2(x)
+
+    // console.log(test2)
+    
     let yahoo = function() {
         console.log('야호')
     }
     // setTimeout(함수, 지연시간ms  == 1/1000초)
+    // 예약하는거 
     setTimeout(yahoo, 3000)
+
+    setTimeout(
+        function() {
+            console.log("야호")
+        }, 
+        3000 + 4000
+    )
+
+    // setTimeout의 return은 예약 번호다
+    let idx = setTimeout(
+        function() {
+            console.log("야호!!!!!!!!!!!!!!!!")
+        }, 
+        1000
+    )
+    console.log(idx)
+    // 예약 취소 
+    clearTimeout(idx)
+
+
+    function rc(cb) {
+        cb()
+        setTimeout(cb, 1000)   
+    }
+       
+    function 기계_1초후_한번더(함수) {
+        함수()
+        
+        setTimeout(
+        기계_1초후_한번더(함수)
+        , 1000)   
+    }   
+
+
+
 
     </script>
 </head>
