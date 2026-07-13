@@ -21,17 +21,17 @@
             볼륨 down
             음소거 on / off 
         */
-        let power = false // 전원 상태 저장
-        let lastCh = parseInt(0)  // 마지막 채널 저장
-        let lastVol = parseInt(0) // 마지막 볼륨 저장
-        const CH_MAX = parseInt(10)  // 최대 채널 저장
-        const CH_MIN = parseInt(0) // 최소 채널 저장
-        const VOL_MAX = parseInt(5) // 최대 볼륨 저장 
-        const VOL_MIN = parseInt(0) // 최소 볼륨 저장
-        let isMute = false // 음소거 꺼짐 
+       
+        let power = false // 전원 상태 저장 변수
+        let lastCh = parseInt(0)  // 마지막 채널 저장 변수 
+        let lastVol = parseInt(0) // 마지막 볼륨 저장 변수
+        const CH_MAX = parseInt(10)  // 최대 채널 저장 변수
+        const CH_MIN = parseInt(0) // 최소 채널 저장 변수
+        const VOL_MAX = parseInt(5) // 최대 볼륨 저장 변수
+        const VOL_MIN = parseInt(0) // 최소 볼륨 저장 변수 
+        let isMute = false // 음소거 꺼짐/켜짐 토글용 플래그 
         let savedVol = parseInt(0) // 음소거 하기 전의 원래 볼륨을 기억할 변수 
         
-
         function powerOn () {
                 power = true
                 console.log('tv 전원 켜짐')
