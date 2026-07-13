@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tv</title>
+    <script>
+        //  TV 만들기 
+        // 채널 : 0 ~ 10 까지
+        // - 10일 때 up을 누르면 0번으로 돌아가게 
+        // - 0일 때 down을 누르면 10번으로 돌아가기 
+
+        // 기능
+        /*
+            전원 on 
+            전원 off
+            채널 (직접입력)
+            채널 up
+            채널 down 
+            볼륨 up
+            볼륨 down
+            음소거 on / off 
+        */
+        let power = false // 전원 상태 저장
+        let lastCh = parseInt(0)  // 마지막 채널 저장
+        let lastVol = parseInt(0) // 마지막 볼륨 저장
+        const CH_MAX = parseInt(10)  // 최대 채널 저장
+        const CH_MIN = parseInt(0) // 최소 채널 저장
+        const VOL_MAX = parseInt(5) // 최대 볼륨 저장 
+        const VOL_MIN = parseInt(0) // 최소 볼륨 저장
+        let isMute = false // 음소거 꺼짐 
+        let savedVol = parseInt(0) // 음소거 하기 전의 원래 볼륨을 기억할 변수 
+        
+
+        function powerOn () {
+                power = true
+                console.log('tv 전원 켜짐')
+        }
+
+        function powerOff() {
+            power = false
+            console.log('tv 전원 꺼짐')
+        }
+
+        function channel(ch) {
+                if(power) {
+                    if( ch < CH_MIN || ch > CH_MAX) {
+                        console.log('채널이 없습니다')
+                        return
+                    } 
+                lastCh = ch
+                console.log(ch + '번으로 채널 변경' )
+            }else{
+                console.log('전원 꺼져있음')
+            }
+        }
+
+        function channelUp() {
+               if(power) {
+                lastCh++
+                if (lastCh >  CH_MAX) {
+                    lastCh = CH_MIN
+                }
+                console.log(lastCh+ '번으로 채널 변경')
+               
+            } else {
+                console.log('전원 꺼져있음')
+            }
+        }
+
+        function channelDown() {
+               if(power) {
+                lastCh--
+                if (lastCh <  CH_MIN) {
+                    lastCh = CH_MAX
+                }
+                console.log(lastCh+ '번으로 채널 변경')
+               
+            } else {
+                console.log('전원 꺼져있음')
+            }
+        }
+
+        function volumeUp() {
+            if (power) {
+                // 음소거 상태라면 mute() 함수를 불러서 해제
+                if (isMute) {
+                    mute()
+                }
+                if(lastVol < VOL_MAX) {
+                    lastVol++
+                    console.log(lastVol+ '로 음량 변경')
+                } else {
+                    console.log('최대 볼륨입니다')
+                }
+            } else {
+                console.log('전원 꺼져있음')
+            }
+        }
+
+        function volumeDown() {
+            if(power) {
+                // 음소거 상태라면 mute() 함수를 불러서 해제
+                if (isMute) {
+                    mute()
+                }
+                if(lastVol > VOL_MIN) {
+                    lastVol--
+                    console.log(lastVol+ '로 음량 변경 ')
+                } else {
+                    console.log('최소 음량입니다')
+                }
+               
+            } else {
+                console.log('전원 꺼져있음')
+            }
+        }
+
+    // 음소거(최초엔 음소거 아님)
+    // 음소거는 볼륨 조절 시 해제 되어야 함
+    // function mute(){
+        // toggle : 실행 할 때 마다 상태 반전
+
+        // 음소거 상태라면 볼륨 0
+        // 음소거를 해제하면 볼륨은 기존 볼륨
+    // }
+
+        function mute() {
+            if(power) {
+                isMute = !isMute
+                if(isMute === true) {
+                    savedVol = lastVol
+                    lastVol = VOL_MIN
+                    console.log('음소거 모드')
+                } else {
+                    lastVol = savedVol
+                    console.log('음소거 해제 현재 볼륨 : ' + lastVol)
+                }
+            }else {
+                console.log('전원 꺼져있음')
+            }
+        }
+    
+     // 음소거(최초엔 음소거 아님)
+     // 음소거는 볼륨 조절 시 해제 되어야 함
+     // function mute(){
+        // toggle : 실행 할 때 마다 상태 반전
+
+        // 음소거 상태라면 볼륨 0
+        // 음소거를 해제하면 볼륨은 기존 볼륨
+    // }
+
+   powerOn()
+   volumeUp()
+   volumeUp()
+   volumeUp()
+   mute()
+   volumeUp()
+   volumeUp()
+   volumeDown()      
+   volumeDown()      
+   volumeDown()      
+   powerOff()
+    
+
+
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
