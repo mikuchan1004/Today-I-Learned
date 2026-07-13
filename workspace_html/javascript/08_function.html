@@ -214,7 +214,15 @@
         , 1000)   
     }   
 
+   let idx2 = setInterval(function() {
+        console.log('인터발')
+   }, 1000*2)
+    //clearInterval(idx2)
+    // 10초 있다가 인터벌 끄기 
 
+   setTimeout(function(){
+    clearInterval(idx2)
+   }, 1000*10)
 
 
     </script>
