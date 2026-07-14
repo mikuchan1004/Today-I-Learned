@@ -97,31 +97,46 @@
         // '2026-07-14 12:43:19'
         // 월, 분 구하기
 
-        // 날짜 변수 
-        let date = '2026-07-14'
+        // // 날짜 변수 
+        // let date = '2026-07-14'
 
-        // 시간 변수 
-        let time = '12:43:19'
+        // // 시간 변수 
+        // let time = '12:43:19'
 
-        // 날짜를 3개의 배열로 쪼개기 
-        let date_parts = date.split('-')
-        console.log(date_parts) // 잘 쪼개졌는지 확인 
+        // // 날짜를 3개의 배열로 쪼개기 
+        // let date_parts = date.split('-')
+        // console.log(date_parts) // 잘 쪼개졌는지 확인 
 
-        // 3개의 배열 중에 2번째 배열 뽑아오기 
-        let date_digit = date_parts[1]
-        console.log(date_digit) // 잘 뽑았는지 확인
+        // // 3개의 배열 중에 2번째 배열 뽑아오기 
+        // let date_digit = date_parts[1]
+        // console.log(date_digit) // 잘 뽑았는지 확인
 
-        // 월 구하기 
-        console.log(date_digit , '월')
+        // // 월 구하기 
+        // console.log(date_digit , '월')
 
-        // 시간을 3개의 배열로 쪼개기 
-        let time_parts = time.split(':')
-        console.log(time_parts) // 잘 뽑았는지 확인 
+        // // 시간을 3개의 배열로 쪼개기 
+        // let time_parts = time.split(':')
+        // console.log(time_parts) // 잘 뽑았는지 확인 
 
-        let time_digit = time_parts[1]
-        console.log(time_digit) // 잘 뽑았는지 확인
+        // let time_digit = time_parts[1]
+        // console.log(time_digit) // 잘 뽑았는지 확인
         
-        console.log(time_digit , '분')
+        // console.log(time_digit , '분')
+
+        let datetime = '2026-07-14 12:43:19' // 전체 날짜와 시간을 하나의 변수에 저장!
+
+        let part = datetime.split(' ')  // 공백을 기준으로 쪼개서 날짜와 시간을 분리
+        
+        // 날짜 부분을 '-'으로 쪼개서 월을 구하기 
+        let date_parts = part[0].split('-')
+        let month = date_parts[1]
+
+        // 시간 부분을 ':'으로 쪼개서 분을 구하기 
+        let time_parts = part[1].split(':')
+        let minute = time_parts[1]
+
+        // 템플릿 리터럴로 합쳐서 출력!
+        console.log(`${month} 월 ${minute} 분`) // 07월 43분
         
         // ---------------------------
         // 보안상 당첨 이메일을 가려서 출력
