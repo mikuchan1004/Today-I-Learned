@@ -22,6 +22,7 @@
             음소거 on / off 
         */
        
+       // 전역 변수 
         let power = false // 전원 상태 저장 변수
         let lastCh = parseInt(0)  // 마지막 채널 저장 변수 
         let lastVol = parseInt(0) // 마지막 볼륨 저장 변수
@@ -141,14 +142,7 @@
             }
         }
     
-     // 음소거(최초엔 음소거 아님)
-     // 음소거는 볼륨 조절 시 해제 되어야 함
-     // function mute(){
-        // toggle : 실행 할 때 마다 상태 반전
-
-        // 음소거 상태라면 볼륨 0
-        // 음소거를 해제하면 볼륨은 기존 볼륨
-    // }
+   
 
    powerOn()
    volumeUp()
