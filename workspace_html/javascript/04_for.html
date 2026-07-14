@@ -201,7 +201,95 @@
             
             console.log(i)
         }
+
+        console.log('----------------------------')
+        let arr = [1,2,3,4,5,6,7]
+
+        // for in 
+        // in 앞의 변수 i에 현재 index를 저장
+        // 무조건 처음부터 끝까지
+        for(let i in arr) {
+            console.log('i  : ' , i )
+            console.log('값 :  ' , arr[i])
+        }
+
+        console.log('----------------------------')
+        // for of
+        // of 앞의 변수에 현재 값을 저장
+        // 무조건 처음부터 끝까지
+        for(let i of arr) {
+            console.log('i : ' , i)
+        }
+
+        console.log('----------------------------')
+        // arr.forEach(function (a, b, c, d) {
+        //     console.log('a : ' , a)
+        //     console.log('b : ' , b)
+        //     console.log('c : ' , c)
+        //     console.log('d : ' , d) 
+        // }) 
+
+        // forEach : 각 항목별 반복 실행
+        // 전달인자 :  현재 값, 현재 index, 배열 전체 
+        // return
+        let r1 = arr.forEach(function (element,  index, array) {
+            console.log('element : ' , element) // 현재 값
+            console.log('index : ' , index) // 현재 index 값
+            console.log('array : ' , array) // 배열 전체
+        }) 
+        console.log(r1) // undefined
+
+        console.log('----------------------------')
+        // map : forEach와 비슷한데 
+        //             return으로 구성된 새로운 배열을 돌려 줌
+        let r2 =  arr.map(function(el, i, a) {
+            console.log(el, i, a)
+            if (el %2 == 0) {
+                return '짝'
+            } else {
+                return '홀'
+            }
+        })
+        console.log(r2) // undefined 
+
+        console.log('----------------------------')
+
+        let movie = ['호프' , '스파이더맨-브랜드 뉴 데이' , '오디세이' , '모아나']
+       let r3 =  movie.map(function(el){
+            return  el.length
+        })
+        let r4 = movie.map((el) =>{
+            return el.length
+        })
+        let r5 = movie.map(el => el.length)
+        console.log(r3)
+
+        r3.sort(function(y,x) {
+            // return y - x // 오름차순 
+            return Number(x) - Number(y) // 내림차순
+        })
+        console.log(r3)
+
+      r3.sort( (y, x) => y - x )
+      console.log(r3)
+
+      console.log(r3[r3.length-1])
     
+      // filter 
+      // return 한 것만 배열로 돌려준다
+      let r6 = movie.filter(function(el, i, a){
+            if (el.length >= 4) {
+                return true
+            } else {
+                return false
+            }
+      }) 
+      console.log(r6)
+
+      r6 = movie.filter(el => el.length >= 4)
+
+    
+
     </script>
 </body>
 </html>
