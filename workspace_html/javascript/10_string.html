@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>string</title>
+    <script>
+
+        const str = '기사도가 죽었을 리가'
+
+        // 문자열의 길이 
+        console.log('str.length : ' ,  + str.length)
+
+        // indexOf 
+        // 동일한 글씨 찾기 
+        // 있으면 동일한 첫번째 글씨 index 반환
+        // 없으면 -1 반환
+        console.log('죽었 ' , str.indexOf('죽었'))
+        console.log('가' , str.indexOf('가'))
+        console.log('나' , str.indexOf('나'))
+
+        // replace
+        // 첫번째 전달인자를 두번째 전달인자로 바꾼다.
+        // 단, 처음 만나는 것만 바꾼다.
+        let s1 = str.replace('죽었' , '살았')
+        console.log(str)
+        console.log(s1)
+
+        let s2 = str.replace('가' , '나')
+        console.log(s2)
+
+        // 정규 표현식
+        // 문자열에서 특정 패턴을 찾거나 검증 및 추출하는데 사용하는 객체 
+        // 슬래시(/pattern/)로 감싸서 생성.
+        s2 =  str.replace(/가/g , '나')
+        console.log(s2)
+
+        // slice 
+        // 시작부터 끝 바로 앞까지 복사 
+        console.log(str.slice(3, 6))
+
+        // split 
+        // 구분자로 배열을 돌려준다
+        console.log( str.split('   ') )
+
+        // substring
+        let s = str.substring(3, 6)
+        console.log(str)
+        console.log(s)
+
+        // substr
+        // 시작 index부터 몇 개
+        s = str.substr(3, 7)
+        console.log(s)
+
+        // trim
+        let str2 = "  1 2   3   "
+        s = str2.trim()
+        console.log(s)
+
+        str2 = "       "
+        if(str2.length !=0) {}
+        if(str2.trim().length !=0) {}
+    </script>
+</head>
+<body>
+
+</body>
+</html>
