@@ -64,14 +64,64 @@
 
         // 문제1
         // 어떤 이메일에서 id만 출력하기
-        // 이메일에서 id부분만 출력하려면..... 
+        
+        let email = 'todair@naver.com'
+        user_id = email.indexOf('@')
+        console.log('id :' + email.slice(0, user_id))
 
         // 문제2
         // 주민번호로 성별 출력하기
+        
+        let id_number = 'YYMMDD-1234567'
+
+        // 입력받은 주민번호를 하이픈('-')을 기준으로 쪼개서 배열로 만듦
+        let parts = id_number.split('-') 
+
+        // 뒷자리 덩어리(parts[1]에서 맨 첫 번째 글자(인덱스 0)만 쏙 뽑아옴)
+        let genderDigit = parts[1][0]
+        // 확인용 출력 : 제대로 숫자가 뽑혔는지 콘솔에서 확인 
+        console.log('gender :' + genderDigit)
+
+        // 뽑아낸 성별 숫자가 '1' 또는 '3'인지 검사 
+        // 주의 : 문자열에서 뽑아냈기 때문에 반드시 따옴표('')를 붙여서 문자로 비교해야 함
+        if (genderDigit === '1' || genderDigit === '3') {
+            console.log('성별 : 남')
+        } 
+        
+        // 뽑아낸 성별 숫자가 '2' 또는 '4'인지 검사
+        else if (genderDigit === '2' || genderDigit === '4') {
+            console.log('성별 : 여')
+        }
 
         // 문제 3
         // '2026-07-14 12:43:19'
         // 월, 분 구하기
+
+        // 날짜 변수 
+        let date = '2026-07-14'
+
+        // 시간 변수 
+        let time = '12:43:19'
+
+        // 날짜를 3개의 배열로 쪼개기 
+        let date_parts = date.split('-')
+        console.log(date_parts) // 잘 쪼개졌는지 확인 
+
+        // 3개의 배열 중에 2번째 배열 뽑아오기 
+        let date_digit = date_parts[1]
+        console.log(date_digit) // 잘 뽑았는지 확인
+
+        // 월 구하기 
+        console.log(date_digit , '월')
+
+        // 시간을 3개의 배열로 쪼개기 
+        let time_parts = time.split(':')
+        console.log(time_parts) // 잘 뽑았는지 확인 
+
+        let time_digit = time_parts[1]
+        console.log(time_digit) // 잘 뽑았는지 확인
+        
+        console.log(time_digit , '분')
         
         // ---------------------------
         // 보안상 당첨 이메일을 가려서 출력
@@ -81,6 +131,19 @@
         // 문제 5
         // 앞 두글자만 제대로 표시하고 *표는 가려진 개수만큼
         // 예: study.todair@gmail.com >> st**********@gmail.com
+        email = 'study.todair@gmail.com'
+        let id = ' '
+        let pos = email.indexOf('@')
+        if (pos != -1) {
+            id = email.slice(0, pos)
+        }
+        let mask_id_1 = id.slice(0, 2)
+        let len = id.length - 2
+        let mask_id_2 = ' '
+        for (let i=0; i<len; i++){
+            mask_id_2 += '*'
+        }
+        console.log(mask_id_1 + mask_id_2 + email.substring(pos))
 
 
     </script>
