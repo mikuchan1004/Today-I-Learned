@@ -143,22 +143,35 @@
         // todair@naver.com >>>> to****@naver.com
         // 문제 4
         // 앞 두글자만 제대로 표시하고 *표 4개 표시하고 @부터 다 
-        // 문제 5
-        // 앞 두글자만 제대로 표시하고 *표는 가려진 개수만큼
-        // 예: study.todair@gmail.com >> st**********@gmail.com
-        email = 'study.todair@gmail.com'
-        let id = ' '
-        let pos = email.indexOf('@')
+        email = 'todair@naver.com'
+        id = ' '
+        pos = email.indexOf('@')
         if (pos != -1) {
             id = email.slice(0, pos)
         }
-        let mask_id_1 = id.slice(0, 2)
-        let len = id.length - 2
-        let mask_id_2 = ' '
-        for (let i=0; i<len; i++){
+        mask_id_1 = id.slice(0,2)
+        len = id.length - 2
+        mask_id_2 = ' '
+        for (let i = 0; i <len; i++) {
             mask_id_2 += '*'
         }
         console.log(mask_id_1 + mask_id_2 + email.substring(pos))
+        // 문제 5
+        // 앞 두글자만 제대로 표시하고 *표는 가려진 개수만큼
+        // 예: study.todair@gmail.com >> st**********@gmail.com
+        // email = 'study.todair@gmail.com'
+        // let id = ' '
+        // let pos = email.indexOf('@')
+        // if (pos != -1) {
+        //     id = email.slice(0, pos)
+        // }
+        // let mask_id_1 = id.slice(0, 2)
+        // let len = id.length - 2
+        // let mask_id_2 = ' '
+        // for (let i=0; i<len; i++){
+        //     mask_id_2 += '*'
+        // }
+        // console.log(mask_id_1 + mask_id_2 + email.substring(pos))
 
 
     </script>
