@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dom_content</title>
+</head>
+<body>
+        <div id="msg">
+            <span>원래</span> 있던   글씨 
+        </div>
+
+        <div id="count">0</div>
+
+        <div id="clock">시계 로딩 중...</div>
+
+        <div id="log">원래 있던 글씨</div>
+
+        <table boder="1">
+            <tbody id="tbody">
+                <tr>
+                    <td>첫째칸</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script>
+                const msg =  document.getElementById('msg')
+                console.log(msg)
+
+                // 태그 안쪽의 글씨들 (컨텐츠) 가져오는 방법들 
+
+                // textContent
+                // 컨텐츠 영역의 소스 중에서 text(글씨)만 "그대로" 가져온다
+                console.log('msg.textContent' , msg.textContent)
+
+                // innerText
+                // 브라우저에 보이는 글씨로 가져온다
+                //  - 브라우저가 보여줄 내용에 대한 계산이 끝나고 실제로 표시하는 text
+                console.log('msg.innerText' , msg.innerText)
+
+                // innerHTML
+                // 컨텐츠 영역의 소스를 그대로 가져온다.
+                console.log('msg.innerHTML' , msg.innerHTML)
+
+                // 위의 것은 변수의 내용을 읽은거고 
+                // 이제부터 변수에 값을 담으면 
+                // 컨텐츠의 내용을 바꿔준다.
+
+                // textContent, innerText는 tag도 글씨로 인식한다.
+                // msg.textContent = '<h1>h1제목</h1>  a   b        c'
+                // msg.innerText= '<h1>h1제목</h1>  a   b        c'
+                
+                // innerHTML은 tag는 tag로 인식한다
+                msg.innerHTML= '<h1>h1제목</h1>  a   b        c'
+                msg.innerHTML += 'd'
+
+                msg.innerHTML = '<a href = "javascript:alert(1);alert(2)">눌러봐</a>'
+
+                // const count = document.getElementById('count')
+
+                setInterval(function(){
+                    const count = document.getElementById('count')
+                    let cnt = count.textContent 
+                    // console.log(cnt, typeof cnt)
+                    cnt =  Number(cnt) + 1 
+                    count.innerText = cnt
+                } , 1000)
+
+                // 시계 만들기 : 시간을  '몇 시 몇 분  몇 초'가 나오게 계속 갱신하기
+
+                setInterval(function(){
+                    const clock = document.getElementById('clock')
+                    const now = new Date() // 현재 컴퓨터 시간을 가져옴 
+                    const h = now.getHours()
+                    const m = now.getMinutes()
+                    const s = now.getSeconds() 
+                    const ms = now.getMilliseconds() 
+
+                    const time = `현재 시간 : ` +  h + `시` +  m +  `분` + s + `초.` + ms
+                    clock.textContent = time
+                }, 1000)
+
+                // DOM 생성 
+
+                // DOM 요소 생성
+                const div = document.createElement('div')
+                console.log(div)
+                div.setAttribute('id' , 'lol')
+                div.innerText = '정글 차이'
+                console.log(div)
+
+                div.setAttribute('style' , 'color:red;')
+
+                const log = document.getElementById('log')
+                //appand
+                // 마지막 자식 요소로 추가
+                // 글씨도 넣을 수는 있지만, 잘 쓰이지는 않음
+                log.append(div)
+                log.append('<h1>abcd</h1>')
+
+                // 같은 객체를 두 번 appand를 할 때 조심하자!
+                // 같은 객체는 이동된다.
+                log.append(div)
+
+                const p = document.createElement('p')
+                p.textContent = 'p태그'
+
+                // appandChild
+                // appand 처럼 마지막 자식 요소로 추가된다.
+                //  DOM만 넣을 수 있다
+                log.appendChild(p)
+                // log.appendChild('<h1>글씨일 뿐이다</h1>') // 글씨를 넣을 수는 없다. 
+
+                const p2 = document.createElement('p')
+                p2.textContent = 'p2'
+
+                // prepend :  첫번째 자식 요소로 추가 
+                log.prepend(p2)
+
+                const p3 = document.createElement('p')
+                p3.textContent = 'p3'
+
+                // before는 이전 형제로 추가 
+                log.before(p3)
+
+                const p4 = document.createElement('p')
+                p4.textContent = 'p4'
+
+                // after는 다음 형제로 추가
+                log.after(p4)
+
+                // table js로 구현 
+
+                const table = document.getElementById('tbody')
+                const tr = document.createElement('tr')
+                const td = document.createElement('td')
+                td.textContent = '첫째칸'
+
+
+
+        </script>
+</body>
+</html>
