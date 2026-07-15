@@ -40,7 +40,6 @@
     <div id="div1">div1</div>
     <div id="div2" class="bg-yellow">div2</div>
 
-
     <script>
         // DOM : Document Object Model
         // javascript로 수정이 가능한 대상
@@ -161,6 +160,11 @@
        let isBlue =  div1.classList.contains('blue')
         console.log('isBlue : ' , isBlue)
 
+        // div2를 가져와서 
+        // .blue 적용
+        div2.classList.add('blue')
+
+        div2.remove() // DOM 삭제 
     </script>
 
 
