@@ -93,7 +93,7 @@
                 div.setAttribute('style' , 'color:red;')
 
                 const log = document.getElementById('log')
-                //appand
+                //append
                 // 마지막 자식 요소로 추가
                 // 글씨도 넣을 수는 있지만, 잘 쓰이지는 않음
                 log.append(div)
@@ -106,8 +106,8 @@
                 const p = document.createElement('p')
                 p.textContent = 'p태그'
 
-                // appandChild
-                // appand 처럼 마지막 자식 요소로 추가된다.
+                // appendChild
+                // append 처럼 마지막 자식 요소로 추가된다.
                 //  DOM만 넣을 수 있다
                 log.appendChild(p)
                 // log.appendChild('<h1>글씨일 뿐이다</h1>') // 글씨를 넣을 수는 없다. 
@@ -132,10 +132,13 @@
 
                 // table js로 구현 
 
-                const table = document.getElementById('tbody')
+                const tbody = document.getElementById('tbody')
                 const tr = document.createElement('tr')
                 const td = document.createElement('td')
                 td.textContent = '첫째칸'
+                tr.append(td)
+                
+               
 
 
 
