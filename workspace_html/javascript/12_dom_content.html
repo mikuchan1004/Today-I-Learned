@@ -63,26 +63,7 @@
                 </tr>
             </thead>
             <tbody id="board2">
-                    <!-- <tr>
-                        <td>제목1</td>
-                        <td>작성자1</td>
-                    </tr>
-                    <tr>
-                        <td>제목2</td>
-                        <td>작성자2</td>
-                    </tr>
-                    <tr>
-                        <td>제목3</td>
-                        <td>작성자3</td>
-                    </tr>
-                    <tr>
-                        <td>제목4</td>
-                        <td>작성자4</td>
-                    </tr>
-                    <tr>
-                        <td>제목5</td>
-                        <td>작성자5</td>
-                    </tr> -->
+                  
             </tbody>
         </table>
 
@@ -333,15 +314,59 @@
                 }
                 console.log(str)
 
+                //////////////////////////////////////////////////////
          
-               
+               const body = document.querySelector('body')
+               const style = document.createElement('style') // <style></style>
+               /*
+                    #board {
+                        border : 1px solid red;    
+                    }
+               */
+              style.innerText = `
+                #board {
+                        border : 1px solid red;    
+                    }
+            `     
+            // body에 style을 넣는다.
+            body.append(style)
 
-               
+            // const script = document.createElement('script')
+            // script.innerText = ` alert(1)`
 
+            // body.append(script)
+
+            /////////////////////////////////////////////////
+            // style
+            
+            const clock = document.getElementById('clock')
+            // CSS에서 -로 연결되는 프로퍼티명은 카멜케이스(단어를 대문자로 연결 )로 변경해서 사용
+            // font-size >>> fontSIze
+            // background-color >>> backgroundColor
+            clock.style.color = 'red'
+            clock.style.fontSize = '1.5em'
+
+            console.log(clock.style)
+            console.log(clock.style.color)
+            console.log(clock.style.height)
+            clock.style.height = '50px'
+            console.log(clock.style.height)
+            
+            let w = window.getComputedStyle(clock, null).getPropertyValue('width')
+            console.log('w' , w)
+            
+            clock.style.border = '1px solid red'
+            
+            clock.style.height = parseInt(Math.random() * 100 ) + 'px'
+            console.log(clock.style.height)
+            // 기존 높이보다 5px 크게 
+            // 78px + 5 : 78px5
+            // console.log(parseInt('78px') + 5)
+            clock.style.height = parseInt(clock.style.height) + 5 + 'px'
+            console.log(clock.style.height)
+            
                
-                
-                
-                
+            
         
 
 
