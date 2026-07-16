@@ -9,6 +9,12 @@
 
     <div class="quiz q1">힌트만 달라</div>
 
+    <div class = 'quiz q2'>퀴즈2</div>
+    <div class = 'quiz q2-1'>퀴즈2-1</div>
+    <div class = 'quiz q2-2'>퀴즈2-2</div>
+    <div class = 'quiz q2'></div>
+    <div class = 'quiz q2-1'>퀴즈2-1</div>
+
     <script>
         //  문제 1
         //  <div class = 'quiz q1'>힌트만 달라</div>
@@ -28,7 +34,16 @@
         <div class = 'quiz q2'></div>
         <div class = 'quiz q2-1'>퀴즈2-1</div>
         */
-        // 위 코드 중 클래스 q2개가 몇 개인가?
+        // 위 코드 중 클래스 q2가 몇 개인가?
+
+        // class가 quiz q2인 div를 가져온다.
+        const div2 = document.querySelectorAll('.quiz.q2')
+        console.log(div2)
+
+        // 클래스 q2가 몇 개인지 찾아보기
+
+        const count = document.querySelectorAll('.quiz.q2').length
+        console.log(`클래스 q2의 갯수 : ${count}`) // 2
 
         // 문제3
         // 위 코드에서 q2를 가지는 태그의 글씨를 출력하시오
@@ -36,9 +51,19 @@
             퀴즈2-1    
 
         */
+       
+        // quiz q2-1 클래스를 가진 요소의 글씨를 가져온다
+        const text = document.querySelector('.quiz.q2-1').textContent
+        
+        // 가져온 요소의 글씨 출력
+        console.log(text) // 퀴즈2-1
 
         // 문제4
         // 위 코드 중 글씨가 없는 태그의 내용을 "비어있음"으로 바꾼다
+
+        const elements = document.querySelectorAll('.quiz.q2') // 같은 클래스를 가진 요소를 배열로 반환
+        console.log(elements) // 확인용 
+        elements[1].textContent = '비어있음' // 인덱스가 0부터 시작하므로, 두 번째 요소는 1로 지정
     </script>
 </body>
 </html>
