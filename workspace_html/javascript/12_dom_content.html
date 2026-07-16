@@ -24,7 +24,7 @@
             </tbody>
         </table> -->
 
-        <table boder="1">
+        <table border="1">
             <thead>
                 <tr>
                     <th>제목</th>
@@ -32,6 +32,37 @@
                 </tr>
             </thead>
             <tbody id="board">
+                    <!-- <tr>
+                        <td>제목1</td>
+                        <td>작성자1</td>
+                    </tr>
+                    <tr>
+                        <td>제목2</td>
+                        <td>작성자2</td>
+                    </tr>
+                    <tr>
+                        <td>제목3</td>
+                        <td>작성자3</td>
+                    </tr>
+                    <tr>
+                        <td>제목4</td>
+                        <td>작성자4</td>
+                    </tr>
+                    <tr>
+                        <td>제목5</td>
+                        <td>작성자5</td>
+                    </tr> -->
+            </tbody>
+        </table>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>작성자</th>
+                </tr>
+            </thead>
+            <tbody id="board2">
                     <!-- <tr>
                         <td>제목1</td>
                         <td>작성자1</td>
@@ -165,6 +196,7 @@
 
                 // const tbody = document.getElementById('tbody')
                 // const tr = document.createElement('tr')
+                // tbody.append(tr)
                 // const td = document.createElement('td')
                 // td.textContent = '첫째칸'
                 // tr.append(td)
@@ -261,10 +293,47 @@
                     td2.textContent = rows[i][1]
                     tr.append(td2)
                 }
-               
-
+            
+                ///////////////////////////////////////////
+                let board2 = document.querySelector('#board2')
+                let html = ' '
                 
+                for(i = 0; i < rows.length; i++) {
+                    html += `
+                                <tr>
+                                    <td>${rows[i][0]}</td>
+                                    <td>${rows[i][1]}</td>
+                                </tr>
+                    `
+                    board2.innerHTML += html
+                }
 
+                // let str = ' '
+                // for (let i = 0; i<5; i++) {
+                //     str += i 
+                // }
+                // console.log(str)
+
+                // 거꾸로...? 
+                // 01234가 아니고 
+                // 43210으로 만드려면?
+                // reverse는 배열이 아니니까 못쓰고....으으으으음 
+
+                let str = ' '
+                for (let i = 0; i<5; i++){
+                    str = i + str
+                }
+                console.log(str)
+
+                // 543210으로 나오게 해보기 
+
+                str = ' '
+                for (let i = 0; i<6; i++) {
+                    str =  i + str 
+                }
+                console.log(str)
+
+         
                
 
                
