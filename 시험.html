@@ -10,28 +10,34 @@
             font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f7f6; /* 밝고 부드러운 배경색 */
-            color: #333333; /* 가독성 좋은 짙은 회색 텍스트 */
+            background-color: #f4f7f6;
+            color: #333333;
         }
 
-        /* 상단 헤더: 신뢰감을 주는 블루 계열 그라데이션 */
+        /* 상단 헤더: 배경 이미지와 반투명 블루 그라데이션 오버레이 적용 */
         header {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: linear-gradient(rgba(30, 60, 114, 0.85), rgba(42, 82, 152, 0.85)),
+                        url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* 스크롤 시 배경이 고정되는 패럴랙스 효과 */
             color: #ffffff;
             text-align: center;
-            padding: 4rem 1rem;
+            padding: 6rem 1rem; /* 이미지가 잘 보이도록 여백을 살짝 늘림 */
         }
 
         header h1 {
             margin: 0 0 15px 0;
             font-size: 2.8rem;
             letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 텍스트가 더 잘 보이도록 그림자 추가 */
         }
 
         header p {
             font-size: 1.2rem;
             color: #d1e0ff;
             margin: 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .container {
@@ -115,7 +121,7 @@
         }
 
         .highlight {
-            color: #d35400; /* 밝은 배경에 어울리는 강조 색상 */
+            color: #d35400;
             font-weight: bold;
         }
 
@@ -161,7 +167,7 @@
             box-shadow: none;
         }
 
-        /* 주의사항 섹션 디자인: 밝은 노란색/주황색 조합으로 경고 느낌 부여 */
+        /* 주의사항 섹션 디자인 */
         .notice-section {
             background-color: #fff8e1;
             border: 1px solid #ffecb3;
@@ -323,7 +329,8 @@
         <div class="notice-section">
             <h3>⚠️ 수강 신청 전 반드시 확인해 주세요</h3>
             <ul>
-                <li>본 과정은 전액 국비 지원 과정으로, <strong>국민내일배움카드 발급이 가능한 분</strong>만 수강하실 수 있습니다.</li>
+                <li>본 과정은 국비 지원 과정으로, <strong>국민내일배움카드 발급이 가능한 분</strong>만 수강하실 수 있습니다.</li>
+                <li>국민내일배움카드 발급 유형 및 개인의 지원 한도에 따라 <strong>일부 본인부담금</strong>이 발생할 수 있습니다.</li>
                 <li>수강 신청 후 서류 심사 및 간단한 비대면 면접을 통해 최종 선발이 이루어집니다.</li>
                 <li>교육 기간 중 출석률 80% 미만 시 제적 처리될 수 있으며, 향후 국비 지원에 불이익이 발생할 수 있습니다.</li>
                 <li>모집 현황 및 센터 사정에 따라 개강 일정이 일부 변경될 수 있습니다.</li>
@@ -360,19 +367,16 @@
             if (confirmApply) {
                 alert("성공적으로 수강 신청이 완료되었습니다.\n담당자가 곧 서류 심사 및 면접 관련 안내를 위해 연락드릴 예정입니다.");
                 
-                // 페이지 내의 모든 신청 버튼을 가져옵니다.
                 const allButtons = document.querySelectorAll('.apply-btn');
                 
                 allButtons.forEach(btn => {
-                    btn.disabled = true; // 우선 모든 버튼을 클릭할 수 없도록 비활성화합니다.
+                    btn.disabled = true; 
                     
                     if (btn === buttonElement) {
-                        // 사용자가 클릭한 버튼 (밝은 테마에 맞게 긍정적인 초록색 계열 적용)
                         btn.innerText = '신청 완료됨';
                         btn.style.backgroundColor = '#28a745'; 
                         btn.style.color = '#ffffff';
                     } else {
-                        // 선택하지 않은 다른 과정의 버튼
                         btn.innerText = '중복 신청 불가';
                         btn.style.backgroundColor = '#e0e0e0';
                         btn.style.color = '#888888';
