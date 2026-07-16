@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dom_content_3</title>
+</head>
+<body>
+        <h2>게시판</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                </tr>
+            </thead>
+            <tbody id ='board'>
+
+            </tbody>
+        </table>
+
+        <script>
+           const articles = [
+                { no: 1, title: '환영합니다! 첫 번째 공지사항입니다.', author: '운영자냥', date: '2026-07-16' },
+                { no: 2, title: '가입 인사 드려요!', author: '초보유저', date: '2026-07-16' },
+                { no: 3, title: '자바스크립트 너무 재밌어요 ㅠㅠ', author: '코딩천재', date: '2026-07-17' },
+                { no: 4, title: '이거 어떻게 하는 건가요?', author: '궁금러', date: '2026-07-17' }
+        ]
+            // ID가 board인 tbody를 가져온다.
+        // const tbody = document.getElementById('board')
+
+        //for문으로 가져오기 전에... 먼저 규칙을 알아내보자 
+
+        // // 첫번째 줄 생성!
+        // const tr  = document.createElement('tr')
+        // tbody.append(tr)
+
+        // // 첫번째 칸에는 no을 넣어보자
+        // const td = document.createElement('td')
+        // td.textContent = '1'
+        // tr.append(td)
+
+        // //두번째 칸에는 title을 넣어보자 
+        // const td2 = document.createElement('td')
+        // td2.textContent = '환영합니다! 첫 번째 공지사항입니다'
+        // tr.append(td2)
+
+        // //세번째 칸에는 author를 넣어보자 
+        // const td3 = document.createElement('td')
+        // td3.textContent = '운영자냥'
+        // tr.append(td3)
+
+        // // 네번째 칸에는 date를 넣어보자 
+        // const td4 = document.createElement('td')
+        // td4.textContent = '2026-07-16'
+        // tr.append(td4)
+
+        // for문으로 가져오자 조건식 : i = 0; i < articles.length; i++
+
+        // const tbody = document.querySelector('#board') // ID가 board인 tbody를 가져온다
+
+        // for(let i = 0; i< articles.length; i++) {
+            
+        //     const tr = document.createElement('tr') 
+        //     tbody.append(tr) // 만든 tr을 tbody에 붙인다
+
+        //     const td = document.createElement('td')
+        //     td.textContent = articles[i].no // 배열안에 있는  객체의 속성이 'no'인 텍스트를 가져옴 
+        //     tr.append(td) //  만든 td를 tr에 붙인다!
+
+        //     const td2 = document.createElement('td')
+        //     td2.textContent = articles[i].title  // 배열안에 있는 객체의 속성이 'title'인 텍스트를 가져옴
+        //     tr.append(td2)
+
+        //     const td3 = document.createElement('td')
+        //     td3.textContent = articles[i].author // 배열안에 있는 객체의 속성이 'author'인 텍스트를 가져옴 
+        //     tr.append(td3)
+
+        //     const td4 = document.createElement('td')
+        //     td4.textContent = articles[i].date // 배열 안에 있는 객체의 속성이 'date'인 텍스트를 가져옴 
+        //     tr.append(td4)
+        // }
+
+        // 리팩토링 버전 
+         const tbody = document.querySelector('#board')
+         let htmlContent = ' ' // 화면에 그릴 HTML 문자열을 담을 바구니 준비 
+
+         // forEach로 배열 안의 객체(article)을 하나씩 꺼내옴
+         articles.forEach((article) => {
+                htmlContent += `
+                    <tr>
+                            <td>${article.no}</td>
+                            <td>${article.title}</td>
+                            <td>${article.author}</td>
+                            <td>${article.date}</td>
+                    </tr>
+                `
+         })
+            tbody.innerHTML = htmlContent
+
+        </script>
+</body>
+</html>
