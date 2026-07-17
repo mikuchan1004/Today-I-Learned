@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>헤븐 번즈 레드 31A 부대원 명단 렌더링</title>
+</head>
+<body>
+    <h2>제 31A부대 명단</h2>
+    <table border="1">
+        <thead>
+                <tr>
+                    <th>이름</th>
+                    <th>포지션</th>
+                    <th>전용 무기</th>
+                </tr>
+        </thead>
+        <tbody id ='squad-list'>
+
+        </tbody>
+    </table>
+
+    <script>
+        const squad31A = [
+                { name: '카야모리 루카', role: '어태커', weapon: '쌍검' },
+                { name: '이즈미 유키', role: '브레이커', weapon: '해킹 태블릿' },
+                { name: '아이카와 메구미', role: '디버퍼', weapon: '사이킥 해머' },
+                { name: '토죠 츠카사', role: '버퍼', weapon: '정보 분석 안경' },
+                { name: '아사쿠라 카렌', role: '블래스터', weapon: '데스 사이즈 (낫)' },
+                { name: '쿠니미 타마', role: '힐러', weapon: '전함 망토' }
+        ];
+        // const tboay = document.getElementById('squad-list')
+
+        // // 반복문에 넣기전에 먼저 규칙 파악부터 
+
+        // // 첫번째 줄 
+        // const tr = document.createElement('tr')
+        // tboay.append(tr)
+
+        // const td = document.createElement('td')
+        // td.textContent = squad31A[0].name // 배열 안에 있는 객체의 속성이 name인 텍스트를 가져옴
+        // tr.append(td)
+
+        // const td2 = document.createElement('td')
+        // td2.textContent = squad31A[0].role // 배열 안에 있는 객체의 속성이 role인 텍스트를 가져옴 
+        // tr.append(td2)
+
+        // const td3 = document.createElement('td')
+        // td3.textContent = squad31A[0].weapon // 배열 안에 있는 객체의 속성이   weapon인 텍스트를 가져옴 
+        // tr.append(td3)
+
+        // forEach문을 사용해 게시판을 동적으로 출력해보자 
+
+        const tbody = document.querySelector('#squad-list') // ID가 squad-list인 tbody를 가져온다 
+
+        let htmlContent = ' ' // 화면에 뿌릴 HTML 문자열을 담을 바구니 생성
+
+        squad31A.forEach((member) =>{
+            htmlContent += `
+                <tr>
+                    <td>${member.name}</td>
+                    <td>${member.role}</td>
+                    <td>${member.weapon}</td>
+                </tr>
+            `
+        })
+        tbody.innerHTML = htmlContent
+    </script>
+</body>
+</html>

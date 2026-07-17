@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>헤븐 번즈 레드 31C 부대원 렌더링 (심화)</title>
+</head>
+<body>
+    <h2>제31C부대 명단</h2>
+    <table border="1">
+            <thead>
+                <tr>
+                    <th>이름</th>
+                    <th>포지션</th>
+                    <th>전용무기</th>
+                </tr>
+            </thead>
+            <tbody id="squad-31c">
+
+            </tbody>
+    </table>
+    <script>
+        const squad31C = [
+            { name: '야마와키 본 이바르', role: '어태커', weapon: '대검' },
+            { name: '사쿠라바 세이라', role: '버퍼', weapon: '점성술 루페' },
+            { name: '칸자키 아델하이드', role: '어태커', weapon: '닌자도' },
+            { name: '미야모토 사쿠라', role: '블래스터', weapon: '일본도' },
+            { name: '쿠로사와 마키', role: '브레이커', weapon: '깃발' },
+            { name: '다테 아카리', role: '디버퍼', weapon: '스나이퍼 라이플' }
+        ];
+
+        const tbody = document.querySelector('#squad-31c')
+        let htmlContent = ' ';
+
+        squad31C.forEach((member) =>{
+            
+            let displayName = member.name // 화면에 보여줄 이름들을 변수에 저장 
+            
+            // 꺼내온 멤버의 포지션이 '어태커' 인지 확인 
+            if(member.role === '어태커') {
+                // 어태커라면 이름 뒤에 불꽃을 붙여줌 
+                displayName += '🔥'
+            } 
+
+            htmlContent += `
+                <tr>
+                    <td>${displayName}</td> <!-- 포지션이 어태커가 아닌 멤버의 이름 뒤에는 불꽃을 붙이지 않고 그대로 화면에 보여줌 -->
+                    <td>${member.role}</td>
+                    <td>${member.weapon}</td>
+                </tr>
+            `
+        })
+        tbody.innerHTML = htmlContent
+
+
+        
+    </script>
+</body>
+</html>
