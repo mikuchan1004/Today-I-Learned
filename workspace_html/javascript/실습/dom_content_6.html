@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판</title>
+</head>
+<body>
+    <h2>게시판</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>조회</th>
+            </tr>
+        </thead>
+        <tbody id="board-list">
+            
+        </tbody>
+    </table>
+    <script>
+     const boardData = [
+        { id: 1, title: "가입 인사드립니다!", author: "뉴비", date: "2026-07-18", views: 12 },
+        { id: 2, title: "배열 다루기 너무 어려워요...", author: "코딩초보", date: "2026-07-18", views: 34 },
+        { id: 3, title: "흥, 딱히 알려주려는 건 아냐", author: "츤데레", date: "2026-07-18", views: 99 }
+    ];
+    const tbody = document.querySelector('#board-list')
+    let htmlContent = '' //  화면에 보여줄 HTML 문자열을 담을 바구니 준비 
+    
+    boardData.forEach((board) =>{  
+        htmlContent += `
+                    <tr>
+                        <td>${board.id}</td>
+                        <td>${board.title}</td>
+                        <td>${board.author}</td>
+                        <td>${board.date}</td>
+                        <td>${board.views}</td>
+                    </tr>
+        `
+
+    })
+        tbody.innerHTML = htmlContent
+  
+    </script>
+    
+</body>
+</html>
