@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async</title>
+    <script>
+        function fn1(){
+            console.log('fn1 실행')
+
+            fn2()
+        }
+        function fn2(){
+            console.log('fn2 실행')
+
+            fn3()
+            fn3()
+
+            console.log('1')
+            setTimeout(function(){
+                console.log('2')
+            },0)
+            // console.log('3')
+            console.log('1')
+            setTimeout(function(){
+                console.log('3')
+            },0)
+            console.log('마지막')
+        }
+        function fn3(){
+            console.log('fn3 실행')
+        }
+
+        fn1()
+        // fn2()
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
