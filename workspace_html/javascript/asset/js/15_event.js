@@ -118,12 +118,31 @@ function bind() {
         log(event.keyCode)
         
         const game = document.querySelector('#game')
+        let x = 0 // 초기 X 좌표
+        let y = 0 // 초기 Y 좌표
+        const speed = 10; // 이동 거리
         console.log(game.style.left)
+
+        if(event.key === 'ArrowUp') {
+            y -= speed
+        } else if (event.key === 'ArrowDown') {
+            y += speed
+        } else if (event.key === 'ArrowLeft') {
+            x -= speed
+        } else if (event.key === 'ArrowRight') {
+            x += speed
+        }
+
+        // 변경된 좌표 적용 
+        game.style.top = y + 'px'
+        game.style.left = x + 'px'
+
+        log ('top :' + game.style.top)
+        log ('left :' + game.style.left)
         
         if(event.keyCode == 39) {
             log('오른쪽')
         }
-        
     })
     
 function btn3click() {
