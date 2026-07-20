@@ -10,6 +10,13 @@
         <input type='text' id="id" value="abcd"><br>
         <input type='password' id="pw"><br>
         <input type="date" id="date"><br>
+
+        <input type="radio" name="ai" value="1" checked>chatGPT
+        <input type="radio" name="ai" value="2">gemini
+        <input type="radio" name="ai" value="3">grok
+        <input type="radio" name="ai" value="4">perplexity(구글 대신 검색)
+        <input type="radio" name="ai" value="5">claude
+
     </form>
 
     <script>
@@ -43,6 +50,9 @@
             date.value = result
 
             console.log(today.toISOString().split('T')[0])
+
+            const radio = document.querySelector('[name=ai]:checked')
+            console.log(radio.value)
            
 
         }, 1000 * 5)
