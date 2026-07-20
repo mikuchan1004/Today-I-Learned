@@ -16,6 +16,26 @@
         <input type="radio" name="ai" value="3">grok
         <input type="radio" name="ai" value="4">perplexity(구글 대신 검색)
         <input type="radio" name="ai" value="5">claude
+        <br>
+
+        <input type="checkbox" class="game" value="a">마비노기 모바일
+        <input type="checkbox" class="game" value="b">스타듀밸리
+        <input type="checkbox" class="game" value="c">워크래프트3
+        <input type="checkbox" class="game" value="d">오버워치
+        <input type="checkbox" class="game" value="e">메이플
+        <input type="checkbox" class="game" value="f">마인크래프트
+        <br>
+
+        <select id="lang">
+            <option value="1">javascript</option>
+            <option value="2" selected>python</option>
+            <option value="3">db</option>
+            <option value="4">java</option>
+        </select>
+
+        <br>
+        <textarea id="textarea">초기값</textarea>
+        <div id="view"></div>
 
     </form>
 
@@ -53,6 +73,40 @@
 
             const radio = document.querySelector('[name=ai]:checked')
             console.log(radio.value)
+
+            const radios = document.querySelectorAll('[name=ai]')
+            radios[1].checked = true
+
+            // const checks = document.querySelectorAll('.game:checked')
+            const checks = document.querySelectorAll('.game:not(:checked)')
+            for(let i=0; i<checks.length; i++) {
+                console.log(checks[i].value)
+            }
+
+            console.log('------------------------')
+            const checks2 = document.querySelectorAll('.game')
+            for (let i=0; i<checks2.length; i++) {
+                console.log(checks2[i].value, checks2[i].checked)
+                if(checks2[i].checked) {
+                    console.log(checks2[i].value)
+                }
+            }
+            checks2[0].checked = true
+
+            const lang = document.getElementById('lang')
+            console.log(lang.value)
+
+            lang.value = '4'
+
+            const textarea = document.querySelector('#textarea')
+            console.log(textarea.value)
+            console.log(textarea.value.indexOf('\n'))
+
+            const view = document.querySelector('#view')
+            view.innerHTML = textarea.value
+
+            let str = textarea.replace(/\n/g, '<br>')
+            view.innerHTML = str
            
 
         }, 1000 * 5)
