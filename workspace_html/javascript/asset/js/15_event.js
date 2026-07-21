@@ -143,9 +143,9 @@ function bind() {
         game.style.left = x + 'px'
         game.style.top = y + 'px'
        
-        if(event.keyCode == 39) {
-
-        }
+        // if(event.keyCode == 39) {
+        //  game.style.left = (parseInt(game.style.left) + 10) + 'px'
+        // }
     })
     
 function btn3click() {
