@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event_form_문제1</title>
+</head>
+<body>
+    <!-- 
+        문제 1 : 주문과 배송 
+        주문 정보 : input으로 이름, 주소
+        ㅁ 주문 정보와 배송 정보가 같습니다 
+        배송 정보 : input으로 이름, 주소
+        * 체크하면 주문 정보가 배송 정보로 복사.
+        * 체크를 풀면 배송 정보 글씨 지우기
+        -->
+    <div id="orderInformation">
+    <h3>주문 정보</h3>
+    이름 : <input type="text" id="orderName"><br>
+    주소 : <input type="text" id="orderAddress"><br>
+    <input type="checkbox" id="checkbox">주문 정보와 배송 정보가 같습니다<br>
+    </div>
+    <div id="deliveryInformation">
+    <h3>배송 정보</h3>
+    이름 : <input type="text" id="deliveryName"><br>
+    주소 : <input type="text" id="deliveryAddress"><br>
+    </div>
+
+    <script>
+       const orderName = document.querySelector('#orderName')
+       const orderAddress = document.querySelector('#orderAddress')
+       const deliveryName = document.querySelector('#deliveryName')
+       const deliveryAddress = document.querySelector('#deliveryAddress')
+       const checkbox = document.querySelector('#checkbox')
+
+       checkbox.addEventListener('change' , function(){
+        if (this.checked) {
+            deliveryName.value = orderName.value
+            deliveryAddress.value = orderAddress.value
+        }else{
+            deliveryName.value= ''
+            deliveryAddress.value = ''
+        }
+       })
+    </script>
+</body>
+</html>

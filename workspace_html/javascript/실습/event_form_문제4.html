@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event_form_문제4</title>
+    <style>
+        .menu-item {
+            cursor: pointer;
+        }
+        .menu-item.active {
+            font-weight: bold;
+            color:black;
+        }
+    </style>
+</head>
+<body>
+    <!--
+        문제 4 : 메뉴 선택 
+        인기상품순, 낮은가격순, 높은가격순, 신상품순, 상품평 많은순 
+        + 클릭한 것만 굵은 글씨로 유지
+    -->
+
+    <div id="menu-list">
+        <span class="menu-item active">인기상품순</span>
+        <span class="menu-item">낮은가격순</span>
+        <span class="menu-item">높은가격순</span>
+        <span class="menu-item">신상품순</span>
+        <span class="menu-item">상품평 많은순</span>
+    </div>
+
+    <script>
+        const menus = document.querySelectorAll('.menu-item')
+
+        menus.forEach(menu => {
+            menu.addEventListener('click', function() {
+                menus.forEach(i => i.classList.remove('active'))
+
+                menu.classList.add('active')
+            })
+        })
+    </script>
+</body>
+</html>

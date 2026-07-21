@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event_form_문제2</title>
+</head>
+<body>
+    <!--문제 2: 로그인창
+    로그인 버튼 눌렀을 때   
+    아이디 또는 비밀번호가 없으면 빨간 글씨 나오게 
+    단, 아이디/비밀번호를 쓰고 로그인을 누르면 빨간 글씨 지우기 -->
+    아이디 : <input type="textbox" id="id"><br>
+    비밀번호 : <input type="password" id="password"><br>
+    <input type="button" id="login" value="로그인"><br>
+    
+    <div id="view"></div>
+
+    <script>
+        function log(message) {
+        const div =  document.createElement('div')
+        div.classList.add('log')
+        div.innerHTML = message
+        const view = document.querySelector('#view')
+        view.prepend(div)
+        }
+
+        const login = document.querySelector('#login')
+        login.addEventListener('click' , function(){
+            const id = document.querySelector('#id')
+            const password = document.querySelector('#password')
+            const view = document.querySelector('#view')
+
+            console.log('id.value' , id.value)
+            console.log('password.value' , password.value)
+            
+            view.style.color = 'red'
+            
+            if(id.value.trim() == '') {
+                log('아이디는 필수입니다')
+            } else if(password.value.trim() == '') {
+                log('비밀번호는 필수입니다')
+            } else {
+                view.style.display = 'none'
+            }
+
+        })
+    </script>
+</body>
+</html>

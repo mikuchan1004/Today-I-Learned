@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event_form_문제5</title>
+    <style>
+        .todo-item {
+            margin-bottom: 5px;
+        }
+        .delete-btn {
+            margin-left: 10px;
+            color:red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<!--
+    문제 5 : Todo List 
+    할일을 적는 input, 추가 버튼
+    + 5-1 : 추가 버튼을 누르면 체크박스와 할일이 하단에 추가된다
+    + 5-2 : 개별 삭제 버튼이 있고, 클릭 시 그 줄이 지워진다. (dom.remove())
+    + 5-3 : 전체 선택 checkbox가 있고 
+            전체 선택 체크 시 : 모든 checkbox 체크 
+            해제 시 : 모든 checkbox 체크 해제
+    + 5-4 : 전체 선택 후에 하나라도 개별 해제가 되면 전체 선택도 해제
+            개별로 모두 체크한 경우 전체 선택도 체크된다.
+    + 5-5 : 선택 삭제 버튼 클릭 시 선택된 내용만 삭제
+-->
+    <h3>Todo List</h3>
+    <!--할 일 입력-->
+    <input type="text" id="todoInput" placeholder="할 일을 입력하세요">
+    <button id="addBtn">추가</button>
+    <br><br>
+
+    <!--전체 제어-->
+    <label><input type="checkbox" id="selectAll">전체 선택</label>
+    <button id="deleteSelectedBtn">선택 삭제</button>
+
+    <!--할 일 목록이 들어갈 텅 빈 공간-->
+    <div id="todoList"></div>
+
+    <script>
+        const todoInput = document.querySelector('#todoInput')
+        const addBtn = document.querySelector('#addBtn')
+        const todoList = document.querySelector('#todoList')
+        const selectAll = document.querySelector('#selectAll')
+        const deleteSelectdBtn = document.querySelector('#deleteSelectedBtn')
+
+        // 전체 선택 체크박스의 상태를 결정하는 함수
+        function updateSelectAll() {
+            const allCheckboxes = document.querySelectorAll('.todo-check')
+            const checkedBoxes = document.querySelectorAll('.todo-check:checked')
+
+            // 할 일이 아예 없거나, 모두 체크된 게 아니라면 전체 선택 해제
+            if (allCheckboxes.length === 0) {
+                selectAll.checked = false
+            }else if (allCheckboxes.length === checkedBoxes.length) {
+                selectAll.checked = true // 개별로 모두 체크되면 전체 선택도 체크 
+            }else {
+                selectAll.checked = false // 하나라도 해제되면 전체 선택 해제 
+            }
+        }
+
+        // 추가 버튼을 누르면 체크박스와 할일이 추가된다
+        addBtn.addEventListener('click', function(){
+            if (todoInput.value.trim() === '') return // 아무것도 안 적혔으면 무시 
+            
+            // 새로운 div 요소 만들기
+            const div = document.createElement('div')
+            div.className = 'todo-item'
+            div.innerHTML = `
+                <label>
+                    <input type='checkbox' class='todo-check'>
+                    <span>${todoInput.value}</span>
+                </label>
+                <button class='delete-btn'>삭제</button>
+            `
+            
+            // todoList 자식으로 집어넣기
+            todoList.appendChild(div)
+            todoInput.value = '' // 다음 입력을 위해 입력창 비우기
+            updateSelectAll() // 항목이 늘어났으니 전체 선택 상태 다시 게산
+        })
+
+        // 이벤트 위임 사용
+        // 새로 추가된 버튼마다 이벤트를 달아주는 건 힘드니까 부모인 todoList에 맡기자
+        todoList.addEventListener('click' , function(e){
+            // 개별 삭제 버튼을 클릭했을 떄 
+            if(e.target.classList.contains('delete-btn')){
+                e.target.parentElement.remove() // 그 버튼의 부모를 통째로 날림
+                updateSelectAll() // 하나가 지워졌으니 전체 선택 상태 다시 저장
+            }
+        })
+
+        todoList.addEventListener('change', function(e){
+            // 개별 체크박스를 클릭해서 상태가 변했을 때
+            if (e.target.classList.contains('todo-check')) {
+                updateSelectAll() // 전체 선택 상태 업데이트
+            }
+        })
+
+        //전체 선택 체크박스 동작
+        selectAll.addEventListener('change' , function(){
+            const allCheckboxes = document.querySelectorAll('.todo-check')
+            allCheckboxes.forEach(cb => {
+                cb.checked = selectAll.checked // 모든 체크박스를 전체 선택 체크박스랑 똑같이 맞춤
+            })
+        })
+
+        // 선택 삭제 버튼 클릭
+        deleteSelectdBtn.addEventListener('click' , function(){
+            // 체크된 항목들만 싹 다 찾아옴
+            const checkBoxes = document.querySelectorAll('.todo-check:checked')
+            checkBoxes.forEach(cb => {
+                //closest()은 내 조상 중에서 가장 가까운 요소를 찾는 명령어
+                cb.closest('.todo-item').remove()
+            })
+            updateSelectAll() // 지울 거 다 지웠으니 전체 선택 상태 리셋 
+        })
+    </script>
+</body>
+</html>

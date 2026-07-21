@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event_form_문제3</title>
+</head>
+<body>
+<!--
+    문제 3: 피자 주문
+    1. 피자 종류 선택 : select 
+    - 불고기, 페퍼로니, 포테이토, 치즈, 파인애플, 고르곤졸라
+    2. 사이즈 선택 : radio
+    - small(18000), medium(20000), large(22000)
+    3. 도우 선택 : radio
+    - 씬, 고구마, 치즈, 소보로
+    4. 토핑 topping : checkbox
+    - 감자(2000), 고구마(2000), 치즈(2500), 베이컨(3000), 옥수수(500), 페페론치노(2500)
+    [확인]
+    + 문제 3-1 : 선택 내역 모두 출력
+    + 문제 3-2 : 선택 내역과 총액 출력 
+--> 
+    <h3>피자 종류를 선택해주세요</h3>
+        <select id="pizzaType">
+            <option>불고기</option>
+            <option>페퍼로니</option>
+            <option>포테이토</option>
+            <option>치즈</option>
+            <option>파인애플</option>
+            <option>고르곤졸라</option>
+        </select>
+
+    <h3>사이즈를 선택해주세요</h3>
+        <input type="radio" name="size" value="small" data-price="18000">small(18000)</input>
+        <input type="radio" name="size" value="medium" data-price="20000">medium(20000)</input>
+        <input type="radio" name="size" value="large" data-price="25000">large(25000)</input>
+
+    <h3>도우를 선택해주세요</h3>
+        <input type="radio" name="dough" value="씬">씬</input>
+        <input type="radio" name="dough" value="고구마">고구마</input>
+        <input type="radio" name="dough" value="치즈">치즈</input>
+        <input type="radio" name="dough" value='소보로'>소보로</input>
+
+    <h3>토핑을 선택해주세요</h3>
+        <input type="checkbox" name="topping" value="감자" data-price="2000">감자(2000)</input>
+        <input type="checkbox" name="topping" value="고구마" data-price="2000">고구마(2000)</input>
+        <input type="checkbox" name="topping" value="치즈" data-price="2500">치즈(2500)</input>
+        <input type="checkbox" name="topping" value="베이컨" data-price="3000">베이컨(3000)</input>
+        <input type="checkbox" name="topping" value="옥수수" data-price="500">옥수수(500)</input>
+        <input type="checkbox" name="topping" value="페페론치노" data-price="2500">페페론치노(2500)</input>
+        <br>
+        <br>
+    <input type="button" id="button" value="확인">
+
+    <div id="orderInfo"></div>
+
+    <script>
+
+        
+        const button = document.querySelector('#button').addEventListener('click', function(){
+            let totalPrice = 0; // 총 가격을 저장하기 위한 변수
+            // 셀렉트박스에서 선택한걸 출력
+            const select = document.querySelector('#pizzaType')
+            const selectValue = select.value
+    
+            // 라디오 선택 출력
+            const sizeRadio = document.querySelector('input[name=size]:checked')
+            const sizeValue = sizeRadio?.value || '선택안함'
+            const doughRadio = document.querySelector('input[name=dough]:checked')
+            const doughValue = doughRadio?.value || '선택안함'
+    
+            // 체크박스 선택 출력
+            const checkboxes = document.querySelectorAll('input[name=topping]:checked')
+            const checkValues = []
+            checkboxes.forEach((cb)=>{
+                checkValues.push(cb.value)
+                totalPrice += parseInt(cb.dataset.price)
+            })
+            
+            const toppingValue = checkValues.length > 0? checkValues.join(",") : '선택안함'
+
+            if(sizeRadio) {
+                totalPrice += parseInt(sizeRadio.dataset.price)
+            }
+    
+            const result = document.querySelector('#orderInfo')
+            result.innerHTML = 
+            `
+            <p><strong>피자:</strong> ${selectValue}</p>
+            <p><strong>사이즈:</strong> ${sizeValue}</p>
+            <p><strong>도우:</strong> ${doughValue}</p>
+            <p><strong>토핑:</strong> ${toppingValue}</p>
+            <p><strong>총 가격:</strong> ${totalPrice원}</p>
+            `
+        })
+        
+
+    </script>
+</body>
+</html>
