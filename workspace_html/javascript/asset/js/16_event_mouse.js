@@ -1,3 +1,7 @@
+let _isDrag = false
+let _offsetX = 0
+let _offsetY = 0
+
 function log(message) {
     const div =  document.createElement('div')
         div.classList.add('log')
@@ -76,10 +80,33 @@ function bind() {
     document.querySelector('body').addEventListener('mousemove' , function(evt){
         const game = document.querySelector('#game')
 
-        game.style.top = evt.pageY+1 + 'px'
-        game.style.left = evt.pageX+1 + 'px'
+        game.style.top = evt.pageY+10 + 'px'
+        game.style.left = evt.pageX+10 + 'px'
 
         log(`X : ${evt.offsetX} , Y: ${evt.offsetY}` )
     })
 
+    document.querySelector('#img').addEventListener('mousedown' , function(evt) {
+        _isDrag = true
+        _offsetX = evt.offsetX
+        _offsetY = evt.offsetY
+    })
+    document.querySelector('#img').addEventListener('mouseup' , function(evt) {
+        _isDrag = false
+    })
+
+    document.querySelector('body').addEventListener('mousemove' , function(evt){
+       const img = document.querySelector('#img')
+
+       if(_isDrag) {
+            img.style.top = (evt.pageY - _offsetY) + 'px'
+            img.style.left = (evt.pageX - _offsetX) + 'px'
+       }
+    })
+    window.addEventListener('resize' , function(evt){
+        const w = window.innerWidth
+        const h = window.innerHeight
+
+        log(`화면의 너비 : ${w}, 화면의 높이 : ${h}`)
+    })
 }
