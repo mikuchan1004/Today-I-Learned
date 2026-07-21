@@ -37,7 +37,7 @@ function bind() {
         event.clipboardData.setDate('text/plain' , result)
     })
 
-    area2.addEventListener('doubleclick' , function(){
+    area2.addEventListener('dbclick' , function(){
         log('더블클릭 발생')
     })
 
