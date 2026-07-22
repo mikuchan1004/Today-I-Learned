@@ -64,9 +64,35 @@
         let j = JSON.parse('{}')
         j = JSON.parse('[{}]')
 
+        const temple = [ {
+            이름: '그랜절' ,
+            주소 : '광장' ,
+            가격 : 300000
+        }, {
+            이름 : '만우절',
+            주소 : '없음',
+            가격 : 2147483647
+        }] 
+        for(let t of temple) {
+            console.log(t.이름)
+        }
+
+        for(let i in temple) {
+            console.log(temple[i].가격)
+        }
+
+        // json의 모든 key를 배열로 돌려줌
+        const keys = Object.keys(json)
+        console.log(keys)
+
+        // key 삭제 
+        // 잘 쓰지는 않음
+        delete json.num
+        console.log(json)
+        
     </script>
 </head>
 <body>
-    
+        
 </body>
 </html>
