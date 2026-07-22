@@ -64,7 +64,7 @@
 
       // 추가 버튼을 누르면 체크박스와 할일이 추가 
       addBtn.addEventListener('click' , function(){
-        if(todoInput.value.trim() === '') return
+        if(todoInput.value.trim() === '') return // 아무것도 입력되어있지 않으면 무시
 
         // 새로운 div 요소 만들기
         const div = document.createElement('div')
