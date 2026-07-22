@@ -66,13 +66,27 @@
 
                         // 2단계. 카테고리 필터링 
                         let item = data.response.body.items.item
-                        let filtered  = item.filter(function(data){
+                        let filtered = item.filter(function(data){
                             if(data.category == 'T1H' || data.category == 'RN1' || data.category == 'REH') {
                                 return true
                             }
                         })
                         // 카테고리 필터링 결과 출력
                         console.log(filtered)
+
+                        // 필터링된 결과를 보여줄 테이블 가져오기
+                        const tbody = document.querySelector('#weather')
+                        
+                        // 배열을 순회하면서 HTML 문자열 생성 
+                        const rows = filtered.map(filtered => `
+                            <tr>
+                                <td>${filtered.category}</td>
+                                <td>${filtered.fcstTime}</td>
+                                <td>${filtered.fcstValue}</td>
+                        `).join('')
+
+                        tbody.innerHTML = rows
+
                     }
                 })
             }
