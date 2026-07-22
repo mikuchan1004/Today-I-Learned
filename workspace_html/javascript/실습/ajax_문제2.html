@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax_문제2</title>
+</head>
+<body>
+    <!-- 
+    문제2 
+    테이블로 표시 
+    시간 | 온도 | 습도 | 강수량
+    -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>시간</th>
+                <th>온도</th>
+                <th>습도</th>
+                <th>강우량</th>
+            </tr>
+        </thead>
+        <tbody id="weather">
+            <tr></tr>
+        </tbody>
+    </table>
+    <button type="button" id="btn1">예보 받아오기</button>
+    <script>
+        window.addEventListener('load' , bind)
+
+        // 1단계. 예보 데이터 받아오기 
+        function bind() {
+            const btn1 = document.querySelector('#btn1')
+            btn1.addEventListener('click' , function(){
+                // API 키 호출 
+                const key = '655611af65cce5c9d9eac89f849a00bb62592dfeef095490fbf938462cf0440e'
+
+                // ajax 객체 생성 
+                const xhr = new XMLHttpRequest()
+                let url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst'
+                    url += '?'
+                    url += 'serviceKey='+key
+                    url += '&numOfRows=1000'
+                    url += '&pageNo=1'
+                    url += '&dataType=JSON'
+                    url += '&base_date=20260722'
+                    url += '&base_time=1500'
+                    url += '&nx=63'
+                    url += '&ny=110'
+
+                // 보낼 준비
+                xhr.open('GET' , url)
+
+                // 보내기
+                xhr.send()
+
+                // 결과 확인
+                xhr.onload = function() {
+                    const data = JSON.parse(xhr.responseText)
+                    console.log('예보 데이터 받아오기 OK')
+
+                    console.log(data)
+
+                    console.log(data.response.body.items.item[0].category)
+                    console.log(data.response.body.items.item[0].fcstValue)
+                    console.log(data.response.body.items.item[0].fcstTime)
+
+                    // T1H : 기온 , RN1 : 강수량, REH : 습도
+                    // 2단계. 카테고리 필터링
+                    let items = data.response.body.items.item
+
+                    let weatherByTime = {} // 시간별로 데이터를 묶어주기
+
+                    items.forEach(function(item) {
+                        const time = item.fcstTime;
+
+                        // 해당 시간대의 바구니가 없다면 새로 하나 만들기
+                        if(!weatherByTime[time]) {
+                            weatherByTime[time] = {temp: '-' , rain: '-' , humid: '-' }
+                        }
+    
+                        // 카테고리를 확인하면서 알맞은 칸에 값을 쏙쏙 넣어준다 
+                        if (item.category === 'T1H') weatherByTime[time].temp = item.fcstValue
+                        if (item.category === 'RN1') weatherByTime[time].rain = item.fcstValue
+                        if (item.category === 'REH') weatherByTime[time].humid = item.fcstValue
+                    })
+                    
+                    // let filtered = item.filter(function(data){
+                    //     if(data.category == 'T1H' || data.category === 'RN1' || data.category === 'REH') {
+                    //         return true
+                    //     }
+                    // })
+                    // 카테고리 필터링 결과 출력
+                    // console.log(filtered)
+
+                    // 필터링된 결과를 테이블에 그려보자
+                    const tbody = document.querySelector('#weather')
+                    let rows = ''
+
+                    // 잘 정돈된 바구니(객체)를 돌면서 HTML 문자열을 생성 
+                    for (const time in weatherByTime) {
+                        const w = weatherByTime[time]
+
+                        // 셋 중 하나라도 유효한 데이터가 들어온 시간대만 출력
+                        if (w.temp !== '-' || w.humid !== '-' || w.rain !== '-') {
+                            rows += `
+                                <tr>
+                                    <td>${time}</td>
+                                    <td>${w.temp}</td>
+                                    <td>${w.humid}</td>
+                                    <td>${w.rain}</td>
+                                </tr>
+                            `
+                        }
+                    }
+
+                    // 테이블에 덮어쓰기!
+                    tbody.innerHTML = rows
+            
+
+                    // // 배열을 순회하면서 HTML 문자열 생성!
+                    // const rows = filtered.map(filtered => `
+                    //     <tr>
+                    //         <td>${filtered.fcstTime}</td>
+                    //         <td>${filtered.fcstValue}</td>
+                    //         <td>${filtered.fcstValue}</td>
+                    //         <td>${filtered.fcstValue}</td>
+                    // `).join('')
+                    
+                }
+
+
+            }) 
+        }
+    </script>
+</body>
+
+</html>
