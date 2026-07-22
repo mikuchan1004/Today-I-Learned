@@ -30,11 +30,16 @@
     </div>
 
     <script>
+        // 클래스가 'menu-item'인 요소를 전부 다 가져옴
         const menus = document.querySelectorAll('.menu-item')
 
         menus.forEach(menu => {
+            // 메뉴를 클릭하면...
             menu.addEventListener('click', function() {
+                // 먼저, active 클래스가 있는지 없는지 모르기때문에
+                // 가져온 모든 요소에서 active 클래스 제거 
                 menus.forEach(i => i.classList.remove('active'))
+                // 클릭한 요소에 active 클래스를 추가
                 menu.classList.add('active')
             })
         })
