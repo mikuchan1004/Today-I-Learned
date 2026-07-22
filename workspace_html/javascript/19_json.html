@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>json</title>
+    <script>
+        // JSON
+        // 값을 key와 value로 관리한다
+        // 순서는 보장하지 않는다
+
+        // JSON 선언 
+        let json = {}
+        json = {
+            "key": "value", 
+            "num" : 1234, 
+            "fn" : function() {
+                console.log(1)
+            },
+            "k1" : {
+                "k1-1" : 1,
+                "k1-2" : 2,
+                 k:3
+            },
+            k2 : 'k3'
+        }
+        console.log(json)
+        console.log("" + json)
+
+        // 값에 접근하는 방법
+        // 방법1 : 배열처럼 
+        console.log("json['key'] : " , json['key'])
+        console.log("json['num'] :" , json['num'])
+        console.log("json['k1']['k1-1'] :" , json['k1']['k1-1'])
+        
+        // 방법2 : 프로퍼티처럼 
+        console.log('json.key :' , json.key)
+        // console.log('json.k1.k1-2 :' , json.k1.k-2)
+        console.log('json.k1.k :' , json.k1.k)
+
+        json['fn']()
+        json.fn()
+
+        // 값 넣기
+        // key가 있으면 덮어쓰기
+        // key가 없으면 추가
+        json.num = 456
+        console.log(json.num)
+        console.log(json.num2) //undefined (상태값. 오류 아님!)
+        json.num2 = 222
+        console.log(json)
+
+        // 네트워크 통신할 떄 무조건 문자로 전송한다
+        // stringify : json을 문자열로 만들어 준다
+        // 단, 값이 함수인 것은 제외 
+        const str = JSON.stringify(json)
+        console.log(str)
+
+        // parse : 문자열을 다시 json으로 만들어 준다
+        const json2 = JSON.parse(str)
+        console.log(json2)
+
+        // JSON.parse('<h1>') 
+        let j = JSON.parse('{}')
+        j = JSON.parse('[{}]')
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
