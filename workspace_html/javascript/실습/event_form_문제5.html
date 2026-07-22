@@ -13,6 +13,10 @@
             color:red;
             cursor: pointer;
         }
+
+        #addBtn, #deleteSelectBtn{
+            cursor:pointer
+        }
     </style>
 </head>
     <!--
@@ -51,14 +55,15 @@
 
     // 전체 선택 체크박스 상태 갱신 함수
     function updateSelectAll() {
-        const allCheckboxes = document.querySelectorAll('.todo-check')
-        const checkedBoxes = document.querySelectorAll('.todo-check:checked')
+        const allCheckboxes = document.querySelectorAll('.todo-check') // todo-check라는 클래스를 가진 모든 요소를 불러온다
+        // todo-check라는 클래스를 가지고 있으며, 체크가 되어있는 모든 요소를 가져온다.
+        const checkedBoxes = document.querySelectorAll('.todo-check:checked') 
         if(allCheckboxes.length === 0) {
-            selectAll.checked = false
+            selectAll.checked = false // 아무것도 체크가 되어 있지않으면, 전체 선택도 체크되어 있지 않음
         } else if (allCheckboxes.length === checkedBoxes.length) {
-            selectAll.checked = true
+            selectAll.checked = true // 모두 체크가 되어 있다면, 전체 선택도 체크
         } else {
-            selectAll.checked = false
+            selectAll.checked = false // 하나라도 체크가 해제되면, 전체 선택도 해제
         }
     }
 
