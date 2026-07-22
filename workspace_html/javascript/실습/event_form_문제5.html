@@ -97,6 +97,17 @@
         todoList.addEventListener('change', function(e){
             // 개별 체크박스를 클릭해서 상태가 변했을 때
             if (e.target.classList.contains('todo-check')) {
+                
+                // 방금 클릭한 체크박스(e.target)의 부모(label) 안에서 span을 찾음
+                const targetSpan = e.target.parentElement.querySelector('span')
+
+                // 체크 상태에 따라 줄을 긋거나 지움
+                if (e.target.checked) {
+                    targetSpan.style.textDecoration = 'line-through'
+                } else {
+                    targetSpan.style.textDecoration = 'none'
+                }
+
                 updateSelectAll() // 전체 선택 상태 업데이트
             } 
         })
