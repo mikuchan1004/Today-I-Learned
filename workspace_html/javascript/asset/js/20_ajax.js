@@ -105,12 +105,53 @@ function bind() {
           })
           console.log(filtered)
         }
-        // 문제1
-        // 테이블로 표시
-        // 예측카테고리 | 예측시간 | 값 
+       
+    })
 
-        // 문제2 
-        // 시간 | 온도 | 습도 | 강수량 
+    const btn4 = document.querySelector('#btn4')
+    btn4.addEventListener('click' , function(){
+        const xhr2 = new XMLHttpRequest()
+
+        xhr2.open('GET' , 'https://jsonplaceholder.typicode.com/users')
+
+        xhr2.send()
+
+        xhr2.onload = function() {
+            const result = JSON.parse(xhr2.responseText)
+            console.log(result[0])
+            // console.log(result[1]['name'])
+            // console.log(result[0].name)
+            // console.log(result[0].address.zipcode)
+            // console.log(result[0].company.name)
+
+            const tbody = document.querySelector('#member')
+            for (i = 0; i < result.length; i++) {
+                const tr = document.createElement('tr')
+                tbody.append(tr) 
+
+                const td = document.createElement('td')
+                td.textContent = result[i].id
+                tr.append(td)
+
+                const td2 = document.createElement('td')
+                td2.textContent = result[i].name
+                tr.append(td2)
+                
+                const td3 = document.createElement('td')
+                td3.textContent = result[i].address.zipcode
+                tr.append(td3)
+
+                const td4 = document.createElement('td')
+                td4.textContent = result[i].company.name
+                tr.append(td4)
+
+                // console.log(result[i].id)
+                // console.log(result[i].name)
+                // console.log(result[i].address.zipcode)
+                // console.log(result[i].company.name)
+            }
+            
+        }
     })
 
 }
