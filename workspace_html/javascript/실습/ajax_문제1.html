@@ -24,9 +24,18 @@
             </tbody>
         </table>
         <button type="button" id="btn1">예보 받아오기</button>
+        <div id="view"></div>
         <script>
             window.addEventListener('load', bind)
-            
+
+            function log(message) {
+                const div =  document.createElement('div')
+                div.classList.add('log')
+                div.innerHTML = message
+                const view = document.querySelector('#view')
+                view.prepend(div)
+            }
+
             // 1단계. 먼저 예보 데이터를 받아오기
             function bind() {
                 const btn1 = document.querySelector('#btn1')
@@ -36,7 +45,7 @@
                     const today = now.toISOString().split('T')[0].replace(/-/g, '')
                     let hour  = now.getHours() - 1
                     if (hour < 10) {
-                        hour = '0' + hour + '00'
+                        hour = '0' + hour +  '00'
                     } else {
                         hour = hour + '00'
                     }
@@ -66,7 +75,7 @@
                     // 결과 확인 
                     xhr.onload = function() {
                         const data = JSON.parse(xhr.responseText)
-                        console.log('예보 데이터 받아오기 OK')
+                        log(`예보 데이터 받아오기 OK`)
                         console.log(data)
 
                         console.log(data.response.body.items.item[0].category)
