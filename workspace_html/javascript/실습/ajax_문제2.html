@@ -25,13 +25,32 @@
         </tbody>
     </table>
     <button type="button" id="btn1">예보 받아오기</button>
+    <div id="view"></div>
     <script>
         window.addEventListener('load' , bind)
+
+        function log(message) {
+            const div =  document.createElement('div')
+            div.classList.add('log')
+            div.innerHTML = message
+            const view = document.querySelector('#view')
+            view.prepend(div)
+        }
 
         // 1단계. 예보 데이터 받아오기 
         function bind() {
             const btn1 = document.querySelector('#btn1')
             btn1.addEventListener('click' , function(){
+
+                const now = new Date()
+                const today = now.toISOString().split('T')[0].replace(/-/g, '')
+                let hour  = now.getHours() - 1
+                if (hour < 10) {
+                    hour = '0' + hour + '00'
+                } else {
+                    hour = hour + '00'
+                }
+
                 // API 키 호출 
                 const key = '655611af65cce5c9d9eac89f849a00bb62592dfeef095490fbf938462cf0440e'
 
@@ -43,8 +62,8 @@
                     url += '&numOfRows=1000'
                     url += '&pageNo=1'
                     url += '&dataType=JSON'
-                    url += '&base_date=20260722'
-                    url += '&base_time=1500'
+                    url += '&base_date=' + today
+                    url += '&base_time=' + hour 
                     url += '&nx=63'
                     url += '&ny=110'
 
@@ -57,7 +76,7 @@
                 // 결과 확인
                 xhr.onload = function() {
                     const data = JSON.parse(xhr.responseText)
-                    console.log('예보 데이터 받아오기 OK')
+                    log('예보 데이터 받아오기 OK')
 
                     console.log(data)
 
@@ -117,7 +136,6 @@
                     // 테이블에 덮어쓰기!
                     tbody.innerHTML = rows
             
-
                     // // 배열을 순회하면서 HTML 문자열 생성!
                     // const rows = filtered.map(filtered => `
                     //     <tr>
@@ -128,7 +146,6 @@
                     // `).join('')
                     
                 }
-
 
             }) 
         }
