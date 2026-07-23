@@ -154,4 +154,30 @@ function bind() {
         }
     })
 
+    const btn5 = document.querySelector('#btn5')
+    btn5.addEventListener('click' , function(){
+
+        // let a = undefined
+        // try {
+        //     a.push(1)
+        // }catch(e) {
+        //     console.log(e)
+        // }
+
+        const url = 'https://jsonplaceholder.typicode.com/users'
+
+        // fetch(주소, 옵션json)
+        fetch(url , {
+            method: 'GET'
+        }).then(function (response){
+            return response.json()
+        }).then(function(data){
+            console.log(data)
+        }).catch(function (error){
+            console.error(error)
+        })
+            
+
+    })
+
 }
