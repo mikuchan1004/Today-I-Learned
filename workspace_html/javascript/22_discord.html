@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>discord</title>
+    <script>
+        window.onload = function() {
+            discord()
+        }
+        function discord() {
+            const ask = document.querySelector('#ask')
+            ask.addEventListener('click' , function(){
+                const prompt = document.querySelector('#prompt').value
+
+                const url = 'https://discordapp.com/api/webhooks/1529728976027648091/CUseu7CIw0XeLiv-u3agtpcYr0hTvYd3qv_3XYHiLwOQI9-PoEAzwAehxiQgMVCq6OWQ'
+
+                const xhr = new XMLHttpRequest()
+                xhr.open('POST' , url)
+
+                xhr.setRequestHeader('Content-Type' , 'application/json')
+                const param = {
+                    username: '디스코드 연동 테스트' , 
+                    content: prompt
+                }
+                
+                xhr.send(JSON.stringify(param))
+
+                xhr.onload = function(){
+                    console.log(xhr.responseText)
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <h3>디스코드 연동</h3>
+    <textarea id="prompt"></textarea>
+    <br>
+    <button type="button" id="ask">디코에 말하기</button>
+</body>
+</html>
