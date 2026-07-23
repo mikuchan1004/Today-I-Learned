@@ -12,11 +12,12 @@
         window.onload = function() {
             gemini()
         }
+        const userAPIKey = prompt('발급받은 제미나이 API키를 입력해주세요')
         
         function gemini() {
             const ask = document.querySelector('#ask')
             ask.addEventListener('click' , function(){
-                const key = 'AQ.Ab8RN6KQtg1komsKCRYabdWH8FObDgqInUWxzwxdXTpwBxChWQ'
+                const key = userAPIKey
                 const prompt = document.querySelector('#prompt').value
                 const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent'
 
