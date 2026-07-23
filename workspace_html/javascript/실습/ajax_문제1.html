@@ -32,6 +32,15 @@
                 const btn1 = document.querySelector('#btn1')
                 btn1.addEventListener('click' , function(){
 
+                    const now = new Date()
+                    const today = now.toISOString().split('T')[0].replace(/-/g, '')
+                    let hour  = now.getHours() - 1
+                    if (hour < 10) {
+                        hour = '0' + hour + '00'
+                    } else {
+                        hour = hour + '00'
+                    }
+
                     // API 키 준비 
                     const key = '655611af65cce5c9d9eac89f849a00bb62592dfeef095490fbf938462cf0440e'
                     
@@ -43,8 +52,8 @@
                             url += '&numOfRows=1000'
                             url += '&pageNo=1'
                             url += '&dataType=JSON'
-                            url += '&base_date=20260722'
-                            url += '&base_time=1500'
+                            url += '&base_date=' + today
+                            url += '&base_time=' + hour
                             url += '&nx=63'
                             url += '&ny=110'
             
