@@ -25,7 +25,7 @@
         </tbody>
     </table>
     <button type="button" id="btn1">예보 받아오기</button>
-    <div id="view"></div>
+    <div id="view">
     <script>
         window.addEventListener('load' , bind)
 
@@ -76,7 +76,7 @@
                 // 결과 확인
                 xhr.onload = function() {
                     const data = JSON.parse(xhr.responseText)
-                    log('예보 데이터 받아오기 OK')
+                    console.log('예보 데이터 받아오기 OK')
 
                     console.log(data)
 
