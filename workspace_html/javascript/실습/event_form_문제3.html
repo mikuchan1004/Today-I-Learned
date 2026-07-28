@@ -61,7 +61,7 @@
             let totalPrice = 0; // 총 가격을 저장하기 위한 변수
             // 셀렉트박스에서 선택한걸 출력
             const select = document.querySelector('#pizzaType')
-            const selectValue = select.value
+            const pizzaValue = select.value
     
             // 라디오 선택 출력
             const sizeRadio = document.querySelector('input[name=size]:checked')
@@ -86,7 +86,7 @@
             const result = document.querySelector('#orderInfo')
             result.innerHTML = 
             `
-            <p><strong>피자:</strong> ${selectValue}</p>
+            <p><strong>피자:</strong> ${pizzaValue}</p>
             <p><strong>사이즈:</strong> ${sizeValue}</p>
             <p><strong>도우:</strong> ${doughValue}</p>
             <p><strong>토핑:</strong> ${toppingValue}</p>
