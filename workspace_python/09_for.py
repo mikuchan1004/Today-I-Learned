@@ -48,3 +48,37 @@ while dice != 3:
     count += 1
     if dice == 3 :
         print(count)
+
+
+# 산 모양으로 별 출력하기
+
+# 계단식으로 별을 출력해보기 (오른쪽)
+
+for i in range(5) :
+    for j in range(5) :
+        if j <= i:
+            print('*', end='')
+    print()
+
+# 역삼각형 모양으로 별을 출력해보기 
+
+for i in range(5):
+    for j in range(5):
+        if i <= j:
+            print('*' , end='')
+    print()
+
+# 산 모양으로 별 출력하기
+
+for i in range(5):
+    # 먼저 빈칸을 4, 3, 2, 1, 0개 순으로 찍기
+    for j in range(4 - i):
+        print(' ', end='')
+    # 그 다음 별을 1, 3, 5, 7, 9개 순으로 이어서 찍기
+    for k in range(2 * i + 1):
+        print('*' , end='')
+
+    # 빈칸과 별을 다 찍었으니 한 줄 마무리
+    print()
+
+    
