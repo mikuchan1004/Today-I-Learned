@@ -114,6 +114,13 @@
         const allCheckboxes = document.querySelectorAll('.todo-check')
         allCheckboxes.forEach(cb => {
             cb.checked = selectAll.checked // 모든 체크박스를 전체 선택 체크박스랑 똑같게 맞춤
+
+            // 텍스트 취소선 동기화 
+            const targetSpan = cb.parentNode.querySelector('span')
+            if (targetSpan) {
+                // 전체선택이 체크되었으면 취소선을 긋고, 아니면 없앰
+                 targetSpan.style.textDecoration = selectAll.checked ? 'line-through' : 'none'
+            }
          })
     })
 
