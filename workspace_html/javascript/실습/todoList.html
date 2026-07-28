@@ -143,6 +143,15 @@
 
     // 스크립트 맨 마지막! 페이지가 켜지면 무조건 한 번 실행!
     loadTodos();
+
+    // 입력창에서 키보드를 뗄 때 발생하는 이벤트 감지
+    todoInput.addEventListener('keyup', function(e) {
+        // 방금 뗀 키가 'Enter' 키인지 확인!
+        if (e.key === 'Enter') {
+            // '추가' 버튼을 마우스로 꾹 누른 것과 완전히 똑같은 효과를 내요!
+            addBtn.click(); 
+        }
+    });
 </script>
 </body>
 </html>
