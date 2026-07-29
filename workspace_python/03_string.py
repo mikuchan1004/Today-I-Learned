@@ -58,3 +58,30 @@ print(k)
 
 m = [1, 2, 3]
 a, b, c = m
+
+a = ['a' , 'b' , 'c' , 'd' , 'e']
+b = '-'.join(a)
+a = [1, 2, 3, 4, 5]
+'-'.join(map(str, a))
+'-'.join(str(data) for data in a)
+
+print(b)
+c = b.split('-')
+print(c)
+
+a = "Don't Look Back in Anger"
+b = a.find('back')
+print(b)
+
+c = a.upper()
+print(c)
+
+d = a.upper().find('back'.upper())
+print(d)
+
+a = '    a b  '
+print(a.strip())
+
+print('35'.zfill(4))
+print('35000'.zfill(4))
+
