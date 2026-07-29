@@ -48,7 +48,7 @@ print(i.find('z')) # 없으면 -1
 print(i.index('l'))
 # print(i.index('z')) # 없으면 에러 
 
-print(i.rfind('l')) # rear 뒤에서 부터 indexOf
+print(i.rfind('l')) # right 뒤에서 부터 indexOf
 
 print(i.replace('l' , 'w')) # 모두 바꿔 줌 
 
