@@ -57,3 +57,51 @@ print(set(a))
 # set
 # 중복을 제거해서 관리한다.
 # 순서는 보장하지 않는다.
+
+b = {
+    '이름' : '호랑이심장',
+    '직업' : '마법사',
+    '직업2' : '전사' ,
+    '스킬' : {
+        '공격' : '고백' ,
+        '방어' : '철벽남' , 
+        'javascript' : '중'
+    }
+}
+b.update(이름 = '타이거' , 직업 = '강사')
+print (b)
+b.update(이름 = '타이거' , 직업 = '강사' , 나이 = '20')
+print(b)
+
+c = b.pop('나이')
+print(b)
+print(c)
+# c = b.pop('나이')
+c = b.pop('나이' , 0) # 없으면 두 번째 값을 사용
+print(c)
+# c = b.pop() # 전달인자 필수
+c = b.popitem()
+print(c)
+print(b)
+
+a = ['a' , 'b' , 'c']
+b = {
+    'a' : 0,
+    'b' : 0,
+    'c' : 0
+}
+b = {}
+b[a[0]] = 0
+b[a[1]] = 0
+
+c = dict.fromkeys(a)
+print(c)
+
+# key만 나온다 
+for i in c :
+    print(i)
+    print(c[i]) 
+
+for k , v in c.items() :
+    print (k, v)
+
