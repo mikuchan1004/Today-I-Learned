@@ -98,3 +98,10 @@ for i in range(1, 101): # 1부터 100까지 100번 반복
 
 # while True :
 #     print(1)
+
+a = [i*10 if i%2 == 0 else i for i in range(10)]
+for i in range(10) :
+    if i%2 == 0 :
+        a.append(i*10)
+    else:
+        a.append(i)
