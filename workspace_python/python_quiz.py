@@ -89,7 +89,7 @@ UP/DOWN 게임 만들기
 '''
 import random
 
-correct_answer = random.randint(1, 99) # 정답 숫자는 랜덤으로 생성
+correct_answer = random.randint(1, 100) # 정답 숫자는 랜덤으로 생성
 
 user_input = '' # 입력받은 숫자를 정답과 비교하기 위해 만든 변수
 
