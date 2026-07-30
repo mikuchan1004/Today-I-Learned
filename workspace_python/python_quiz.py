@@ -142,7 +142,7 @@ users = {
     "user1": "abcd"
 }
 
-# 성공할 때까지 무한 반복을 해야하니까 While문!
+# 성공할 때까지 반복을 해야하니까 While문!
 
 while True:
     user_id = input('아이디를 입력해주세요 : ')
