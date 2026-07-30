@@ -56,31 +56,45 @@ cart = {
         '개수': 5
     }
 }
+# 장바구니 전체 가격을 담을 변수를 먼저 0으로 초기화
+cart_totalPrice = 0 
 
-apple_price = cart.get('사과').get('가격')
-apple_count = cart.get('사과').get('개수')
-apple_totalPrice = cart['사과']['가격'] * cart['사과']['개수']
-a = apple_totalPrice # 사과의 총 가격 
-banana_price = cart.get('바나나').get('가격')
-banana_count = cart.get('바나나').get('개수')
-banana_totalPrice = cart['바나나']['가격'] * cart['바나나']['개수']
-b = banana_totalPrice # 바나나의 총 가격
-peach_price = cart.get('복숭아').get('가격')
-peach_count = cart.get('복숭아').get('개수')
-peach_totalPrice = cart['복숭아']['가격'] * cart['복숭아']['개수']
-c = peach_totalPrice # 복숭아의 총 가격 
-kiwi_price = cart.get('키위').get('가격')
-kiwi_count = cart.get('키위').get('개수')
-kiwi_totalPrice = cart['키위']['가격'] * cart['키위']['개수']
-d = kiwi_totalPrice # 키위의 총 가격 
-print('사과의 총 가격 :' , a , '원')
-print('바나나의 총 가격 :' , b , '원')
-print('복숭아의 총 가격 :' , c , '원')
-print('키위의 총 가격 :' , d , '원')
+#  ,items()를 쓰면 과일 이름(키)과 가격/개수 정보(값)을 한 쌍씩 쏙쏙 빼올 수 있음.
+for fruit, info in cart.items():
+    #  딕셔너리 안의 딕셔너리니까, 이렇게 바로 접근해서 계산하면 됨.
+    fruit_total = info['가격'] * info['개수']
 
-cart_totalPrice = a + b + c + d
+    print(fruit, '의 총 가격 :' , fruit_total , '원')
 
-print('다 샀을 때의 가격은? : ' , cart_totalPrice , '원')
+    # 전체 가격에 현재 과일의 총가격을 누적해서 더해줌 
+    cart_totalPrice += fruit_total
+
+print('다 샀을 때의 가격은? : ' , cart_totalPrice, '원')
+
+# apple_price = cart.get('사과').get('가격')
+# apple_count = cart.get('사과').get('개수')
+# apple_totalPrice = cart['사과']['가격'] * cart['사과']['개수']
+# a = apple_totalPrice # 사과의 총 가격 
+# banana_price = cart.get('바나나').get('가격')
+# banana_count = cart.get('바나나').get('개수')
+# banana_totalPrice = cart['바나나']['가격'] * cart['바나나']['개수']
+# b = banana_totalPrice # 바나나의 총 가격
+# peach_price = cart.get('복숭아').get('가격')
+# peach_count = cart.get('복숭아').get('개수')
+# peach_totalPrice = cart['복숭아']['가격'] * cart['복숭아']['개수']
+# c = peach_totalPrice # 복숭아의 총 가격 
+# kiwi_price = cart.get('키위').get('가격')
+# kiwi_count = cart.get('키위').get('개수')
+# kiwi_totalPrice = cart['키위']['가격'] * cart['키위']['개수']
+# d = kiwi_totalPrice # 키위의 총 가격 
+# print('사과의 총 가격 :' , a , '원')
+# print('바나나의 총 가격 :' , b , '원')
+# print('복숭아의 총 가격 :' , c , '원')
+# print('키위의 총 가격 :' , d , '원')
+
+# cart_totalPrice = a + b + c + d
+
+# print('다 샀을 때의 가격은? : ' , cart_totalPrice , '원')
 
 '''
 문제3
