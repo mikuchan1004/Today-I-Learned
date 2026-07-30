@@ -7,13 +7,13 @@ numbers = [3, 7, 10, 15, 22, 8, 13]
 '''
 numbers = [3, 7, 10, 15, 22, 8, 13]
 
-a = [ i for i in numbers if i % 2 == 0]
-print(a) # [10, 22, 8]
+even = [ i for i in numbers if i % 2 == 0]
+print(even) # [10, 22, 8]
 
-b = [i for i in numbers if i % 2 == 1]
-print(b) # [3, 7, 15, 13]
-c = sum(b)
-print(c) # 38
+odd = [i for i in numbers if i % 2 == 1]
+print(odd) # [3, 7, 15, 13]
+result = sum(odd)
+print(result) # 38
 
 '''
 문제 2
