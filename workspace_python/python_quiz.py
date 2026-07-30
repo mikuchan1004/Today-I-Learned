@@ -86,6 +86,7 @@ print('다 샀을 때의 가격은? : ' , cart_totalPrice , '원')
 문제3
 UP/DOWN 게임 만들기
 단, 맞추면 몇번째에 맞췄는지도 출력
+
 '''
 import random
 
