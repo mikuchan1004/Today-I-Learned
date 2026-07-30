@@ -105,3 +105,15 @@ for i in range(10) :
         a.append(i*10)
     else:
         a.append(i)
+
+a = 2
+i = 0
+while i < 10:
+   if i == a:
+       print('찾음')
+       break
+   i += 1
+else : 
+    print('못찾음')
+    
+# while의 else는 break를 만나지 않고 종료되는 경우 else문이 실행 된다.
