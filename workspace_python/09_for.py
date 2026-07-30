@@ -93,7 +93,6 @@ for i in range(1, 101): # 1부터 100까지 100번 반복
     else : 
         print(i) # 아무것도 해당되지 않을 때 숫자 출력
 
-
 # import turtle as t
 # t.shape('turtle')
 
