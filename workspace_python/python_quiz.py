@@ -169,4 +169,13 @@ while True:
 문제5-2 : 그 중 가장 득표 많은 사람의 이름과 득표 수 출력
 
 '''
+후보 = ['a' , 'b' , 'c']
+득표 = {}
 
+for i in range(100) :
+    투표 = random.choice(후보)
+
+    득표[투표] = 득표.get(투표, 0) + 1
+print(득표)
+
+print(max(득표), 득표[max(득표)])
