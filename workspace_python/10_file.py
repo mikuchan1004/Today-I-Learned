@@ -109,10 +109,23 @@ with open('pickle.p'  , 'rb') as file :
 #  import joblib
 
 #a : 이어 쓰기 
-with open('hello.txt' , 'a') as file : 
-    file.write('123')
-    file.read()
+# with open('hello.txt' , 'a') as file : 
+#     file.write('123')
+#     file.read()
 
 # +
 # 쓰기 계열에 붙어있으면 읽기 가능해짐 
 # 읽기 계열에 붙어있으면 쓰기 가능해짐
+
+# 단어 중 대소문자 구분없이 c를 포함하는 단어를 출력하시오. 단, ,.은 출력하지 마시오.
+
+with open('word.txt' , 'r') as file :
+   for line in file:
+       # 공백 기준으로 단어 분리 
+       words = line.split()
+       for word in words :
+           # 단어 양 끝의 쉼표와 마침표 제거 
+           word = word.strip(',.')
+           # 특정 문자('c')가 포함되어 있는지 확인 
+           if 'c' in word:
+               print(word)
