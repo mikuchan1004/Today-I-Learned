@@ -128,9 +128,21 @@ with open ('word.txt', 'r') as file :
 
     # 단어를 하나씩 꺼내서 검사.
     for word in words :
-        # 콤마와 점 제거
-        cleanWord = word.replace(',' , '').replace('.' , '')
-        # 단어 중 'c'를 포함하는 단어 찾기
-        if 'c' in cleanWord :
-            print(cleanWord)
-  
+       tmp = word.split('c')
+       if len(tmp) > 1:
+           a = word.split('.')
+           b = ''.join(a)
+           c = b.split(',')
+           d = ''.join(c)
+           print(d)
+
+print('-' * 30)
+with open ('word.txt', 'r') as file :
+    text = file.read() 
+
+    words = text.split()
+
+    for word in words :
+        if word.find('c') != -1 :
+           a = word.replace(',' , '').replace('.' , '')
+           print(a)
