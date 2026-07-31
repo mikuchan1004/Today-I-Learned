@@ -119,13 +119,18 @@ with open('pickle.p'  , 'rb') as file :
 
 # 단어 중 대소문자 구분없이 c를 포함하는 단어를 출력하시오. 단, ,.은 출력하지 마시오.
 
-with open('word.txt' , 'r') as file :
-   for line in file:
-       # 공백 기준으로 단어 분리 
-       words = line.split()
-       for word in words :
-           # 단어 양 끝의 쉼표와 마침표 제거 
-           word = word.strip(',.')
-           # 특정 문자('c')가 포함되어 있는지 확인 
-           if 'c' in word:
-               print(word)
+# 먼저 파일을 가져와서 읽기 
+with open ('word.txt', 'r') as file :
+    text = file.read() 
+
+    # 공백을 기준으로 단어를 쪼개기
+    words = text.split()
+
+    # 단어를 하나씩 꺼내서 검사.
+    for word in words :
+        # 콤마와 점 제거
+        cleanWord = word.replace(',' , '').replace('.' , '')
+        # 단어 중 'c'를 포함하는 단어 찾기
+        if 'c' in cleanWord :
+            print(cleanWord)
+  
