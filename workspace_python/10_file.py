@@ -99,8 +99,6 @@ with open('pickle.p'  , 'rb') as file :
   print(p2, type(p2))
   p2 =  pickle.load(file)
   print(p2, type(p2))
-  p2 =  pickle.load(file)
-  print(p2, type(p2))
   print(p2['k'])
 
  # dump한 만큼만 꺼낼 수 있다
@@ -109,3 +107,12 @@ with open('pickle.p'  , 'rb') as file :
 
  # pickle 보다 대용량에 특화된 라이브러리 
 #  import joblib
+
+#a : 이어 쓰기 
+with open('hello.txt' , 'a') as file : 
+    file.write('123')
+    file.read()
+
+# +
+# 쓰기 계열에 붙어있으면 읽기 가능해짐 
+# 읽기 계열에 붙어있으면 쓰기 가능해짐
