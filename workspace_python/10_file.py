@@ -146,3 +146,27 @@ with open ('word.txt', 'r') as file :
         if word.find('c') != -1 :
            a = word.replace(',' , '').replace('.' , '')
            print(a)
+
+print('-' * 30)
+# 조건1. order.txt를 읽기 모드로 읽기. 
+with open ('order.txt' , 'r' , encoding='utf-8' ) as file :
+    order = file.read()
+    print(order) # 잘 읽었는지 확인
+
+print('-' * 30)
+# 조건2. 이상치 제거 
+# 가격이 0보다 작은 경우
+# 가격이 10000보다 큰 경우
+# 개수가 0보다 작은 경우
+# 파이썬에서 읽어온 텍스트 내용 중 원하는 문자나 문자열을 제거하면 replace() , strip() 또는 조건문 필터링을 사용하면 된다고 합니다
+# 출처 : 구글 검색
+orders = order.replace('아메리카노, -2, 3000원' , '').replace('주스, 5, 12000' , '').replace('우유, 1, -2000', '').replace(',' , '')
+print(orders)
+
+# 조건3. 텍스트 클렌징 적용
+# 각 항목의 앞뒤 공백 제거 
+# 가격에서 "원" 제거
+# 수량과 가격은 정수형으로 변환
+print('-' * 30)
+clean_orders = orders.strip() # 이러면 각 항목의 앞뒤 공백 제거
+print(clean_orders) # 잘 제거가 되었는지 확인
