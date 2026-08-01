@@ -161,7 +161,7 @@ print('-' * 30)
 # 개수가 0보다 작은 경우
 # 파이썬에서 읽어온 텍스트 내용 중 원하는 문자나 문자열을 제거하려면 replace() , strip() 또는 조건문 필터링을 사용하면 된다고 합니다 
 # (출처 : 구글 검색)
-orders = order.replace('아메리카노, -2, 3000원' , '').replace('주스, 5, 12000' , '').replace('우유, 1, -2000', '').replace(',' , '')
+orders = order.replace('아메리카노, -2, 3000원' , '').replace('주스, 5, 12000' , '').replace('우유, 1, -2000', '')
 print(orders)
 
 # 조건3. 텍스트 클렌징 적용
@@ -175,17 +175,26 @@ print(clean_orders) # 잘 제거가 되었는지 확인
 # 조건4. 전체 매출 뽑아내기 
 # 전체 매출을 뽑아내려면 문자열 그대로 int로 변환을 한다거나 아니면 다른 자료형으로 바꾸면 될거같은데....
 
-# 전체 매출을 내는데 상품명은 필요가 없으니까 replace로 날려버리자
+total_sales = 0 #  총 매출이 들어갈 주머니 
+
+# clean_orders에는 엔터(\n)이 남아있을 테니까 줄바꿈을 기준으로 쪼개서 리스트로
+lines = clean_orders.split('\n')
+
 print('-' * 30)
-total_incomes =  clean_orders.replace('아메리카노' , '').replace('카페라테' , '').replace('물', '').replace('탄산음료' , '')
-print(total_incomes) # 잘 날라갔는지 확인
+for line in lines :
+    # replace로 통째로 날려버려서 생긴 빈 줄은 계산할 수 없으니  무시
+    if not line.strip():
+        continue
 
-# int 함수에 공백과 줄바꿈이 포함된 여러 개의 숫자가 한 번에 들어가거나 빈 줄이 포함되면 오류가 발생하니까 
-# 공백을 기준으로 쪼개고 빈 줄을 걸러내야 함
+    items = line.split(',') # 쉼표를 기준으로 쪼갬 
+    print(items)
 
-result = [int(i) for i in total_incomes.split()]
-print(type(result),result)
+    # 혹시라도 다른 데이터에 "원" 글자가 남아있을 수도 있으니 마저 정리 
+    quantity = int(items[1])
+    price = int(items[2].replace('원' , ''))
 
-total_income = sum(result) # 전체 매출을 계산
-print(total_income)
+    # 수량과 가격을 곱해서 총 매출 주머니에 넣기 
+    total_sales += (quantity * price)
 
+    print('-' * 30)
+    print(f"전체 매출 : {total_sales} 원")
