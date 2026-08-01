@@ -176,7 +176,7 @@ print(clean_orders) # 잘 제거가 되었는지 확인
 
 total_sales = 0 #  총 매출이 들어갈 주머니 
 
-# clean_orders에는 엔터(\n)이 남아있을 테니까 줄바꿈을 기준으로 쪼개서 리스트로
+# clean_orders에는 엔터(\n)가 남아있을 테니까 줄바꿈을 기준으로 쪼개서 리스트로
 lines = clean_orders.split('\n')
 
 print('-' * 30)
