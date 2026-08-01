@@ -147,6 +147,7 @@ with open ('word.txt', 'r') as file :
            a = word.replace(',' , '').replace('.' , '')
            print(a)
 
+# 8월 3일 평가 문제 연습 
 print('-' * 30)
 # 조건1. order.txt를 읽기 모드로 읽기. 
 with open ('order.txt' , 'r' , encoding='utf-8' ) as file :
@@ -173,3 +174,18 @@ print(clean_orders) # 잘 제거가 되었는지 확인
 
 # 조건4. 전체 매출 뽑아내기 
 # 전체 매출을 뽑아내려면 문자열 그대로 int로 변환을 한다거나 아니면 다른 자료형으로 바꾸면 될거같은데....
+
+# 전체 매출을 내는데 상품명은 필요가 없으니까 replace로 날려버리자
+print('-' * 30)
+total_incomes =  clean_orders.replace('아메리카노' , '').replace('카페라테' , '').replace('물', '').replace('탄산음료' , '')
+print(total_incomes) # 잘 날라갔는지 확인
+
+# int 함수에 공백과 줄바꿈이 포함된 여러 개의 숫자가 한 번에 들어가거나 빈 줄이 포함되면 오류가 발생하니까 
+# 공백을 기준으로 쪼개고 빈 줄을 걸러내야 함
+
+result = [int(i) for i in total_incomes.split()]
+print(type(result),result)
+
+total_income = sum(result) # 전체 매출을 계산
+print(total_income)
+
