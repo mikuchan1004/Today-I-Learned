@@ -188,7 +188,6 @@ for line in lines :
     items = line.split(',') # 쉼표를 기준으로 쪼갬 
     print(items)
 
-    # 혹시라도 다른 데이터에 "원" 글자가 남아있을 수도 있으니 마저 정리 
     quantity = int(items[1]) # 수량을 정수형으로 
     price = int(items[2].replace('원' , ''))  # 가격을 정수형으로 변환하면서 "원" 이라는 글자가 남아있을 수도 있으니 정리
  
