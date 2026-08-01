@@ -189,9 +189,9 @@ for line in lines :
     print(items)
 
     # 혹시라도 다른 데이터에 "원" 글자가 남아있을 수도 있으니 마저 정리 
-    quantity = int(items[1])
-    price = int(items[2].replace('원' , ''))
-
+    quantity = int(items[1]) # 수량을 정수형으로 
+    price = int(items[2].replace('원' , ''))  # 가격을 정수형으로 변환하면서 "원" 이라는 글자가 남아있을 수도 있으니 정리
+ 
     # 수량과 가격을 곱해서 총 매출 주머니에 넣기 
     total_sales += (quantity * price)
 
