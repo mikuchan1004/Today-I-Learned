@@ -228,7 +228,7 @@ def A() :
 
     def B() :
         x = 30
-        
+
         def C() :
             nonlocal x, y 
             print(x)
@@ -236,3 +236,4 @@ def A() :
         C()
     B()   
 A()
+
