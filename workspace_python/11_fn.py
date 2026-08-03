@@ -101,9 +101,138 @@ def 파일출력(경로) :
 
 def local_var() :
     a2 = 10
-    if a2 > 3:
-        print(a2)
-        b2 = 5
-    print(b2)
+    print(a2)
 
 local_var()
+# print(a2) a2는 local_var의 지역 변수라서 현 시점엔 없다.  
+
+def ref(a) :
+    a.append(4)
+    return a
+
+b = [1, 2, 3]
+ref(b)
+print(b)
+
+def fn1(a) :
+    return a+10
+def fn2(a) :
+    return a*10
+c = 10
+b = fn1(c) # 20
+d = fn2(b) # 200
+print(d)
+
+e = fn2( fn1(c) )
+print(e)
+
+print(fn1)
+# print = 2
+
+def ten(x) :
+    return x + 10
+
+ten2 = lambda x : x + 10
+print(ten2(5))
+print ((lambda x : x + 10) (5))
+
+a = ['1' , '2']
+b = [int(a[0]) ,int(a[1])]
+c = list(map(int, a))
+print(a, b, c)
+
+d = list(map(ten2, c))
+print(d)
+
+e = list(map(lambda x : x + 10, c))
+print(e)
+
+def square(x) :
+    return x * x 
+
+sqr = lambda x : x **2
+
+def sum(x , y) :
+    return x + y
+
+add= lambda x, y : x + y 
+
+info = [{
+    'name' : '이름1',
+    'age' : 25
+} , {
+    'name' : '이름2',
+    'age' : 23
+} , {
+    'name' : '이름3',
+    'age' : 30
+}]
+
+# 함수로
+# 나이만 출력
+def print_age (info) :
+    for person in info :
+        print(person['age'])
+print_age(info)
+# lambda로도 만들어보자
+print_age2 = lambda info : [person['age'] for person in info]
+print(print_age2(info))
+
+info.sort(key  = lambda x : x['age'])
+print(info)
+
+x = 10 #  전역변수, global 변수 
+def foo() :
+    x = 20 # 지역변수
+    print('foo 안에서 x:' , x)
+foo()
+print('foo 밖에서 x:' , x)
+
+def foo2():
+    print('foo2 안에서 x:' , x) # 전역 변수 읽기는 됨
+foo2()
+
+def foo3() :
+    global x 
+    x = 20
+foo3()
+print('foo3 이후에 x:' , x)
+
+# 함수 안에서 변수 우선 순위 
+'''
+1. 먼저 지역 변수 찾기
+2. 없으면 전역 변수 찾기
+3. 없으면 에러
+
+'''
+x = 10
+def test(z) :
+    return  z + 2 
+x = test(x)
+
+def test2() :
+    global x 
+    x = x + 2
+
+x = 10
+y = 20
+def test3() :
+    global x , y
+    x = 11
+    y = 12
+
+
+def A() : 
+    x = 10
+    y = 20
+
+    def B() :
+        x = 30
+        
+        def C() :
+            nonlocal x, y 
+            print(x)
+            print(y)
+        C()
+    B()   
+A()
