@@ -196,3 +196,7 @@ for line in lines :
 
     print('-' * 30)
     print(f"전체 매출 : {total_sales} 원")
+
+    print('-' * 30)
+
+    
