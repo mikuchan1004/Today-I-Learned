@@ -73,3 +73,9 @@ print(a.hello)
 # 외부로 노출되지 않는다
 # 캡슐화, 은닉화
 # print(a.___money) # __ + _money라서 안된다
+
+class Knotted:
+    def __init__(self, name, addr):
+        self.brand = '노티드-디저트맛집'
+        self.name = name
+        self.addr = addr
