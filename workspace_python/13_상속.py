@@ -118,13 +118,16 @@ class Car:
 
 class Lambo(Car) :
     def start(self):
+        super().start()
         print('바랑')
 
     def accel(self):
+        super().accel()
         print('스~아~앙')
 
 class Tico(Car):
     def accel(self):
+        super().accel()
         print('부다다당')
 
 car1 = Lambo()
