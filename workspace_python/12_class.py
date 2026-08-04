@@ -75,7 +75,39 @@ print(a.hello)
 # print(a.___money) # __ + _money라서 안된다
 
 class Knotted:
+
+    brand = '노티드-디저트맛집'
+
     def __init__(self, name, addr):
-        self.brand = '노티드-디저트맛집'
+        # self.brand = '노티드-디저트맛집'
         self.name = name
         self.addr = addr
+    def info(self):
+        print(self.name)
+
+k1 =  Knotted('천안점' , '천안')
+k2 = Knotted('아산점' , '아산')
+
+print(k1.name, k1.brand)
+print(k2.name, k2.brand)
+
+print(k1.name, Knotted.brand)
+print(k2.name, Knotted.brand)
+
+class Calc :
+    PI = 3.141592
+
+    def __init__(self):
+        self.meat = 200
+
+    @staticmethod
+    def add(x, y) :
+        return x + y
+
+    def plus(self, x, y) :
+       Calc.add(x, y) 
+
+print(Calc.add(1,2) * Calc.PI)
+
+
+
