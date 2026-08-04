@@ -109,5 +109,17 @@ class Calc :
 
 print(Calc.add(1,2) * Calc.PI)
 
+class Person4:
+    count = 0
 
+    def __init__(self):
+        Person4.count += 1
 
+    @classmethod
+    def print_count(cls) :
+        print(f'{Person4.count}명 생성됨')
+
+p1 = Person4()
+p2 = Person4()
+p3 = Person4()
+Person4.print_count()
