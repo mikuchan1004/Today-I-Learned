@@ -135,3 +135,28 @@ car2 = Tico()
 car1.start()
 car1.accel()
 car2.accel()
+
+from abc import *
+
+# 부모 전용 클래스
+class StudentBase(metaclass = ABCMeta):
+    @abstractmethod
+    def study(self):
+        pass
+
+    @abstractmethod
+    def go_to_school(self):
+        pass
+
+class Student(StudentBase):
+    def study(self):
+        print('공부하기')
+
+    def go_to_school(self):
+        print('학교가기')
+
+a = Student()
+a.study()
+a.go_to_school()
+
+# b = StudentBase() 
