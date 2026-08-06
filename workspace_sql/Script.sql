@@ -3,6 +3,6 @@
 범위 주석
 */
 
-create database human;
-use human;
-
+select * from emp;
+select * from dept;
+select * from salgrade;
