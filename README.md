@@ -13,13 +13,14 @@
 
 |링크 모음|
 | :--- |
+[HTML, CSS 수업을 위해 활용할 사이트(poiemaweb)](https://poiemaweb.com/)
 [전체 수업 내용 정리(노션)](https://www.notion.so/260629-387a69c6e8268029bc39e45c08072f09)
 [HTML 수업 내용 정리(노션)](https://www.notion.so/HTML-387a69c6e82680c6b409f13b73f5f457)
 [CSS 수업 내용 정리(노션)](https://www.notion.so/CSS-38aa69c6e82680da83aec28fc55d5fcb)
 [Git 내용 정리(노션)](https://www.notion.so/GIT-390a69c6e8268051877acc5585bd54d9)
 [Javascript 내용 정리(노션)](https://app.notion.com/p/Javascript-396a69c6e826804f8c78fc9df7331894)
 [Python 내용 정리(노션)](https://app.notion.com/p/Python-3ada69c6e82680d5a1a9df775683a0e9)
-[HTML, CSS 수업을 위해 활용할 사이트(poiemaweb)](https://poiemaweb.com/)
+[RDBMS 내용 정리(노션)](https://app.notion.com/p/RDBMS-3b5a69c6e826804980f8ee9e0551c059)
 
 ------------------------------------------------------------------------
 
