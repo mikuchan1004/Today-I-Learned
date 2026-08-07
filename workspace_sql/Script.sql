@@ -11,7 +11,9 @@ select empno from emp;
 select empno, ename from emp;
 
 select job from emp;
+
 -- 중복 결과를 하나만 보여준다 --
+
 select distinct job from emp;
 
 select job as '직업' from emp;
@@ -56,15 +58,18 @@ select * from emp
 where not(sal = 3000);
 
 -- 문제 1. 급여가 2000 이상이고 3000 미만인 사원을 출력
+
 select * from emp 
 where sal >= 2000 and sal < 3000;
 
 -- beetween A and B 
 -- A 이상 and B 이하
+
 select * from emp 
 where sal between 2000 and 3000;
 
 -- 문제 2. job이 CLERK 이거나 급여가 2000 초과이면서 부서 번호가 10인 사원만 출력
+
 select * from emp 
 where job ='CLERK' or (sal > 2000 and deptno = 10);
 
@@ -73,6 +78,7 @@ where deptno = 20 or deptno = 30 or deptno = 10
 
 -- 컬럼이 같고 or로 연결되어 있는 경우 
 -- in으로 간편하게 표현 가능
+
 select * from emp 
 where deptno in(20, 30)
 
@@ -80,6 +86,7 @@ select * from emp
 where deptno not in(20, 30)
 
 -- % : 모든 글자를 뜻함(심지어 글씨가 없어도 포함)
+
 select * from emp
 where ename like 'S%';
 
@@ -90,11 +97,13 @@ select * from emp
 where ename like '%AM%';
 
 -- _ : 아무 글자 딱 하나를 뜻함
+
 select * from emp
 where ename like '_L%';
 
 -- 문제
 -- 이름이 5글자인 사람을 출력하시오
+
 select * from emp
 where ename like '_____';
 
@@ -104,6 +113,7 @@ select upper('Human');
 
 -- 문제 'Am'을 이용해 am이 이름 중간에 들어가는 사람만 출력
 -- (mariaDB는 like에서 대소문자 구분을 원래 안함)
+
 select * from emp
 where ename like lower('%am');
 
@@ -128,15 +138,18 @@ select * from emp
 where comm is not null
 
 
+-- order by
 
 select * from emp
 order by sal;
 
 -- asc : 오름차순, 생략 가능 
+
 select * from emp 
 order by sal asc; 
 
 -- desc : 내림차순
+
 select * from emp 
 order by sal desc; 
 
@@ -145,6 +158,7 @@ order by deptno;
 
 -- order by에 여러 컬럼이 적혀있는 경우
 -- 왼쪽부터 정렬되고 동일한 값이 있는 경우 다음 조건이 적용된다.
+
 select * from emp
 order by deptno desc, job;
 
@@ -156,6 +170,7 @@ where sal > 1000
 order by deptno desc, job asc, empno;
 
 -- limit : 보여줄 row의 수 제한 
+
 select * from emp
 where sal > 1000
 order by deptno desc, job asc, empno
@@ -163,6 +178,7 @@ limit 3;
 
 -- limit offset, rows
 -- offset만큼 건너뛰고 rows만 보여줌
+
 select * from emp
 where sal > 1000
 order by deptno desc, job asc, empno
@@ -172,6 +188,7 @@ limit 5,3;
 -- 급여가 2000~3000 사이(포함)인 사원의 
 -- 연봉이 작은 순으로 출력하시오
 -- 단, 연봉이 같으면 이름을 내림차순으로
+
 select * from emp
 where 
 	(deptno = 20 or deptno = 30) 
