@@ -109,8 +109,25 @@ where ename like lower('%am');
 
 -- 문제
 -- 부서 10 또는 20의 사원 중 이름에 A가 들어가는 사원만 출력 
+
 select * from emp
 where deptno in (10, 20) and ename like('%A%');
+
+-- null 다루기 
+
+select * from emp
+where comm = null;
+
+select * from emp
+where comm < 100;
+
+select * from emp
+where comm is null
+
+select * from emp
+where comm is not null
+
+
 
 select * from emp
 order by sal;
