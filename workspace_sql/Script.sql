@@ -417,5 +417,134 @@ where sal > (select sal
 select * from emp
 where sal > (select avg(sal) from emp);
 
+-- 부서별 최고 연봉자 
+-- 1. 부서별 최고 연봉
+
+select max(sal) 
+from emp
+group by deptno
+
+select ename, sal
+from emp
+-- where sal = 3000 or sal = 2850 or sal = 5000;
+where sal in (3000, 2850, 5000);
+
+select ename, sal, deptno
+from emp 
+where sal in (select max(sal)
+			  from emp
+			  group by deptno);
+
+select sal from emp where ename = 'SCOTT';
+select * from salgrade;
+
+select grade 
+from salgrade
+where 3000 between losal and hisal;
+
+select sal, ename, 
+		(select grade 
+			from salgrade
+			where 3000 between losal and hisal)
+from emp where ename = 'SCOTT';
+
+select * from dept
+
+select * 
+from emp, dept;
+
+select * 
+from emp, dept
+where emp.deptno = dept.deptno;
+
+select * 
+from emp e, dept d
+where e.deptno = d.deptno;
+
+-- select ename, dname, deptno
+-- from emp e, dept d 
+-- where e.deptno = d.deptno;
+
+select e.ename, d.dname, e.deptno
+from emp e, dept d
+where e.deptno = d.deptno;
+
+select * from salgrade;
+
+-- 스미스의 연봉 등급은?
+-- 이름, 월급, 등급, losal, hisal
+select * from salgrade 
+where (800) >= losal and 800 <= hisal;
+
+select sal from emp
+where ename = 'SMITH';
+
+select ename, sal, grade, losal, hisal
+from emp e , salgrade s 
+where sal >= losal and sal <= hisal
+and ename = 'SMITH';
+
+select * from emp;
+
+select mgr 
+from emp 
+where ename = 'SMITH';
+
+select 
+	ename
+from emp 
+where empno = 7902;
+
+select 
+	ename
+from emp 
+where empno = (select 
+				MGR 
+				from emp
+				where ename = 'SMITH');
+
+-- mgr이 null인 것은 빠진다.
+select e1.ename , e2.ename
+from emp e1, emp e2
+where e1.mgr = e2.empno
+and e1.ename = 'SMITH';
+
+-- 문제
+-- 모든 사람의 이름, 부서명, 급여 등급, 등급 순 내림차순
+select ename, sal, dname, grade
+from emp e, dept d, salgrade s
+where e.deptno = d.deptno 
+and e.sal between s.losal and s.hisal
+order by grade desc , sal desc;
+
+select ename, ename from emp;
+select ename, emp.* from emp;
+select ename, e.* from emp e;
+
+select e.deptno
+from emp e join dept d on(e.deptno = d.deptno);
+
+select deptno
+from emp e join dept d using(deptno);
+
+select e1.empno, e1.ename, e2.empno, e2.ename
+from emp e1
+	left outer join emp e2 on e1.mgr = e2.empno;
+
+select e1.empno, e1.ename, e2.empno, e2.ename
+from emp e1
+	right outer join emp e2 on e1.mgr = e2.empno;
+
+select * from dept;
+
+-- 문제
+-- deptno, dname, empno, ename
+-- 모든 부서가 다 나오게
+-- 부서번호 오름차순, 부서번호가 같으면 이름 오름차순
+select deptno, dname, empno, ename
+from dept d
+	left outer join emp e using(deptno)
+order by deptno, ename;
+
 
 
