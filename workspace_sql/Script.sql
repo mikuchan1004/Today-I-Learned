@@ -622,7 +622,7 @@ select * from emp_2;
 select * from dept_2;
 select * from salgrade_2;
 
--- 새로 만든 테이블들을 날려보자
+-- 새로 만든 테이블들을 지워보자
 
 drop table emp_2;
 drop table dept_2;
