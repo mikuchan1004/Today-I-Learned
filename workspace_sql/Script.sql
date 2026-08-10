@@ -887,3 +887,98 @@ with recursive emp_recu as (
 )
 select * from emp_recu
 order by sort_key;
+
+-- 문제 1
+-- 1981년에 입사한 사원 중에서 
+-- 급여가 가장 낮은 사원을 조회하시오
+
+select ename, hiredate, sal
+from emp
+where to_char(hiredate, 'YYYY') = '1981'
+and sal = (
+	select min(sal)
+	from emp 
+	where to_char(hiredate, 'YYYY') = '1981'
+)
+
+-- 문제 2
+-- 각 부서 별 급여가 가장 높은 사원과 가장 낮은 사원의 차이를 조회하시오.
+-- 결과 : 부서명, 차이 금액
+select 
+	d.dname,
+	max(e.sal)-min(e.sal)
+from
+	emp e
+join
+	dept d on e.deptno = d.deptno
+group by
+	d.deptno, d.dname;
+
+-- 문제 3
+-- BLAKE보다 높은 연봉을 받는 사람들 출력
+select ename, sal
+from emp
+where sal > 2850
+
+-- 문제 4
+-- JONES랑 같은 job을 가진 사람들
+
+select * from emp
+where job='MANAGER'
+
+-- 문제 5 
+-- 급여 등급 별 사원 수를 등급 오름차순으로 정렬 
+-- 단, 모든 등급을 표시한다.
+
+select
+	s.grade,
+	count(e.empno)
+from 
+	emp e
+join 
+	salgrade s on e.sal between s.losal and s.hisal
+group by 
+	s.grade 
+order by 
+	s.grade asc;
+
+
+-- 문제 6
+-- 이름, 급여, 급여 등급, 부서 이름 조회
+-- 단, 급여 등급 3 이상만 조회
+-- 급여 등급 내림차순, 등급이 같은 경우 급여 내림차순, 급여가 같은 경우 이름 내림차순
+
+select e.ename, e.sal, s.grade, d.dname 
+from emp e
+join dept d on e.deptno = d.deptno
+join salgrade s on e.sal between s.losal and s.hisal 
+where s.grade >= 3
+order by s.grade desc, e.sal desc, e.ename desc
+
+-- 문제 7
+-- 부서명이 SALES인 사원 중 급여 등급이 2 또는 3인 사원을 급여 내림차순으로 정렬
+
+select e.ename, e.sal, s.grade, d.dname
+from emp e 
+join dept d on e.deptno = d.deptno
+join salgrade s on e.sal between s.losal and s.hisal
+where d.dname = 'SALES' and s.grade between 2 and 3
+order by e.sal desc
+
+-- 문제. 부서 이름별로 사원 수와 평균 급여를 조회하시오. 
+-- 단, 사원 수가 3명 이상인 부서만 조회되어야 하며, 평균 급여가 높은 순서(내림차순)로 정렬하시오. (by Google Gemini)
+
+select 
+	d.dname,
+	count(*),
+	avg(e.sal)
+from 
+	emp e
+join
+	dept d on e.deptno = d.deptno
+group by
+	d.dname
+having 
+	count(*) >= 3
+order by
+	avg(e.sal) desc;
