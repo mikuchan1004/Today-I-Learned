@@ -640,6 +640,141 @@ create table dept3 (
 	loc varchar(13)
 );
 
+-- ALTER
 
+alter table emp3
+add gender varchar(10) not null default '남';
+select * from emp3;
 
+alter table emp3
+change gender gender2 varchar(10);
+select * from emp3;
+
+alter table emp3
+rename column gender2 to gender3;
+select * from emp3;
+
+alter table emp3
+drop column gender;
+select * from emp3;
+
+alter table emp3
+rename to emp4;
+select * from emp4;
+
+drop table emp4;
+drop table dept3;
+
+select * from emp_copy;
+truncate table emp_copy; -- 아주 위험한 코드니까 주의!
+select * from emp_copy;
+
+select * from dept2;
+drop table dept2;
+
+select * from emp2;
+drop table emp2;
+
+create table dept2 (
+	deptno int(2) primary key,
+	dname varchar(14),
+	loc varchar(13)
+);
+
+create table emp2 (
+	empno int(4), 
+	ename varchar(10) not null,
+	job varchar(9) default 'CLERK',
+	mgr int(4),
+	hiredate date default now(),
+	sal decimal(7,2), 
+	comm decimal(7,2),
+	deptno int(2),
+	primary key(empno),
+	foreign key(deptno) references dept2(deptno)
+);
+
+select * from emp2;
+
+insert into dept2 
+values(
+	10,
+	'휴먼',
+	'천안'
+);
+
+insert into emp2 
+values(
+		1000, 
+		'김상우', 
+		'MANAGER', 
+		2000, 
+		'2026-08-09',
+		3000,
+		50,
+		10
+);
+
+select * from emp2;
+
+insert into emp2 (empno, ename, sal, comm, deptno)
+values (
+	1001, '홍길동', 4100, 150, 10
+);
+
+select * from emp2;
+
+-- ename은 not null 제한이 있고
+-- insert에 누락하면 null이 들어간다 
+-- 그래서 에러 발생
+
+/*insert into emp2 (empno, sal, comm, deptno)
+values (
+	1001, 4100, 150, 10
+);
+*/
+
+-- primary key
+-- unique + not null
+
+/*
+insert into emp2 (empno, ename, sal, comm, deptno)
+values (
+	1001, '홍길동', 4100, 150, 10
+);
+*/
+
+-- dept 테이블에 deptno 20값이 없어서 에러
+
+/*
+insert into emp2 (empno, ename, sal, comm, deptno)
+values (
+	1002, '홍길동', 4100, 150, 20
+);
+*/
+
+insert into emp2 (empno, ename, sal, comm, deptno)
+values 
+(1002, '홍길동2', 4100, 150, 10),
+(1003, '홍길동3', 4100, 150, 10),
+(1004, '홍길동4', 4100, 150, 10);
+
+select * from emp2;
+
+-- UPDATE
+
+update emp2
+set 
+	sal = 1000,
+	comm = 200;
+
+select * from emp2;
+
+update emp2
+set	
+	sal = sal * 1.1,
+	comm = comm * 1.2
+where empno = 1002;
+
+select * from emp2;
 
