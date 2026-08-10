@@ -755,9 +755,9 @@ values (
 
 insert into emp2 (empno, ename, sal, comm, deptno)
 values 
-(1002, '홍길동2', 4100, 150, 10),
-(1003, '홍길동3', 4100, 150, 10),
-(1004, '홍길동4', 4100, 150, 10);
+(1012, '홍길동2', 4100, 150, 10),
+(1013, '홍길동3', 4100, 150, 10),
+(1014, '홍길동4', 4100, 150, 10);
 
 select * from emp2;
 
@@ -777,4 +777,19 @@ set
 where empno = 1002;
 
 select * from emp2;
+
+update dept2
+set deptno = 20
+where deptno = 10;
+
+-- DELETE
+
+delete from emp2
+where empno = 1002;
+select * from emp2;
+
+delete from emp2;
+select * from emp2;
+
+
 
