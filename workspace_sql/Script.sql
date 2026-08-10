@@ -546,87 +546,100 @@ from dept d
 	left outer join emp e using(deptno)
 order by deptno, ename;
 
--- 새로운 테이블을 만들어보자
 
-use human; -- 데이터베이스 'human'을 사용하겠다는 의미 
+-- having 없이 서브쿼리로 해결해보자 
+-- 1. 부서 별 평균 연봉 출력
 
-create table dept_2 (
-deptno int(2) primary key,
-dname varchar(14),
-loc varchar(13)
+select avg(sal)
+from emp
+group by deptno;
+
+-- 2. 부서 별 평균 연봉이 2000 이상인 부서만 출력
+
+select avg(sal) avg_sal
+from emp
+-- where avg_sal >= 2000 -- 별칭은 select 이후에 사용 가능
+-- where avg(sal) >= 2000 -- 집계 함수 사용 불가
+group by deptno
+having avg(sal) >= 2000;
+
+-- 서브쿼리를 써보자
+
+select * 
+from (
+	select avg(sal) avg_sal
+	from emp
+	group by deptno
+)a
+where avg_sal >= 2000;
+
+-- DDL
+-- create
+
+desc emp;
+
+create table emp2(
+	empno int(4) primary key, 
+	ename varchar(10) not null,
+	job varchar(9),
+	mgr int(4),
+	hiredate date,
+	sal decimal(7,2), -- 총 7자리, 그 중 2자리 소수점
+	comm decimal(7,2),
+	deptno int(2)
 );
 
-create table emp_2 (
-empno int(4) primary key,
-ename varchar(10),
-job varchar(9),
-mgr int(4),
-hiredate date,
-sal decimal(7,2),
-comm decimal(7,2),
-deptno int(2),
-constraint fk_deptno foreign key (deptno) references dept(deptno)
+select * from emp2;
+
+desc emp2;
+
+desc dept;
+
+create table dept2 (
+	deptno int(2) primary key,
+	dname varchar(14),
+	loc varchar(13)
 );
 
--- 새로 만든 테이블에 데이터를 넣어보자
+select * from dept2;
 
-insert into dept_2 values(10,'accounting', 'newwork');
-insert into dept_2 values(20, 'reserach' , 'dallas');
-insert into dept_2 values(30, 'sales', 'chigago' );
-insert into dept_2 values(40, 'operations' , 'boston');
+-- 테이블 복사
 
-select * from dept_2; -- 잘들어갔는지 확인 
+create table emp_copy 
+as select * from emp;
+select * from emp_copy;
 
-insert into emp_2 values
-(7369, 'smith', 'clerk', 7902, str_to_date('17-12-1980', '%d-%m-%Y'), 800, null, 20),
-(7499, 'allen', 'salesman', 7698, str_to_date('20-2-1981','%d-%m-%Y'), 1600, 300, 30),
-(7521, 'ward', 'salesman', 7698, str_to_date('22-2-1981', '%d-%m-%Y'), 1250, 500, 30),
-(7566, 'jones', 'manager', 7839, str_to_date('2-4-1981', '%d-%m-%Y'), 2975, null, 20),
-(7654, 'martin', 'salesman', 7698, str_to_date('28-9-1981', '%d-%m-%Y'), 1250, 1400, 30),
-(7698, 'blake', 'manager', 7839, str_to_date('1-5-1981', '%d-%m-%Y'), 2850, null, 30),
-(7782, 'clark' , 'manager' , 7839, str_to_date('9-6-1981' , '%d-%m-%Y'), 2450, null, 10),
-(7788, 'scott' , 'analyst', 7566, str_to_date('13-7-1987' , '%d-%m-%Y'), 3000, null, 20),
-(7839, 'king', 'president' , null, str_to_date('17-11-1981', '%d-%m-%Y'), 5000, null, 10),
-(7844, 'turner', 'salesman', 7698, str_to_date('8-9-1981' , '%d-%m-%Y'), 1500, 0, 30),
-(7876, 'adams' , 'clerk' , 7788, str_to_date('13-7-1987', '%d-%m-%Y'), 1100, null, 20),
-(7900, 'james', 'clerk' , 7698, str_to_date('3-12-1981', '%d-%m-%Y'), 950, null, 30),
-(7902, 'ford' , 'analyst' , 7566, str_to_date('3-12-1981', '%d-%m-%Y'), 3000, null, 20),
-(7934, 'miller', 'clerk', 7782, str_to_date('23-1-1982', '%d-%m-%Y'), 1300, null, 10);
+create table emp_copy2
+as select * from emp where 1 <> 1;
+select * from emp_copy2;
 
-select * from emp_2; -- 잘들어갔는지 확인 
+create table dept3 
+as select * from dept where 1 != 1;
+select * from dept3;
 
-create table bonus_2 (
-ename varchar(10),
-job varchar(9),
-sal int,
-comm int
+create table emp3 (
+	empno int(4), 
+	ename varchar(10) not null,
+	job varchar(9),
+	mgr int(4),
+	hiredate date,
+	sal decimal(7,2), 
+	comm decimal(7,2),
+	deptno int(2),
+	primary key(empno),
+	foreign key(deptno) references dept3(deptno)
 );
 
-create table salgrade_2 (
-grade int,
-losal int,
-hisal int
+-- 테이블 삭제 
+
+drop table dept3;
+
+create table dept3 (
+	deptno int(2) primary key,
+	dname varchar(14),
+	loc varchar(13)
 );
 
-insert into salgrade_2 values(1,700,1200);
-insert into salgrade_2 values(2,1201,1400);
-insert into salgrade_2 values(3,1401,2000);
-insert into salgrade_2 values(4,2001,3000);
-insert into salgrade_2 values(5,3001,5000);
 
-select * from salgrade_2;
-
--- 테이블들이 잘 만들어졌는지, 데이터가 잘 들어갔는지 확인해보자
-
-select * from emp_2;
-select * from dept_2;
-select * from salgrade_2;
-
--- 새로 만든 테이블들을 지워보자
-
-drop table emp_2;
-drop table dept_2;
-drop table bonus_2;
-drop table salgrade_2;
 
 
