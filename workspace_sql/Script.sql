@@ -791,5 +791,15 @@ select * from emp2;
 delete from emp2;
 select * from emp2;
 
+rollback;
+select * from emp2;
+select * from dept2;
 
+commit;
+rollback;
+
+delete from emp2
+where empno = 1013;
+rollback;
+select * from emp2;
 
