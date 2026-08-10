@@ -803,3 +803,87 @@ where empno = 1013;
 rollback;
 select * from emp2;
 
+
+select * 
+from emp e
+	left outer join emp2 e2 on(e.mgr = e2.empno)
+	left outer join dept d on(e.deptno = d.deptno)
+order by e.ename desc;
+
+select * from emp
+where deptno = 10;
+
+-- INDEX
+
+create index idx_emp_empno_desc
+on emp(empno desc);
+
+select * from emp
+order by empno desc;
+
+create index idx_emp_deptno
+on emp(deptno);
+
+select * from emp 
+order by deptno = 10;
+
+select * 
+from emp force index(idx_emp_deptno)
+where deptno = 10
+order by deptno;
+
+-- mariadb 한글 한 글자는 3Byte
+
+select length('한글');
+select length('ab');
+
+select max(empno)+1 from emp;
+
+-- sequence 
+
+create table emp_auto (
+	empno int auto_increment,
+	ename varchar(50),	
+	primary key(empno)
+);
+
+insert into emp_auto(ename)
+values ('민수');
+
+select * from emp_auto;
+
+insert into emp_auto(ename)
+values ('민수2');
+select * from emp_auto;
+
+-- 무한 대댓글
+
+select 
+	empno, ename, mgr, 1 as level
+from emp 
+where mgr is null
+union all 
+select 
+	empno, ename, mgr, 2 as level
+from emp 
+where mgr = 7839;
+
+with recursive emp_recu as (
+	select 
+		empno, ename, mgr,
+		lpad(ename, length(ename), ' '),
+		1 as level, 
+		cast(ename as char(200)) as sort_key
+	from emp 
+	where mgr is null
+	union all 
+	select 
+		e.empno, e.ename, e.mgr, 
+		lpad(e.ename, (er.level*4)+length(e.ename), ' '),
+		er.level+1 as level,
+		concat(er.sort_key, '-', cast(e.ename as char(200))) as sort_key
+	from emp e
+		join emp_recu er on (e.mgr = er.empno)
+)
+select * from emp_recu
+order by sort_key;
