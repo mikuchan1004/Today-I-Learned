@@ -894,19 +894,20 @@ order by sort_key;
 
 select ename, hiredate, sal
 from emp
-where to_char(hiredate, 'YYYY') = '1981'
+where substr(hiredate, 1, 4) = '1981'
 and sal = (
 	select min(sal)
 	from emp 
-	where to_char(hiredate, 'YYYY') = '1981'
+	where substr(hiredate, 1, 4) = '1981'
 )
 
 -- 문제 2
 -- 각 부서 별 급여가 가장 높은 사원과 가장 낮은 사원의 차이를 조회하시오.
 -- 결과 : 부서명, 차이 금액
+
 select 
 	d.dname,
-	max(e.sal)-min(e.sal)
+	max(e.sal)-min(e.sal) as '차이 금액'
 from
 	emp e
 join
@@ -916,23 +917,25 @@ group by
 
 -- 문제 3
 -- BLAKE보다 높은 연봉을 받는 사람들 출력
+
 select ename, sal
 from emp
-where sal > 2850
+where sal > (select sal from emp
+			 where ename = 'BLAKE')
 
 -- 문제 4
 -- JONES랑 같은 job을 가진 사람들
 
 select * from emp
-where job='MANAGER'
+where job = (select job from emp
+			where ename = 'JONES')
 
 -- 문제 5 
 -- 급여 등급 별 사원 수를 등급 오름차순으로 정렬 
 -- 단, 모든 등급을 표시한다.
 
 select
-	s.grade,
-	count(e.empno)
+	s.grade, count(*)
 from 
 	emp e
 join 
@@ -941,7 +944,6 @@ group by
 	s.grade 
 order by 
 	s.grade asc;
-
 
 -- 문제 6
 -- 이름, 급여, 급여 등급, 부서 이름 조회
