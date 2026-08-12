@@ -1022,10 +1022,11 @@ select e.ename as 사원명, d.dname as 부서명, e.sal as 급여, round(dept_a
 from emp e
 join dept d on e.deptno = d.deptno 
 join (
+	-- 부서별 평균 급여를 구하는 서브 쿼리
 	select deptno, avg(sal) as avg_sal
 	from emp 
 	group by deptno
 )dept_avg
 	on e.deptno = dept_avg.deptno
-where e.sal > dept_avg.avg_sal
-order by d.dname asc, e.sal desc;
+where e.sal > dept_avg.avg_sal -- 본인 급여가 부서 평균보다 높은 사람만
+order by d.dname asc, e.sal desc; -- 부서별 오름차순, 급여 내림차순
