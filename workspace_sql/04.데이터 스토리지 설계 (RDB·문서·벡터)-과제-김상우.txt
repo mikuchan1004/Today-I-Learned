@@ -1,0 +1,60 @@
+/*
+ 문제 1
+ 급여가 2000을 초과하는 사원의 사원명, 급여, 부서이름을 조회하세요. 
+ */
+
+select e.ename, e.sal , d.dname
+from emp e
+join dept d on e.deptno = d.deptno
+where sal > 2000;
+
+/*
+ 문제 2 
+ 급여가 1000 이상 3000 이하인 사원의 사원명, 급여, 급여등급을 조회하세요.
+ */
+
+select e.ename, e.sal, s.grade
+from emp e
+join salgrade s on e.sal between s.losal and s.hisal
+where sal >= 1000 and sal <= 3000;
+
+/*
+ 문제3
+ 입사일이 빠른 순으로 사원명, 입사일, 부서이름을 출력하세요.
+ */
+
+select e.ename, e.hiredate, d.dname 
+from emp e
+join dept d on e.deptno = d.deptno
+order by hiredate;
+
+/*
+ 문제 4
+ 급여등급이 3 이상인 사워만 사원명, 부서이름, 급여, 급여등급을 급여 기준 내림차순
+ 정렬하세요.
+ */
+
+select e.ename, d.dname, e.sal, s.grade
+from emp e
+join dept d on e.deptno = d.deptno
+join salgrade s on e.sal between s.losal and s.hisal 
+where grade >= 3
+order by e.sal desc;
+
+/*
+ 문제 5
+ 각 부서 별로 평균 급여보다 높은 사원만 사원명, 부서이름, 급여, 평균급여를 
+ 부서이름 오름차순, 급여 내림차순으로 정렬하세요.
+ */
+
+select e.ename as 사원명, d.dname as 부서명, e.sal as 급여, round(dept_avg.avg_sal, 2) as 평균급여
+from emp e
+join dept d on e.deptno = d.deptno 
+join (
+	select deptno, avg(sal) as avg_sal
+	from emp 
+	group by deptno
+)dept_avg
+	on e.deptno = dept_avg.deptno
+where e.sal > dept_avg.avg_sal
+order by d.dname asc, e.sal desc;
