@@ -967,25 +967,6 @@ join salgrade s on e.sal between s.losal and s.hisal
 where d.dname = 'SALES' and s.grade between 2 and 3
 order by e.sal desc
 
--- 문제. 부서 이름별로 사원 수와 평균 급여를 조회하시오. 
--- 단, 사원 수가 3명 이상인 부서만 조회되어야 하며, 평균 급여가 높은 순서(내림차순)로 정렬하시오. (by Google Gemini)
-
-select 
-	d.dname,
-	count(*),
-	avg(e.sal)
-from 
-	emp e
-join
-	dept d on e.deptno = d.deptno
-group by
-	d.dname
-having 
-	count(*) >= 3
-order by
-	avg(e.sal) desc;
-
-
 -- 데이터 스토리지 설계 (RDB·문서·벡터) 시험 문제 풀이
 
 /*
