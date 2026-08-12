@@ -21,7 +21,8 @@
 [Javascript 내용 정리(노션)](https://app.notion.com/p/Javascript-396a69c6e826804f8c78fc9df7331894)
 [Python 내용 정리(노션)](https://app.notion.com/p/Python-3ada69c6e82680d5a1a9df775683a0e9)
 [RDBMS 내용 정리(노션)](https://app.notion.com/p/RDBMS-3b5a69c6e826804980f8ee9e0551c059)
-
+[FastAPI 내용 정리(노션)](https://app.notion.com/p/FastAPI-3baa69c6e826807195abf1ec6e41fc3a)
+[가상 환경 venu 내용 정리(노션)](https://app.notion.com/p/venv-3baa69c6e826807a8dd0e82776ac3e61)
 ------------------------------------------------------------------------
 
 ## 📅 학습 목차
