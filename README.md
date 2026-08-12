@@ -13,8 +13,8 @@
 
 |링크 모음|
 | :--- |
-[전체 수업 내용 정리(노션)](https://www.notion.so/260629-387a69c6e8268029bc39e45c08072f09)
 [HTML, CSS 수업을 위해 활용할 사이트(poiemaweb)](https://poiemaweb.com/)
+[전체 수업 내용 정리(노션)](https://www.notion.so/260629-387a69c6e8268029bc39e45c08072f09)
 [Git 내용 정리(노션)](https://www.notion.so/GIT-390a69c6e8268051877acc5585bd54d9)
 [HTML 수업 내용 정리(노션)](https://www.notion.so/HTML-387a69c6e82680c6b409f13b73f5f457)
 [CSS 수업 내용 정리(노션)](https://www.notion.so/CSS-38aa69c6e82680da83aec28fc55d5fcb)
