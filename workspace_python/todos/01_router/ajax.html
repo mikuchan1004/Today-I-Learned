@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax</title>
+    <script>
+        window.onload = () => {
+            document.querySelector('#todo').addEventListener('click', function(){
+
+                id = document.querySelector('#id').value
+                item = document.querySelector('#item').value
+                param = {
+                    id: id,
+                    item 
+                }
+                
+                fetch('http://127.0.0.1:8000/todo', {
+                    method : 'POST' , 
+                    headers : {
+                        "Content-Type" : "application/json"
+                    },
+                    body : JSON.stringify(param) 
+                })
+                .then(function(response){
+                    return response.json()
+                }).then(function(data){
+                    console.log(data)
+                }).catch(function(err){
+                    console.error(err)
+                })
+            })
+
+            document.querySelector('#todo2').addEventListener('click', function(){
+                new Promise(function(resolve, reject){
+                    setTimeout(function(){
+                        try {
+                            console.log('지금이니!!')
+                            resolve("메세지")
+                        }catch(e) {
+                            reject("메세지")
+                        }
+                    }, 1000)
+                }).then(function(data){
+                    console.log("then에서 출력 :", data)
+                }).catch(function(data){
+                    console.error('catch에서 출력 :', data)
+                })
+
+            })
+
+            document.querySelector('#todo3').addEventListener('click', async function(){
+                console.log('시작전')
+                // const data = await new Promise(function(resolve, reject){
+                //     setTimeout(function(){
+                //         try {
+                //             console.log('지금이니!!')
+                //             resolve("메세지")
+                //         }catch(e) {
+                //             reject("메세지")
+                //         }
+                //     }, 1000)
+                // })
+
+                await new Promise(resolve => setTimeout(resolve, 1000))
+                console.log('이후')        
+            })
+
+            document.querySelector('#todo4').addEventListener('click', async function(){
+
+                id = document.querySelector('#id').value
+                item = document.querySelector('#item').value
+                param = {
+                    id: id,
+                    item 
+                }
+                
+                let response = await fetch('http://127.0.0.1:8000/todo', {
+                    method : 'POST' , 
+                    headers : {
+                        "Content-Type" : "application/json"
+                    },
+                    body : JSON.stringify(param) 
+                })
+               console.log(response)
+               console.log('------------')
+               console.log(await response.json())
+            })
+
+        }
+    </script>
+</head>
+<body>
+    <form method="post" action="http://127.0.0.1:8000/todo/param2" >
+        id : <input type="text" name="id"><br>
+        item : <input type="text" name="item"><br>
+        <br>
+        <input type="submit" value="전송">
+    </form>
+    <br>
+    <div>
+        id : <input type="text" name="id" id="id"><br>
+        item : <input type="text" name="item" id="item"><br>
+        <button id="todo">todo 추가</button><br>
+        <button id="todo2">todo 추가-동기1</button><br>
+        <button id="todo3">todo 추가-동기2</button><br>
+        <button id="todo4">todo 추가-동기3</button><br>
+
+    </div>
+</body>
+</html>
