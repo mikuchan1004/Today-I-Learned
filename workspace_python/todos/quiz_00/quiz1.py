@@ -2,7 +2,6 @@ from fastapi import APIRouter, Request
 
 todo_router = APIRouter()
 
-
 # 문제 1.
 # 브라우저에서 
 # - input에 몇 단 입력
