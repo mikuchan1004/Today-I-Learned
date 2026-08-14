@@ -25,6 +25,4 @@ async def todoParam(req:Request):
             "두번째 숫자" : num2,
             "결과는?" : total
         }
-    return {
-        print('숫자만 입력하는겁니다. ㅇㅋ?')
-    }
+    return {"error" : "제발 숫자만 넣어주세요."}

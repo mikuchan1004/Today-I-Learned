@@ -30,6 +30,8 @@ async def todoParam(req:Request):
         elif oper == '*':
             total = num_int1 * num_int2
         elif oper == '/':
+            if num_int2 == 0:
+                return {"error" : "0으로 나눌 수 없다구 이 바보야"}
             total = num_int1 / num_int2
 
         return {
@@ -38,7 +40,4 @@ async def todoParam(req:Request):
             "두번째 숫자" : num_int2,
             "결과는?" : total
         }
-    return {
-        print('제발 숫자만 넣어주세요.')
-        
-    }
+    return {"error" : "제발 숫자만 넣어주세요."}
