@@ -34,8 +34,8 @@ async def todoParam(req:Request):
 
         return {
             "첫번째 숫자" : num_int1,
-            "두번째 숫자" : num_int2,
             "연산자" : oper,
+            "두번째 숫자" : num_int2,
             "결과는?" : total
         }
     return {
