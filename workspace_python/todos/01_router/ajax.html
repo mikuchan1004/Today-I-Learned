@@ -97,7 +97,7 @@
         <br>
         <input type="submit" value="전송">
     </form>
-    <br>
+    <hr>
     <div>
         id : <input type="text" name="id" id="id"><br>
         item : <input type="text" name="item" id="item"><br>
@@ -106,17 +106,27 @@
         <button id="todo3">todo 추가-동기2</button><br>
         <button id="todo4">todo 추가-동기3</button><br>
     </div>
+    <hr>
    <form method="post" action="http://127.0.0.1:8000/todo/param3" >
         1~9까지의 숫자를 입력해주세요 : <input type="text" name="number"><br>
         <br>
         <input type="submit" value="전송">
     </form>
-
+    <hr>
     <form method="post" action="http://127.0.0.1:8000/todo/param4" >
         첫번째 숫자를 입력해주세요 : <input type="text" name="num1"><br>
         두번째 숫자를 입력해주세요 : <input type="text" name="num2"><br>
         <br>
         <input type="submit" value="전송">
     </form>
+    <hr>
+     <form method="post" action="http://127.0.0.1:8000/todo/param5" >
+        첫번째 숫자를 입력해주세요 : <input type="text" name="num_int1"><br>
+        연산자를 입력해주세요 : <input type="text" name="operator"><br>
+        두번째 숫자를 입력해주세요 : <input type="text" name="num_int2"><br>
+        <br>
+        <input type="submit" value="전송">
+    </form>
+    <hr>
 </body>
 </html>

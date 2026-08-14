@@ -21,6 +21,9 @@ async def todoParam(req:Request):
         gugudan_list = [f"{num} x {i} = {num * i}" for i in range(1,10)]
     
         return {
-            "number" : num,
-            "gugudan" : gugudan_list
+            "숫자" : num,
+            "구구단 리스트" : gugudan_list
         }
+    return {
+        print('숫자를 입력해주세요 제발!')
+    }

@@ -21,7 +21,10 @@ async def todoParam(req:Request):
         total = num1 + num2
 
         return {
-            "number1" : num1,
-            "number2" : num2,
-            "result" : total
+            "첫번째 숫자" : num1,
+            "두번째 숫자" : num2,
+            "결과는?" : total
         }
+    return {
+        print('숫자만 입력하는겁니다. ㅇㅋ?')
+    }
