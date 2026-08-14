@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Form, Request
+from model import Todo #type:ignore
 
 todo_router = APIRouter()
 
@@ -52,6 +53,14 @@ async def todoParam(req:Request) -> dict:
     return {
         "id": id,
         "item" : item
+    }
+
+@todo_router.post('/todo43')
+def add_todo43(todo:Todo) -> dict:
+    print(f'todo : {todo}')
+    todo_list.append(todo)
+    return {
+        "code" : "200 OK"
     }
 
 print(2, __name__)
