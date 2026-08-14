@@ -1,13 +1,10 @@
 from fastapi import FastAPI
 # 크로스 도메인 문제 해결을 위해 필요한걸 호출
 from fastapi.middleware.cors import CORSMiddleware
-from todo import todo_router #type:ignore
-# quiz_00 폴더의 quiz1 파일에 있는 todo_router를 가져다가 쓰겠다는 의미
-from quiz_00.quiz1 import todo_router
-# quiz_00 폴더의 quiz2 파일에 있는 todo_router를 가져다가 쓰겠다는 의미
-from quiz_00.quiz2 import todo_router
-# quiz_00 폴더의 quiz3 파일에 있는 todo_router를 가져다가 쓰겠다는 의미
-from quiz_00.quiz3 import todo_router
+from todo import todo_router as main_router
+from quiz_00.quiz1 import todo_router as quiz1_router
+from quiz_00.quiz2 import todo_router as quiz2_router
+from quiz_00.quiz3 import todo_router as quiz3_router
 
 # 크로스 도메인 CORS 해결 코드
 app = FastAPI()
@@ -24,7 +21,10 @@ async def welcome() -> dict:
         "message" : "Hello World"
     }
 
-app.include_router(todo_router)
+app.include_router(main_router)
+app.include_router(quiz1_router)
+app.include_router(quiz2_router)
+app.include_router(quiz3_router)
 
 print(1, __name__)
 
