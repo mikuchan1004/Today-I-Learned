@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from todo import todo_router #type:ignore
 
+# 크로스 도메인 CORS 해결 코드
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
