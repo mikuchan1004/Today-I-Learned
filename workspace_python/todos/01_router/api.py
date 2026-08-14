@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from todo import todo_router #type:ignore
+from quiz_00.quiz1 import todo_router
 
 # 크로스 도메인 CORS 해결 코드
 app = FastAPI()
