@@ -1,0 +1,9 @@
+# todos 폴더 내의 가상환경 시스템 파일만 제외
+todos/Lib/
+todos/Scripts/
+todos/Include/
+todos/pyvenv.cfg
+
+# 파이썬 임시 캐시 제외
+__pycache__/
+*.pyc
