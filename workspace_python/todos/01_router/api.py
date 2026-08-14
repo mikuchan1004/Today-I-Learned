@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 # 크로스 도메인 문제 해결을 위해 필요한걸 호출
 from fastapi.middleware.cors import CORSMiddleware
-from todo import todo_router as main_router
+from todo import todo_router as main_router #type:ignore
 from quiz_00.quiz1 import todo_router as quiz1_router
 from quiz_00.quiz2 import todo_router as quiz2_router
 from quiz_00.quiz3 import todo_router as quiz3_router

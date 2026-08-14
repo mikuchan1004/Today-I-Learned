@@ -56,9 +56,9 @@ async def todoParam(req:Request) -> dict:
     }
 
 @todo_router.post('/todo43')
-def add_todo43(todo:Todo) -> dict:
-    print(f'todo : {todo}')
+async def add_todo43(todo:Todo) -> dict:
     todo_list.append(todo)
+    print(f'todo : {todo}')
     return {
         "code" : "200 OK"
     }
