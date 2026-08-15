@@ -4,9 +4,9 @@ todo_router = APIRouter()
 
 # 문제 2.
 # 클라이언트에서 
-# -숫자 두 개를 입력받음 
+# 숫자 두 개를 입력받음 
 # 파이썬에서 
-# - 두 개의 합을 출력.
+# 두 개의 합을 출력.
 
 @todo_router.post("/todo/param4")
 async def todoParam(req:Request):

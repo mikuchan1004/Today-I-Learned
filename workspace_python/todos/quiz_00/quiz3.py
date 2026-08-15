@@ -4,11 +4,11 @@ todo_router = APIRouter()
 
 # 문제 3.
 # 웹에서 
-# - 숫자 2개와 연산자를 입력 
-# - 2, "-" , 3
+# 숫자 2개와 연산자를 입력 
+#  2, "-" , 3
 # 파이썬에서
-# - 결과 출력 
-# - 화면에서도 출력
+# 결과 출력 
+# 화면에서도 출력
 
 @todo_router.post("/todo/param5")
 async def todoParam(req:Request):

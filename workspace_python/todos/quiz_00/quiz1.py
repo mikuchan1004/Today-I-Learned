@@ -4,9 +4,9 @@ todo_router = APIRouter()
 
 # 문제 1.
 # 브라우저에서 
-# - input에 몇 단 입력
+# input에 몇 단 입력
 # 파이썬에서 
-# - 해당 구구단의 단 출력 
+# 해당 구구단의 단 출력 
 
 @todo_router.post("/todo/param3")
 async def todoParam(req:Request):
