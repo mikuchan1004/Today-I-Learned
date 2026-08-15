@@ -24,4 +24,4 @@ async def todoParam(req:Request):
             "숫자" : num,
             "구구단" : gugudan_list
         }
-    return {"error" : "제발 숫자만 넣어주세요."}
+    return {"error" : "숫자만 넣는거라구."}
