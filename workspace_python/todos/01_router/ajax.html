@@ -87,6 +87,25 @@
                console.log(await response.json())
             })
 
+            document.querySelector('#todo43').addEventListener('click', async function(){
+
+                itemValue = document.querySelector('#item_todo43').value
+                
+                let response = await fetch('http://127.0.0.1:8000/todo43', {
+                    method : 'POST' , 
+                    headers : {
+                        "Content-Type" : "application/json"
+                    },
+                    body : JSON.stringify({
+                        id: 1,         
+                        item: itemValue 
+                    }) 
+                })
+               console.log(response)
+               console.log('------------')
+               console.log(await response.json())
+            })
+
         }
     </script>
 </head>
@@ -137,6 +156,10 @@
         <br>
         <input type="submit" value="전송">
     </form>
+    <hr>
+        item : <input type="text" name="item" id="item_todo43"><br>
+        <br>
+      <button id="todo43">전송</button><br>
     <hr>
 </body>
 </html>
