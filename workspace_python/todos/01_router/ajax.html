@@ -101,6 +101,12 @@
                         item: itemValue 
                     }) 
                 })
+                // 서버에서 넘어온 JSON  데이터 변수에 담기 
+                let data = await response.json()
+
+                // HTML 태그(#result)에 글자 집어넣기 
+                document.querySelector('#result').textContent = `서버 응답: ${data.code}`
+
                console.log(response)
                console.log('------------')
                console.log(await response.json())
@@ -118,6 +124,7 @@
         <br>
         <input type="submit" value="전송">
     </form>
+
     <hr>
     <h3>todo2</h3>
     <div>
@@ -136,6 +143,7 @@
         <br>
         <input type="submit" value="전송">
     </form>
+
     <hr>
     <h3>두 숫자의 합 구하기</h3>
     <form method="post" action="http://127.0.0.1:8000/todo/param4" >
@@ -146,6 +154,7 @@
         <input type="submit" value="전송">
     </form>
     <hr>
+
     <h3>웹 버전 계산기</h3>
      <form method="post" action="http://127.0.0.1:8000/todo/param5" >
         첫번째 숫자를 입력해주세요 : <input type="text" name="num_int1"><br>
@@ -156,10 +165,12 @@
         <br>
         <input type="submit" value="전송">
     </form>
+
     <hr>
         item : <input type="text" name="item" id="item_todo43"><br>
         <br>
       <button id="todo43">전송</button><br>
+      <div id="result"></div>
     <hr>
 </body>
 </html>
