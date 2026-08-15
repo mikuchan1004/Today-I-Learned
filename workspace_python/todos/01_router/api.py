@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 # 크로스 도메인 문제 해결을 위해 필요한걸 호출
 from fastapi.middleware.cors import CORSMiddleware
+# 불러온 라우터들에게 별칭 부여
 from todo import todo_router as main_router #type:ignore
 from quiz_00.quiz1 import todo_router as quiz1_router
 from quiz_00.quiz2 import todo_router as quiz2_router
