@@ -6,6 +6,7 @@ from todo import todo_router as main_router #type:ignore
 from quiz_00.quiz1 import todo_router as quiz1_router
 from quiz_00.quiz2 import todo_router as quiz2_router
 from quiz_00.quiz3 import todo_router as quiz3_router
+from ajax import ajax_router #type:ignore
 
 # 크로스 도메인 CORS 해결 코드
 app = FastAPI()
@@ -26,6 +27,7 @@ app.include_router(main_router)
 app.include_router(quiz1_router)
 app.include_router(quiz2_router)
 app.include_router(quiz3_router)
+app.include_router(ajax_router)
 
 print(1, __name__)
 

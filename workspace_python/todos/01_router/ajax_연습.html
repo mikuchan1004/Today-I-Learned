@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax 연습</title>
+    <style>
+        #result2 {
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<script>
+    window.onload = () => {
+    //목록을 불러와서 화면에 그려주는 공통 함수 
+    async function loadTodos() {
+        let response = await fetch('http://127.0.0.1:8000/ajax/todo')
+        const resultData = await response.json()
+
+        console.log('서버 데이터 확인 : ', resultData) 
+            
+        document.querySelector('#result2').textContent = resultData.todos
+            .map(todo => `[${todo.id}] [${todo.item}]`)
+            .join('\n')
+        }
+        // 함수 호출
+        loadTodos();
+
+        document.querySelector('#ajax_todo').addEventListener('click', function(){
+
+            id = document.querySelector('#id').value
+            item = document.querySelector('#item').value
+            param = {
+                id:id,
+                item
+            }
+
+            fetch('http://127.0.0.1:8000/ajax/todo',{
+                method:'POST',
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+                body : JSON.stringify(param)
+            })
+            .then(function(response){
+                return response.json()
+            }).then(function(data){
+                console.log(data)
+            }).catch(function(err){
+                console.error(err)
+            })
+            
+        })
+
+        document.querySelector('#ajax_todo2').addEventListener('click', async function(){
+
+            // input 요소 자체를 먼저 변수로 잡아둠
+            const  idInput = document.querySelector('#id')
+            const  itemInput = document.querySelector('#item')
+            
+            // 요소에서 이름값을 꺼냄
+            const id = idInput.value
+            const item = itemInput.value
+            
+            const  param = {id, item}
+
+            let response = await fetch('http://127.0.0.1:8000/ajax/todo',{
+                method :'POST',
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+                body : JSON.stringify(param)
+            })
+            
+            // json()은 한 번만 읽을 수 있으므로 변수에 담아두고 계속 재사용!
+            const resultData = await response.json()
+            
+            document.querySelector('#result').textContent = resultData.메시지
+
+            // 추가 후 목록 다시 불러오기 및 입력창 비우기 
+            await loadTodos()
+            idInput.value = ''
+            itemInput.value = ''
+            
+            console.log(response)
+            console.log('----------')
+            console.log(resultData) // 이미 반환한 resultData를 출력해야 오류가 안남
+        })
+
+        document.querySelector('#ajax_delete').addEventListener('click', async function(){
+            const idInput = document.querySelector('#id')
+            const id = idInput.value
+
+            if(!id) {
+                alert('삭제할 ID를 입력해야한다구 바보')
+                return
+            }
+
+            // URL 뒤에 삭제할 ID를 붙여서 DELETE 메서드로 요청
+            let response = await fetch(`http://127.0.0.1:8000/ajax/todo/${id}`, {
+                method : 'DELETE'
+            })
+            const resultData = await response.json()
+
+            // 화면 갱신
+            document.querySelector('#result').textContent = resultData.메시지
+    
+            // 삭제 후 목록 다시 불러오기 & id 입력창 초기화 
+            await loadTodos()
+            idInput.value = ''
+            document.querySelector('#item').value = ''
+
+        })
+    } 
+</script>
+<body>
+    <h3>ajax_todo</h3>
+    <div>
+        id : <input type="text" name="id" id="id"><br>
+        <br>
+        item: <input type="'text" name="item" id="item"><br>
+        <button id="ajax_todo">todo  추가</button><br>
+        <br>
+        <button id="ajax_todo2">todo  추가-비동기</button><br>
+        <br>
+        <button id="ajax_delete">todo 삭제</button>
+    </div>
+    <div id="result"></div>
+    <div id="result2"></div>
+</body>
+</html>
