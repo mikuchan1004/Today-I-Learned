@@ -75,6 +75,20 @@ async def get_single_todo(todo_id: int) -> dict:
         "message" : "ID가 존재하지 않습니다"
     }
 
+from fastapi import Path
+@todo_router.get("/todo2/{todo_id}")
+async def get_single_todo2(todo_id: int = Path(gt=10)) -> dict:
+    print('todo_id:' , todo_id)
+    
+    for todo in todo_list:
+        if todo.id == todo_id:
+            return {
+                "todo" : todo 
+            }
+    return {
+        "message" : "ID가 존재하지 않습니다"
+    }
+
 print(2, __name__)
 
 if __name__ == "__main__":
