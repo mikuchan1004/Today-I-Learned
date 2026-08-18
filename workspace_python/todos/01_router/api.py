@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 # 크로스 도메인 문제 해결을 위해 필요한걸 호출
 from fastapi.middleware.cors import CORSMiddleware
 # 불러온 라우터들에게 별칭 부여
@@ -28,6 +28,13 @@ app.include_router(quiz1_router)
 app.include_router(quiz2_router)
 app.include_router(quiz3_router)
 app.include_router(ajax_router)
+
+@app.get('/ip')
+def test(req: Request):
+    ip = req.client.host
+    print(ip)
+
+    return ip
 
 print(1, __name__)
 
