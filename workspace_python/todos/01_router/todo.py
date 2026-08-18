@@ -75,6 +75,7 @@ async def get_single_todo(todo_id: int) -> dict:
         "message" : "ID가 존재하지 않습니다"
     }
 
+# Valid, Validate 유효성 검증
 from fastapi import Path
 @todo_router.get("/todo2/{todo_id}")
 async def get_single_todo2(todo_id: int = Path(gt=10)) -> dict:
