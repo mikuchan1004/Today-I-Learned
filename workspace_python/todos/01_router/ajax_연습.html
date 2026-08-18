@@ -128,8 +128,8 @@
             // 서버에서 넘어온 JSON 데이터를 변수에 담기 
             let data = await response.json()
 
-            // HTML 태그 (#result2)에 글자 집여넣기
-            document.querySelector('#result2').textContent = `서버 응답 : ${data.code}`
+            // HTML 태그 (#result3)에 글자 집여넣기
+            document.querySelector('#result3').textContent = `서버 응답 : ${data.code}`
 
             console.log(response)
              console.log('------------')
@@ -189,6 +189,6 @@
     <input type="text" name="item" id="item_todo43" placeholder="할 일을 입력해주세요"><br>
     <br>
     <button id="todo43">전송</button><br>
-    <div id="result2"></div>
+    <div id="result3"></div>
 </body>
 </html>
