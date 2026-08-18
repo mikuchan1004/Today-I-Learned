@@ -131,11 +131,6 @@
             // HTML 태그 (#result3)에 글자 집여넣기
             document.querySelector('#result3').textContent = `서버 응답 : ${data.code}`
 
-            await loadTodos()           
-            itemValue.value = ''
-
-
-
             console.log(response)
              console.log('------------')
             console.log(await response.json())
