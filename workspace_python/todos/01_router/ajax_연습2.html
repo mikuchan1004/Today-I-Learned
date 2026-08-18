@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax_연습2</title>
+</head>
+<Script>
+    window.onload = () => {
+
+        document.querySelector('#add_todo').addEventListener('click' , async function(){
+            
+        // Number로 감싸면 ID가 문자가 아닌 숫자로 변환됨!
+          id = Number(document.querySelector("#id").value)
+          item = document.querySelector("#item").value
+          param = {
+              id : id,
+              item
+          }
+      
+          let response = await fetch('http://127.0.0.1:8000/crud/c' , {
+            method : 'POST',
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify(param)
+          })
+        })
+
+        document.querySelector('#get_todo').addEventListener('click' , async function(){
+
+            id = document.querySelector('#id').value
+
+            // GET 요청은 body를 떼고 URL 뒤에 쿼리 스트링을 붙여야 한다. (by Google Gemini)
+            let response = await fetch(`http://127.0.0.1:8000/crud/r?todo_id=${id}` , {
+                method : 'GET'
+            })
+
+            let data = await response.json()
+            console.log(data)
+            
+        })
+
+    }
+
+</Script>
+<body>
+    <h3>CRUD 연습</h3>
+    <div>
+        <input type="text" name="id" id="id" placeholder="아이디를 입력해주새요"><br>
+        <br>
+        <input type="text" name="item" id="item" placeholder="할 일을 입력해주세요"><br>
+        <br>
+        <button id="add_todo">todo 추가</button>
+        <button id="get_todo">todo 조회</button>
+        <button id="update_todo">todo 수정</button>
+        <button id="delete_todo">todo 삭제</button>
+    </div>
+</body>
+</html>
