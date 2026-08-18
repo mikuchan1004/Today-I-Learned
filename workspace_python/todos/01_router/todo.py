@@ -78,7 +78,21 @@ async def get_single_todo(todo_id: int) -> dict:
 # Valid, Validate 유효성 검증
 from fastapi import Path
 @todo_router.get("/todo2/{todo_id}")
-async def get_single_todo2(todo_id: int = Path(gt=10)) -> dict:
+async def get_single_todo2(todo_id: int = Path(gt=10, le=100)) -> dict:
+    print('todo_id:' , todo_id)
+    
+    for todo in todo_list:
+        if todo.id == todo_id:
+            return {
+                "todo" : todo 
+            }
+    return {
+        "message" : "ID가 존재하지 않습니다"
+    }
+
+from typing import Annotated
+@todo_router.get("/todo3/{todo_id}")
+async def get_single_todo3(todo_id: Annotated[int, Path(ge=10)]) -> dict:
     print('todo_id:' , todo_id)
     
     for todo in todo_list:
