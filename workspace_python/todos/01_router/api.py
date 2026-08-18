@@ -42,4 +42,4 @@ if __name__ == "__main__":
     print('api.py 파일 직접 실행')
 
     import uvicorn
-    uvicorn.run("api:app" , port=8000, reload=True)
+    uvicorn.run("api:app" , port=8000, reload=True, host="0.0.0.0")
