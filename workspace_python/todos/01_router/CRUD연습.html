@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ajax_연습2</title>
+    <title>CRUD연습</title>
 </head>
 <Script>
     window.onload = () => {
@@ -25,6 +25,10 @@
             },
             body : JSON.stringify(param)
           })
+            
+            let data = await response.json()
+            console.log(data)
+            
         })
 
         document.querySelector('#get_todo').addEventListener('click' , async function(){
@@ -39,6 +43,43 @@
             let data = await response.json()
             console.log(data)
             
+        })
+        
+        document.querySelector('#update_todo').addEventListener('click', async function() {
+            
+            id = document.querySelector('#id').value
+            item = document.querySelector('#item').value
+
+            let response = await fetch(`http://127.0.0.1:8000/crud/u?todo_id=${id}` , {
+                method :'PUT',
+                headers : {
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify({
+                item : item
+            })
+        })
+
+            let data = await response.json()
+            console.log(data)
+        })
+
+        document.querySelector('#delete_todo').addEventListener('click' , async function(){
+
+            id = document.querySelector('#id').value
+            
+            let response = await fetch(`http://127.0.0.1:8000/crud/d?todo_id=${id}` , {
+                method :'DELETE',
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+                body : JSON.stringify({
+                    id : id
+                })
+            })
+
+            let data = await response.json()
+            console.log(data)
         })
 
     }
