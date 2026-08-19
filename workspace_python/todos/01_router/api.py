@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 # 크로스 도메인 문제 해결을 위해 필요한걸 호출
 from fastapi.middleware.cors import CORSMiddleware
 # 불러온 라우터들에게 별칭 부여
@@ -37,6 +37,17 @@ def test(req: Request):
     print(ip)
 
     return ip
+
+@app.get('/err')
+def err():
+    print('/err 실행')
+
+    raise HTTPException(
+        status_code = 403,
+        detail = '글씨 아무거나 asadaweewe'
+    )
+
+    
 
 print(1, __name__)
 
