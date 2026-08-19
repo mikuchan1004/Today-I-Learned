@@ -47,7 +47,9 @@ def err():
         detail = '글씨 아무거나 asadaweewe'
     )
 
-    
+@app.get('/html')
+def html():
+    return "<h1>Hello World</h1>"
 
 print(1, __name__)
 
