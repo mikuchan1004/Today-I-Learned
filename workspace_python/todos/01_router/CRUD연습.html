@@ -28,6 +28,8 @@
             
             let data = await response.json()
             console.log(data)
+
+            document.querySelector('#post_result').textContent = data.메시지
             
         })
 
@@ -42,7 +44,10 @@
 
             let data = await response.json()
             console.log(data)
-            
+
+            document.querySelector('#get_result').textContent = data.todo[ 'id']
+            document.querySelector('#get_result2').textContent = data.todo[ 'item']
+
         })
         
         document.querySelector('#update_todo').addEventListener('click', async function() {
@@ -62,6 +67,9 @@
 
             let data = await response.json()
             console.log(data)
+
+            document.querySelector('#update_result').textContent = data.메시지
+
         })
 
         document.querySelector('#delete_todo').addEventListener('click' , async function(){
@@ -80,6 +88,9 @@
 
             let data = await response.json()
             console.log(data)
+
+            document.querySelector('#delete_result').textContent = data.메시지
+
         })
 
     }
@@ -88,7 +99,7 @@
 <body>
     <h3>CRUD 연습</h3>
     <div>
-        <input type="text" name="id" id="id" placeholder="아이디를 입력해주새요"><br>
+        <input type="text" name="id" id="id" placeholder="아이디를 입력해주세요"><br>
         <br>
         <input type="text" name="item" id="item" placeholder="할 일을 입력해주세요"><br>
         <br>
@@ -96,6 +107,11 @@
         <button id="get_todo">todo 조회</button>
         <button id="update_todo">todo 수정</button>
         <button id="delete_todo">todo 삭제</button>
+        <div id="post_result"></div>
+        <div id="get_result"></div>
+        <div id="get_result2"></div>
+        <div id="update_result"></div>
+        <div id="delete_result"></div>
     </div>
 </body>
 </html>

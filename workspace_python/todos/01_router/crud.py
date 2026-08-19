@@ -29,7 +29,7 @@ async def add_todo(todo:dict) -> dict:
 
 @crud_router.get('/crud/r')
 async def get_todo(todo_id : int) -> dict:
-   print(todo_id, todo_list)
+   print(todo_list)
    for todo in todo_list :
        # 입력받은 todo의 아이디가 등록된 todo의 아이디와 같다면, "todo" : todo 형태로 돌려줌
        if todo.get('id') == todo_id:
