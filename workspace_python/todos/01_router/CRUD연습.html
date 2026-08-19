@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD연습</title>
+    <style>
+        .hide {
+            display:none
+        }
+    </style>
 </head>
 <Script>
     window.onload = () => {
@@ -113,5 +118,220 @@
         <div id="update_result"></div>
         <div id="delete_result"></div>
     </div>
+    <hr>
+    <h3>등록 post - ajax</h3>
+    <form id="form1" method="POST" action="http://localhost:8000/crud/api/c">
+        id : <input type="number" name="id" id="id2"><br>
+        item : <input type="text" name="item" id="item2"><br>
+        <input type="submit" value="등록[POST]">
+    </form>
+    <hr>
+    <h3>전체 목록 - ajax</h3>
+    <button type="button" id="readAll">전체 목록 가져오기</button>
+    <table border="1">
+        <thead>
+            <th>id</th>
+            <th>item</th>
+        </thead>
+        <tbody id="tbody">
+            <!-- <tr>
+                <td>1</td>
+                <td>11</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>22</td>
+            </tr> -->
+        </tbody>
+    </table>
+
+    <h3>상세 - ajax</h3>
+    <div id="detail"></div>
+    <div>
+        <button type="button" id="update">수정하기</button>
+    </div>
+
+    <div id="modify" class="hide">
+        <h1>수정 - ajax</h1>
+        <div>
+            <!-- <form method="post" action="">
+                id : <span class="id"></span><br>
+                <input type="hidden" name="id" value="123">
+                item : <input type="text" name="item"><br>
+                <input type="submit" value="수정">
+            </form> -->
+            id : <span class="id" name="id"></span><br>
+            item : <input type="text" class="item" name="item"><br>
+            <input type="button" class="commit" value="수정">
+            <input type="button" class="del" value="삭제">
+            <input type="button" class="cancel" value="취소">
+        </div>
+    </div>
+
+    <script>
+        // 주석은 Google Gemini가 달아주었습니다
+        // ----------------------------------------------------
+        // 1. 데이터 추가 (Create / POST)
+        // ----------------------------------------------------
+        form1 = document.querySelector('#form1')
+        submit = document.querySelector('#form1 [type=submit]')
+
+        submit.addEventListener('click' , function(event){
+            event.preventDefault() // 폼 제출 시 페이지가 새로고침되는 기본 동작 방지
+            
+            id = document.querySelector('#id2')
+            item = document.querySelector('#item2')
+
+            url = 'http://localhost:8000/crud/api/c'
+            param = {
+                id : parseInt(id.value), // 백엔드(FastAPI)가 int 타입을 원하므로 숫자로 변환
+                item : item.value
+            }
+
+            // POST 요청으로 신규 데이터 전송
+            fetch(url, {
+                method: 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify(param)
+            })
+        })
+
+        // ----------------------------------------------------
+        // 2. 전체 목록 조회 (Read All / GET)
+        // ----------------------------------------------------
+        readAll = document.querySelector('#readAll')
+        readAll.addEventListener('click', function(){
+            url = 'http://localhost:8000/crud/api/r'
+
+            fetch(url, {
+                method: 'GET'
+            }).then(function(resp){
+                return resp.json() // 응답받은 JSON 문자열을 JS 객체/배열로 파싱
+            }).then(function(data){
+                console.log(data)
+                tbody = document.querySelector('#tbody')
+                tbody.innerHTML = '' // 테이블 기존 목록 싹 비우기
+        
+                for (let i=0; i<data.length; i++) {
+                    const rowId = data[i].id   // 루프 내부 상수로 id 선언
+                    const rowItem = data[i].item
+
+                    tr = document.createElement('tr')
+                    tr.innerHTML = `
+                        <td class="id" data-id="${rowId}">${rowId}</td>
+                        <td>${rowItem}</td>
+                    `
+                    
+                    // 각 행의 ID 클릭 시 단일 상세 조회 이벤트 등록
+                    tr.querySelector('.id').addEventListener('click' , function(event){
+                        // [수정 포인트!] 상위 const 변수와 겹치지 않게 clickId 변수로 안전하게 추출
+                        const clickId = event.target.getAttribute('data-id')
+                        console.log(clickId)
+                        
+                        const xhr = new XMLHttpRequest()
+                        xhr.open('get', 'http://localhost:8000/crud/api/r/' + clickId)
+                        xhr.send()
+                        xhr.onload = function() {
+                            data = JSON.parse (xhr.responseText)
+
+                            // 상세 화면(#detail)에 데이터 출력
+                            detail = document.querySelector('#detail')
+                            detail.innerHTML = `
+                                id: ${data.id}<br>
+                                item: ${data.item}<br>
+                            `
+                            // 추후 수정/삭제에서 사용할 수 있도록 data-id 속성에 id 기록
+                            update = document.querySelector('#update')
+                            update.setAttribute('data-id', data.id)
+                            detail.setAttribute('data-id', data.id)
+                        }
+                    })
+                    tbody.append(tr) // 생성한 행을 테이블에 추가
+                }
+            })
+        })
+
+        // ----------------------------------------------------
+        // 3. 수정 폼 열기 (Read One / GET)
+        // ----------------------------------------------------
+        update = document.querySelector('#update')
+        update.addEventListener('click', function(){
+              detail = document.querySelector('#detail')
+              const id = detail.getAttribute('data-id') // 상세 영역에 저장된 id 가져오기
+
+              const xhr = new XMLHttpRequest()
+                xhr.open('get', 'http://localhost:8000/crud/api/r/' + id)
+                xhr.send()
+                xhr.onload = function() {
+                    data = JSON.parse (xhr.responseText)
+                    modify = document.querySelector('#modify')
+
+                    // 수정 폼(#modify) 태그들에 기존 정보 채워넣기
+                    modify.querySelector('.id').innerHTML = data.id
+                    modify.querySelector('.id').setAttribute('data-id' , data.id)
+                    modify.querySelector('.item').value = data.item
+                    
+                    modify.classList.remove('hide') // 수정 폼 화면에 표시
+                }
+        })
+
+        // ----------------------------------------------------
+        // 4. 수정 취소 (Cancel)
+        // ----------------------------------------------------
+        cancel = document.querySelector('#modify .cancel')
+        cancel.addEventListener('click', function(){
+            modify = document.querySelector('#modify')     
+            modify.querySelector('.id').innerHTML = ''
+            modify.querySelector('.item').value = ''
+            modify.classList.add('hide') // 수정 폼 숨기기
+        })
+
+        // ----------------------------------------------------
+        // 5. 수정 내용 반영 (Update / PUT)
+        // ----------------------------------------------------
+        commit = document.querySelector('#modify .commit')
+        commit.addEventListener('click', function(){
+            modify = document.querySelector('#modify')     
+            id = modify.querySelector('.id').getAttribute('data-id')
+            item = modify.querySelector('.item').value
+
+            url = 'http://localhost:8000/crud/api/u'
+            param = {
+                id : parseInt(id), // 숫자로 확실히 파싱하여 백엔드로 전달
+                item : item
+            }
+
+            fetch(url, {
+                method: 'PUT',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify(param)
+            }).then(function(){
+                modify.classList.add('hide') // 수정 완료 후 폼 닫기
+                document.querySelector('#readAll').click() // 테이블 자동 갱신
+            })
+        })
+
+        // ----------------------------------------------------
+        // 6. 데이터 삭제 (Delete / DELETE)
+        // ----------------------------------------------------
+        del = document.querySelector('#modify .del')
+        del.addEventListener('click', function(){
+            modify = document.querySelector('#modify')     
+            id = modify.querySelector('.id').getAttribute('data-id')
+
+            url = `http://localhost:8000/crud/api/d/${id}`
+
+            fetch(url, {
+                method: 'DELETE'
+            }).then(function(){
+                modify.classList.add('hide') // 삭제 완료 후 폼 닫기
+                document.querySelector('#readAll').click() // 테이블 자동 갱신
+            })
+        })
+    </script>
 </body>
 </html>
