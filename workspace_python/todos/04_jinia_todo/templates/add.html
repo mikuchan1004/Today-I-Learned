@@ -1,23 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>추가 페이지</title>
+    <title>Todo 추가 페이지</title>
 </head>
 <body>
     <h2>Todo 추가 페이지</h2>
-    <!-- 절대경로 대신 상대경로 /add 사용-->
+
+    <!-- 
+      [Form 태그 핵심]
+      1. method="post": 데이터를 서버로 안전하게 '제출'하기 위해 POST 방식을 사용합니다.
+      2. action="/add": 상대 경로를 사용하여 서버 주소가 바뀌어도 백엔드의 /add (POST) 라우트로 정확히 전달됩니다.
+    -->
     <form method="post" action="/add">
-        <input type="text" name="id" placeholder="아이디를 입력해주세요"><br>
-        <br>
-        <input type="text" name="item" placeholder="내용을 입력해주세요"><br>
-        <br>
+        
+        <!-- 
+          [Input 태그 핵심]
+          FastAPI 백엔드(Form(...))에서 수신할 때는 id가 아닌 name 속성의 값을 Key로 사용합니다.
+          'name="id"'와 'name="item"'을 절대 오타 없이 정확하게 적어주어야 422 에러가 안 납니다!
+        -->
+        <input type="text" name="id" placeholder="아이디를 입력해주세요" required><br><br>
+        <input type="text" name="item" placeholder="내용을 입력해주세요" required><br><br>
+
+        <!-- type="submit": 누르면 form의 action 경로로 POST 요청을 보냅니다 -->
         <button type="submit">추가</button>
-        <!-- 취소 버튼은 전체 조회 페이지('/')로 돌아가도록 a 태그 활용-->
-         <a href="/">
-             <button type="button">취소</button>
-         </a>
+
+        <!-- 
+          [취소 버튼]
+          Form 태그 내부의 버튼은 기본적으로 submit 동작을 하므로, 
+          취소 버튼은 반드시 <a> 태그로 감싸고 type="button"을 명시해서 메인('/') 페이지로 이동시킵니다.
+        -->
+        <a href="/">
+            <button type="button">취소</button>
+        </a>
     </form>
 </body>
 </html>

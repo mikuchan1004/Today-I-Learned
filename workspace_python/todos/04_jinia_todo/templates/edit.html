@@ -1,26 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo 수정 페이지</title>
 </head>
 <body>
-    <h2>Todo 수정 페이지</h2>
+    <h2>✏️ Todo 수정 페이지</h2>
 
-    <!-- 수정 처리 경로(/todo/ID/edit)로 Form 전송-->
-     <form method="post" action="/todo/{{todo.id}}/edit">
-        <strong>ID:</strong> {{todo['id']}}
-        <!-- value 속성에 기존 todo.item 값을 넣어줌 -->
-         <label for="item">내용:</label><br>
-         <input type="text" id="item" name="item" value="{{todo.item}}"required><br><br>
+    <!-- 수정 처리 라우트인 /todo/ID/edit (POST)로 폼 데이터를 제출합니다 -->
+    <form method="post" action="/todo/{{ todo.id }}/edit">
+        
+        <!-- 
+          [주의] 파이썬 딕셔너리 형태일 경우 {{ todo['id'] }} 또는 {{ todo.id }}로 접근 가능합니다.
+          ID는 수정 불가능한 고유값이므로 텍스트로만 표시합니다.
+        -->
+        <p><strong>ID:</strong> {{ todo['id'] }}</p>
 
-         <button type="submit">수정완료</button>
+        <!-- 
+          [기존 데이터 채우기]
+          value="{{ todo.item }}" 속성을 사용하여 기존 작성했던 Todo 내용을 input창에 미리 보여줍니다.
+          백엔드 수신을 위해 name="item" 속성을 꼭 챙겨야 422 에러가 안 터집니다!
+        -->
+        <label for="item">내용:</label><br>
+        <input type="text" id="item" name="item" value="{{ todo.item }}" required><br><br>
 
-         <!--취소 시 기존 상세 페이지(/todo/ID)로 돌아감-->
-         <a href="/todo/{{todo.id}}">
+        <button type="submit">수정완료</button>
+
+        <!-- 취소 시 수정 전 데이터였던 해당 [상세 페이지]로 다시 돌아갑니다 -->
+        <a href="/todo/{{ todo.id }}">
             <button type="button">취소</button>
-         </a>
-     </form>
+        </a>
+    </form>
 </body>
 </html>
