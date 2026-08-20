@@ -33,8 +33,10 @@ def step3(request : Request):
     # 2. redirect 방식 
     return RedirectResponse(
         url = '/step1',
-        status_code = 307 # 기본값 : 307
+        status_code = 303 # 기본값 : 307
     )
+    # 303 : 다시 올 때 Get으로 접속 
+    # 307 : 다시 올 때 현재 방식 유지
 
 if __name__ == "__main__":
     import uvicorn
