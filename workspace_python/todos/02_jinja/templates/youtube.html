@@ -1,0 +1,123 @@
+{% extends 'layout.html' %}
+
+{% block youtube %}
+{{ super() }}
+<div>
+    동영상1 : 좋아요 <span>{{ like }}</span>
+</div>
+{% endblock %}
+
+{% block title %}
+    동영상 페이지
+{% endblock %}
+
+ {% block star %}
+ <div>
+     {% if star %}
+        star를 전달 받았다.<br>
+
+        {% if star >= 0 %}
+            별점이 있습니다<br>
+        {% endif %}
+        {# 
+            만약 {% if star2 > =0 %} 받지 않는 변수를 비교하면 오류 발생. undefined    
+        #}
+     {% endif %}
+
+     {# 단순히 존재 여부만 볼 떄는 전달 받지 않은 변수도 사용이 가능하다. #}
+     {% if star2 %}
+        star2를 전달 받았다.<br>
+     {% endif %}
+
+    {% if star2  %}
+            star2가 참이다.
+    {% else %}
+            star2가 거짓이다.
+    {% endif %}
+
+    <hr>
+    star2 : {{star2}}<br> {# 없어도 에러 안남#}
+    star2 : {{star2 | default('기본값') }}<br>
+    star2 : {{star2 | d('기본값') }}<br>
+    <hr>
+
+    {% if star > 3 %}
+            별점이 높아요 :{{star}}
+    {% elif star == 3 %}
+            별점이 중간 : {{star}}
+    {% elif star <= 2 and star >= 0 %}
+            별점이 낮아요 : {{star}}
+    {% else %}
+            별점이 이상해요 : {{star}}
+    {% endif %}
+
+ </div>
+ {% endblock %}
+
+ {% block bookmark %}
+    bookmark 블럭 <br>
+    {% for bm in bookmark  %}
+        <div>
+        {{loop.index}}. {{ bm }} {{loop.first}} {{loop.last}}
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block filter %}
+    {# 변수로 받았다 치고 진행 #}    
+    {{"하드코딩한 글씨" | length }}<br>
+    {{"하드코딩한 글씨" | length > 10  }}<br> <!-- True/False -->
+    {{"3.14" | int}}<br>
+    {{"15000" | price}}원<br>
+
+    {{'2026-08-20' | format_date}}<br>
+    
+    {{'<h1>그냥 html</h1>'}}<br>
+    {{'<h1>Markup 거친 html</h1>' | n2br  }}<br>
+    {{'abc\n123\n한글'}}<br>
+    {{'abc\n123\n한글' | n2br  }}<br>
+
+{% endblock %}
+
+{% block css %}
+.card {
+    width : 100px;
+    border : 1px solid black;
+    margin : 20px;
+    padding : 10px;
+    display : inline-block;
+}
+{% endblock %}
+
+{% import 'macros.html' as macros %}
+
+{% block macro%}
+<!-- 
+<div class="card">
+    <h2>제목</h2>
+    <div>
+        내용 
+    </div>
+</div>
+ -->
+    {{render_card('제목1', '내용1')}}
+    {{render_card('제목2', '내용2')}}
+    {{macros.render_card2('제목3', '내용3')}}
+{% endblock %}
+
+{% macro render_card(title, text) %}
+<div class="card">
+    <h2>{{title}}</h2>
+    <div>
+        {{text}}
+    </div>
+    <div>
+        {{like}}
+    </div>
+</div>
+{% endmacro%}
+
+<div>이거 youtube.html 썡으로 쓴 내용 - 안나온다</div>
+
+
+
