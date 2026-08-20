@@ -3,7 +3,6 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
 
 # 코드에 적힌 주석들은 Google Gemini가 달아주었습니다.
-# 코드 작성 역시 Google Gemini의 도움을 받았습니다.
 
 # FastAPI 앱 객체 생성
 app = FastAPI()

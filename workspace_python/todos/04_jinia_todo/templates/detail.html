@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo 상세 보기</title>
+</head>
+<body>
+    <h2> Todo 상세 보기 </h2>
+
+    <!-- 백엔드(api.py)에서 넘겨준   todo 객체의 값을 출력 -->
+     <div>
+        <strong>ID:</strong>{{todo.id}}
+        <strong>내용:</strong>{{todo.item}}
+     </div>
+
+     <hr>
+     <!-- 버튼 영역 -->
+      <div style="display: flex; gap:8px;">
+        <!-- 수정 페이지(/todo/ID/edit)로 이동하는 버튼 -->
+         <a href="/todo/{{todo.id}}/edit">
+            <button type="button">수정</button>
+         </a>
+
+        <!-- 삭제 처리 (POST 요청이 필요하므로  Form 태그 사용)-->
+        <!-- 실수로 클릭해서 삭제하는 것을 방지하기 위해 onsubmit 경고창도 살짝 넣어줌 -->
+        <form action="/todo/{{todo.id}}/delete" method="post" onsubmit="return confirm('정말 이 Todo를 삭제하시겠어요?')">
+            <button type="submit">삭제</button>
+        </form>
+
+        <!-- 전체 목록('/')으로 돌아가는 취소/목록 버튼-->
+        <a href="/">
+            <button type="button">전체 목록으로</button>
+        </a>
+
+      </div>
+
+</body>
+</html>

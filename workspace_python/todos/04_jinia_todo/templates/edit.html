@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo 수정 페이지</title>
+</head>
+<body>
+    <h2>Todo 수정 페이지</h2>
+
+    <!-- 수정 처리 경로(/todo/ID/edit)로 Form 전송-->
+     <form method="post" action="/todo/{{todo.id}}/edit">
+        <strong>ID:</strong> {{todo['id']}}
+        <!-- value 속성에 기존 todo.item 값을 넣어줌 -->
+         <label for="item">내용:</label><br>
+         <input type="text" id="item" name="item" value="{{todo.item}}"required><br><br>
+
+         <button type="submit">수정완료</button>
+
+         <!--취소 시 기존 상세 페이지(/todo/ID)로 돌아감-->
+         <a href="/todo/{{todo.id}}">
+            <button type="button">취소</button>
+         </a>
+     </form>
+</body>
+</html>

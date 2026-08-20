@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo 전체 목록</title>
+</head>
+<body>
+    <h2>Todo 전체 목록 </h2>
+    <!-- 추가 페이지(/add)로 이동하는 버튼 -->
+     <a href="/add">
+        <button type="button">새 Todo 추가하기</button>
+     </a>
+
+     <hr>
+     <!-- Jinja for문으로 Todo 목록 출력 -->
+      <ul>
+        {% for todo in todos%}
+        <li>
+            <!-- ID 표시 -->
+            <strong>[ID : {{todo.id}}] </strong>
+
+            <!-- 항목을 클릭하면 상세 페이지(/todo/ID)로 이동 -->
+             <a href= "/todo/{{todo.id}}">{{todo.item}}</a>
+        </li>
+        {% else %}
+        <!-- Jinja for-else 구문 : todo 리스트가 비어있을 때 실행-->
+         <li>등록된 Todo가 없습니다. 새로운 할 일을 추가해 보세요</li>
+         {% endfor %}
+      </ul>
+</body>
+</html>
