@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo 추가 페이지</title>
+</head>
+<body>
+    <h1>추가 페이지</h1>
+    <div>
+        <form method="post" action="/api/add">
+            id : <input type="text" name="id"><br>
+            item : <input type="text" name="item"><br>
+            <input type="submit" value="등록">
+            <a href="/list">
+                <input type="button" value="취소">
+            </a>
+        </form>
+    </div>
+</body>
+</html>

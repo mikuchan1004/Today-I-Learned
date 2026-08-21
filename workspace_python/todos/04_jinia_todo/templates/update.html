@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>수정 페이지</h2>
+    <form method="post" action="/api/update">
+        id:<input type="text" name="id" value="{{todo.id}}"><br>
+        item:<input type="text" name="item" value="{{todo.item}}"><br>
+
+        <input type="submit" value="수정완료">
+        <a href="/detail/{{todo.id}}"><input type='button' value='목록으로'></a>
+    </form>
+</body>
+</html>

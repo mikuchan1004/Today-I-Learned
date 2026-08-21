@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상세 페이지</title>
+</head>
+<body>
+    <h1>상세 페이지</h1>
+        
+    id : {{todo.id}}<br>
+    <div>
+        item : {{todo.item}}<br>
+    </div>
+    <!-- <div class="d-none">
+        item : <input type='text' value="{{todo.item}}"><br>
+    </div> -->
+
+
+    <br>
+
+    <a href="/list">목록으로</a>
+    <a href="/update/{{todo.id}}">수정</a>
+    <a href="/api/delete/{{todo.id}}">삭제</a>
+</body>
+</html>

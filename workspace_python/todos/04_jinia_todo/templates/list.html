@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전체 목록</title>
+</head>
+<body>
+    <h1>전체 목록</h1>
+    <div>
+        <a href="/add">
+            <button type="button">추가</button>
+        </a>
+    </div>
+    <table border="1">
+    <thead>
+        <tr>
+         <th>id</th>
+         <th>item</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if list %}
+           {% for todo in list %}
+           <tr>
+            <td>{{todo.id}}</td>
+            <td><a href='/detail/{{todo.id}}'>{{todo.item}}</a></td>
+           </tr>
+           {% endfor %}
+        {% else %}
+           <tr>
+                <td colspan="2">조회할 목록이 없습니다.</td>
+           </tr>
+           {% endif %}
+    </tbody>
+    </table>
+</body>
+</html>
