@@ -91,4 +91,5 @@ def api_delete(id: int):
 if __name__ == "__main__":
     import uvicorn
     # uvicorn 서버 실행 (host: 0.0.0.0, port: 8000, 코드 변경 시 자동 재시작: reload=True)
-    uvicorn.run("api:app", port=8000, reload=True, host="0.0.0.0")
+    # 포트 번호 변경 (사유 : 8000번 포트를 디스코드가 선점해서 사용 불가.)
+    uvicorn.run("api:app", port=8085, reload=True, host="0.0.0.0")
