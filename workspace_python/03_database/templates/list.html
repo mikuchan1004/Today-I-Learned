@@ -19,10 +19,10 @@
          <th>사원명</th>
          <th>직책</th>
          <th>상사번호</th>
-         <th>고용일</th>
+         <!-- <th>고용일</th>
          <th>급여</th>
          <th>보너스</th>
-         <th>부서번호</th>
+         <th>부서번호</th> -->
         </tr>
     </thead>
     <tbody>
@@ -33,15 +33,15 @@
             <td><a href='/detail/{{emp.empno}}'>{{emp.ename}}</a></td>
             <td>{{emp.job}}</td>
             <td>{{emp.mgr}}</td>
-            <td>{{emp.hiredate}}</td>
+            <!-- <td>{{emp.hiredate}}</td>
             <td>{{emp.sal}}</td>
             <td>{{emp.comm}}</td>
-            <td>{{emp.deptno}}</td>
+            <td>{{emp.deptno}}</td> -->
            </tr>
            {% endfor %}
         {% else %}
            <tr>
-                <td colspan="8">조회할 목록이 없습니다.</td>
+                <td colspan="4">조회할 목록이 없습니다.</td>
            </tr>
            {% endif %}
     </tbody>
