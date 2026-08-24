@@ -3,9 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Database</title>
 </head>
 <body>
-    {{emp_list}}
+    <h1>EMP 테이블</h1>
+    <div>
+        <a href="/add">
+            <button type="button">추가</button>
+        </a>
+    </div>
+    <table border="1">
+    <thead>
+        <tr>
+         <th>사원번호</th>
+         <th>사원명</th>
+         <th>직책</th>
+         <th>상사번호</th>
+         <th>고용일</th>
+         <th>급여</th>
+         <th>보너스</th>
+         <th>부서번호</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if emp_list %}
+           {% for emp in emp_list %}
+           <tr>
+            <td>{{emp.empno}}</td>
+            <td><a href='/detail/{{emp.empno}}'>{{emp.ename}}</a></td>
+            <td>{{emp.job}}</td>
+            <td>{{emp.mgr}}</td>
+            <td>{{emp.hiredate}}</td>
+            <td>{{emp.sal}}</td>
+            <td>{{emp.comm}}</td>
+            <td>{{emp.deptno}}</td>
+           </tr>
+           {% endfor %}
+        {% else %}
+           <tr>
+                <td colspan="8">조회할 목록이 없습니다.</td>
+           </tr>
+           {% endif %}
+    </tbody>
+    </table>
 </body>
 </html>

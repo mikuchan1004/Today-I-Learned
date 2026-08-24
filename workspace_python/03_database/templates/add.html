@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>추가 페이지</title>
+</head>
+<body>
+    <h1>추가 페이지</h1>
+    <div>
+        <form method="post" action="/api/add">
+            <input type="number" name="empno" id="empno" placeholder="사원번호 입력"><br>
+            <br>
+            <input type="text" name="ename" id="ename" placeholder="사원명 입력"><br>
+            <br>
+            <input type="text" name="job" id="job" placeholder="직책명 입력"><br>
+            <br>
+            <input type="number" name="mgr" id="mgr" placeholder="상사번호 입력"><br>
+            <br>
+            <input type="text" name="hiredate" id="hiredate" placeholder="고용일 입력"><br>
+            <br>
+            <input type="number" name="sal" id="sal" placeholder="급여 입력"><br>
+            <br>
+            <input type="text" name="comm" id="comm" placeholder="보너스 입력"><br>
+            <br>
+            <input type="number" name="deptno" id="deptno" placeholder="부서번호 입력(10, 20, 30)"><br>
+            <br>
+            <input type="submit" value="추가">
+            <a href="/list">
+                <input type="button" value="취소">
+            </a>
+        </form>
+    </div>
+</body>
+</html>
