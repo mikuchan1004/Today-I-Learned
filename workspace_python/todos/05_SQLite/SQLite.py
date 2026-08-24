@@ -20,6 +20,7 @@ def insert_dept():
     connect = sqlite3.connect('sqlite.db')
     cursor = connect.cursor()
 
+# SQL Injection 공격 방지
     cursor.execute('''
         insert into dept (deptno, dname, loc)    
         values (?, ?, ?)
