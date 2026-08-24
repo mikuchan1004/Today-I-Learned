@@ -83,4 +83,4 @@ def emp_add_form (
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("03_crud:app" , port=8000, reload=True, host="0.0.0.0")
+    uvicorn.run("03_crud:app" , port=8085, reload=True, host="0.0.0.0")
