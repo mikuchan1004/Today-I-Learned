@@ -1,25 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>상세 페이지</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif; }
+        body { background-color: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); padding: 30px; width: 100%; max-width: 480px; }
+        h1 { font-size: 22px; font-weight: 700; color: #2c3e50; margin-bottom: 20px; border-bottom: 2px solid #f0f0f0; padding-bottom: 12px; }
+        .detail-list { margin-bottom: 24px; }
+        .detail-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f8f8f8; font-size: 14px; }
+        .detail-item .label { font-weight: 600; color: #666; }
+        .detail-item .value { color: #2c3e50; font-weight: 500; }
+        .btn-group { display: flex; gap: 8px; justify-content: flex-end; }
+        .btn { padding: 10px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; text-align: center; transition: background-color 0.2s; border: none; }
+        .btn-secondary { background-color: #e0e0e0; color: #333; }
+        .btn-secondary:hover { background-color: #d0d0d0; }
+        .btn-primary { background-color: #4a90e2; color: white; }
+        .btn-primary:hover { background-color: #357abd; }
+        .btn-danger { background-color: #e74c3c; color: white; }
+        .btn-danger:hover { background-color: #c0392b; }
+    </style>
 </head>
 <body>
-    <h1>상세 페이지</h1>
-    <div>
-        사원번호 : {{emp.empno}}<br>
-        사원명 : {{emp.ename}}<br>
-        직책 : {{emp.job}}<br>
-        상사번호 : {{emp.mgr}}<br>
-        고용일 : {{emp.hiredate}}<br>
-        급여: {{emp.sal}}<br>
-        보너스:{{emp.comm}}<br>
-        부서번호 : {{emp.deptno}}<br>
-        <br>
+    <div class="card">
+        <h1>사원 상세 정보</h1>
+        <div class="detail-list">
+            <div class="detail-item"><span class="label">사원번호</span><span class="value">{{emp.empno}}</span></div>
+            <div class="detail-item"><span class="label">사원명</span><span class="value">{{emp.ename}}</span></div>
+            <div class="detail-item"><span class="label">직책</span><span class="value">{{emp.job}}</span></div>
+            <div class="detail-item"><span class="label">상사번호</span><span class="value">{{emp.mgr}}</span></div>
+            <div class="detail-item"><span class="label">고용일</span><span class="value">{{emp.hiredate}}</span></div>
+            <div class="detail-item"><span class="label">급여</span><span class="value">{{emp.sal}}</span></div>
+            <div class="detail-item"><span class="label">보너스</span><span class="value">{{emp.comm}}</span></div>
+            <div class="detail-item"><span class="label">부서번호</span><span class="value">{{emp.deptno}}</span></div>
+        </div>
+        <div class="btn-group">
+            <a href="/list" class="btn btn-secondary">목록으로</a>
+            <a href="/update/{{emp.empno}}" class="btn btn-primary">수정</a>
+            <a href="/api/delete/{{emp.empno}}" class="btn btn-danger">삭제</a>
+        </div>
     </div>
-    <a href="/list">목록으로</a>
-    <a href='/update/{{emp.empno}}'>수정</a>
-    <a href="/api/delete/{{emp.empno}}">삭제</a>
 </body>
 </html>

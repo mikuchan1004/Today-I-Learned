@@ -1,50 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Database</title>
+    <title>Database - 사원 목록</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif; }
+        body { background-color: #f4f6f9; color: #333; display: flex; justify-content: center; padding: 40px 20px; min-height: 100vh; }
+        .container { width: 100%; max-width: 900px; }
+        .header-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        h1 { font-size: 24px; font-weight: 700; color: #2c3e50; }
+        .btn { padding: 10px 20px; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; display: inline-block; transition: background-color 0.2s; }
+        .btn-primary { background-color: #4a90e2; color: white; }
+        .btn-primary:hover { background-color: #357abd; }
+        
+        /* 카드 그리드 스타일 */
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .emp-card { background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); padding: 20px; border: 1px solid #eef2f5; transition: transform 0.2s, box-shadow 0.2s; }
+        .emp-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
+        .emp-name { font-size: 18px; font-weight: 700; color: #2c3e50; text-decoration: none; }
+        .emp-name:hover { color: #4a90e2; }
+        .emp-no { font-size: 12px; font-weight: 700; color: #4a90e2; background-color: #eef5fc; padding: 4px 8px; border-radius: 4px; }
+        .card-body { font-size: 14px; color: #666; }
+        .info-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+        .info-row:last-child { margin-bottom: 0; }
+        .info-label { font-weight: 600; color: #888; }
+        .info-value { color: #333; }
+        .empty-card { grid-column: 1 / -1; background: #fff; border-radius: 12px; padding: 40px; text-align: center; color: #888; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    </style>
 </head>
 <body>
-    <h1>EMP 테이블</h1>
-    <div>
-        <a href="/add">
-            <button type="button">추가</button>
-        </a>
+    <div class="container">
+        <div class="header-area">
+            <h1>EMP 테이블</h1>
+            <a href="/add" class="btn btn-primary">사원 추가</a>
+        </div>
+
+        <div class="card-grid">
+            {% if emp_list %}
+               {% for emp in emp_list %}
+               <div class="emp-card">
+                   <div class="card-header">
+                       <a href="/detail/{{emp.empno}}" class="emp-name">{{emp.ename}}</a>
+                       <span class="emp-no">NO. {{emp.empno}}</span>
+                   </div>
+                   <div class="card-body">
+                       <div class="info-row">
+                           <span class="info-label">직책</span>
+                           <span class="info-value">{{emp.job}}</span>
+                       </div>
+                       <div class="info-row">
+                           <span class="info-label">상사번호</span>
+                           <span class="info-value">{{emp.mgr}}</span>
+                       </div>
+                   </div>
+               </div>
+               {% endfor %}
+            {% else %}
+               <div class="empty-card">
+                   조회할 목록이 없습니다.
+               </div>
+            {% endif %}
+        </div>
     </div>
-    <table border="1">
-    <thead>
-        <tr>
-         <th>사원번호</th>
-         <th>사원명</th>
-         <th>직책</th>
-         <th>상사번호</th>
-         <!-- <th>고용일</th>
-         <th>급여</th>
-         <th>보너스</th>
-         <th>부서번호</th> -->
-        </tr>
-    </thead>
-    <tbody>
-        {% if emp_list %}
-           {% for emp in emp_list %}
-           <tr>
-            <td>{{emp.empno}}</td>
-            <td><a href='/detail/{{emp.empno}}'>{{emp.ename}}</a></td>
-            <td>{{emp.job}}</td>
-            <td>{{emp.mgr}}</td>
-            <!-- <td>{{emp.hiredate}}</td>
-            <td>{{emp.sal}}</td>
-            <td>{{emp.comm}}</td>
-            <td>{{emp.deptno}}</td> -->
-           </tr>
-           {% endfor %}
-        {% else %}
-           <tr>
-                <td colspan="4">조회할 목록이 없습니다.</td>
-           </tr>
-           {% endif %}
-    </tbody>
-    </table>
 </body>
 </html>

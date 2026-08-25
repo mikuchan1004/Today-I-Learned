@@ -1,34 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>추가 페이지</title>
+    <title>사원 추가</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Noto Sans KR', sans-serif; }
+        body { background-color: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); padding: 30px; width: 100%; max-width: 480px; }
+        h1 { font-size: 22px; font-weight: 700; color: #2c3e50; margin-bottom: 24px; text-align: center; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 600; color: #555; margin-bottom: 6px; }
+        .form-group input { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; outline: none; transition: border-color 0.2s; }
+        .form-group input:focus { border-color: #4a90e2; }
+        .btn-group { display: flex; gap: 10px; margin-top: 24px; }
+        .btn { flex: 1; padding: 12px; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; display: inline-block; box-sizing: border-box; }
+        .btn-primary { background-color: #4a90e2; color: white; }
+        .btn-primary:hover { background-color: #357abd; }
+        .btn-secondary { background-color: #e0e0e0; color: #333; }
+        .btn-secondary:hover { background-color: #d0d0d0; }
+    </style>
 </head>
 <body>
-    <h1>추가 페이지</h1>
-    <div>
+    <div class="card">
+        <h1>사원 추가</h1>
         <form method="post" action="/api/add">
-            <input type="number" name="empno" id="empno" placeholder="사원번호 입력"><br>
-            <br>
-            <input type="text" name="ename" id="ename" placeholder="사원명 입력"><br>
-            <br>
-            <input type="text" name="job" id="job" placeholder="직책명 입력"><br>
-            <br>
-            <input type="number" name="mgr" id="mgr" placeholder="상사번호 입력"><br>
-            <br>
-            <input type="text" name="hiredate" id="hiredate" placeholder="고용일 입력"><br>
-            <br>
-            <input type="number" name="sal" id="sal" placeholder="급여 입력"><br>
-            <br>
-            <input type="text" name="comm" id="comm" placeholder="보너스 입력"><br>
-            <br>
-            <input type="number" name="deptno" id="deptno" placeholder="부서번호 입력(10, 20, 30)"><br>
-            <br>
-            <input type="submit" value="추가">
-            <a href="/list">
-                <input type="button" value="취소">
-            </a>
+            <div class="form-group">
+                <label for="empno">사원번호</label>
+                <input type="number" name="empno" id="empno" placeholder="사원번호 입력">
+            </div>
+            <div class="form-group">
+                <label for="ename">사원명</label>
+                <input type="text" name="ename" id="ename" placeholder="사원명 입력">
+            </div>
+            <div class="form-group">
+                <label for="job">직책명</label>
+                <input type="text" name="job" id="job" placeholder="직책명 입력">
+            </div>
+            <div class="form-group">
+                <label for="mgr">상사번호</label>
+                <input type="number" name="mgr" id="mgr" placeholder="상사번호 입력">
+            </div>
+            <div class="form-group">
+                <label for="hiredate">고용일</label>
+                <input type="text" name="hiredate" id="hiredate" placeholder="고용일 입력">
+            </div>
+            <div class="form-group">
+                <label for="sal">급여</label>
+                <input type="number" name="sal" id="sal" placeholder="급여 입력">
+            </div>
+            <div class="form-group">
+                <label for="comm">보너스</label>
+                <input type="text" name="comm" id="comm" placeholder="보너스 입력">
+            </div>
+            <div class="form-group">
+                <label for="deptno">부서번호</label>
+                <input type="number" name="deptno" id="deptno" placeholder="부서번호 입력(10, 20, 30)">
+            </div>
+            <div class="btn-group">
+                <input type="submit" value="추가" class="btn btn-primary">
+                <a href="/list" style="flex: 1; text-decoration: none;">
+                    <input type="button" value="취소" class="btn btn-secondary" style="width: 100%;">
+                </a>
+            </div>
         </form>
     </div>
 </body>
