@@ -48,7 +48,6 @@ def add_page(request: Request):
 def add_form(emp: Emp3 = Form(), session : Session = Depends(get_session)):
     print('/api/add 실행')
     print(emp)
-    emp_list = []
     try:
         # text : sql문을 실헹하기 전에 먼저 컴파일 해둔다 
         sql = text ('''
@@ -73,7 +72,7 @@ def add_form(emp: Emp3 = Form(), session : Session = Depends(get_session)):
     #  추가 완료 후 전체 조회 페이지로 이동
     return RedirectResponse(url = '/list' , status_code=303)
 
-# 상세 정보 조회
+# 사원의 상세 정보 조회
 @app.get('/detail/{empno}')
 def detail_page(empno:int, request:Request, session : Session = Depends(get_session)):
     print('/detail/{empno} 실행' , empno)
@@ -81,13 +80,13 @@ def detail_page(empno:int, request:Request, session : Session = Depends(get_sess
         select * from emp3
         where empno = :empno
     ''')
-    result =session.execute(sql, {'empno' : empno}).mappings().first()
+    result =session.execute(sql, {'empno' : empno}).mappings().fetchone()
 
     return templates.TemplateResponse(request, 'detail.html',{
         'emp' : result 
     })
 
-#  수정 페이지 이동 라우트
+#  테이블 수정 페이지 이동 라우트
 @app.get('/update/{empno}')
 def update_page (empno: int, request: Request, session:Session = Depends(get_session)):
     print('/update/{empno} 실행' , empno)
@@ -101,7 +100,7 @@ def update_page (empno: int, request: Request, session:Session = Depends(get_ses
         'emp' : result 
     })
 
-# 수정 처리 API 라우트
+#  수정 처리 API 라우트
 @app.post('/api/update')
 def opi_update(emp: Emp3 = Form(), session : Session = Depends(get_session)):
     print('/api/update 실행' , emp)
@@ -153,7 +152,6 @@ def api_delete(empno: int, session : Session = Depends(get_session)):
 
     # 삭제 완료 후 전체 조회 페이지로
     return RedirectResponse(url = '/list' , status_code=303)
-
 
 # 메인 모듈 실행 시 Uvicorn 개발 서버 시작
 if __name__ == "__main__":
