@@ -188,7 +188,7 @@ def api_delete(empno: int, session: Session = Depends(get_session)):
     return RedirectResponse(url='/list', status_code=303)
 
 # ==========================================
-# [메인 실행 영역] Uvicorn WAS 서버 구동
+# [메인 실행 영역] Uvicorn 백엔드 서버 구동
 # ==========================================
 if __name__ == "__main__":
     import uvicorn
