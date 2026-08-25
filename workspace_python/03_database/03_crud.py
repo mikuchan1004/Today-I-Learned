@@ -129,14 +129,14 @@ def emp_update_form(
                 empno = :empno
         ''')
         session.execute(sql, {
-            'empno' : Emp3.empno,
-            'ename' : Emp3.ename,
-            'job' : Emp3.job,
-            'mgr' : Emp3.mgr,
-            'hiredate' : Emp3.hiredate,
-            'sal' : Emp3.sal,
-            'comm' : Emp3.comm,
-            'deptno' : Emp3.deptno
+            'empno' : emp.empno,
+            'ename'  : emp.ename,
+            'job' : emp.job,
+            'mgr' : emp.mgr,
+            'hiredate' : emp.hiredate,
+            'sal' : emp.sal,
+            'comm' : emp.comm,
+            'deptno' : emp.deptno
         })
         
         session.commit()
