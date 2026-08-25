@@ -13,7 +13,7 @@ from DTO.DeptDTO import Dept3
 app = FastAPI()
 templates = Jinja2Templates(directory='templates/')
 
-
+# 데이터베이스 접속 정보
 DATABASE_URL = 'mysql+pymysql://root:human1234$@127.0.0.1:3306/human'
 engine = create_engine(DATABASE_URL, echo=True)
 
@@ -50,6 +50,7 @@ def add_form(emp: Emp3 = Form(), session : Session = Depends(get_session)):
     print(emp)
     emp_list = []
     try:
+        # text : sql문을 실헹하기 전에 먼저 컴파일 해둔다 
         sql = text ('''
                 insert into emp3
                 (empno, ename, job, mgr, hiredate, sal,  comm, deptno)
