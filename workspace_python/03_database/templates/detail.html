@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상세 페이지</title>
+</head>
+<body>
+    <h1>상세 페이지</h1>
+    <div>
+        사원번호 : {{emp.empno}}<br>
+        사원명 : {{emp.ename}}<br>
+        직책 : {{emp.job}}<br>
+        상사번호 : {{emp.mgr}}<br>
+        고용일 : {{emp.hiredate}}<br>
+        급여: {{emp.sal}}<br>
+        보너스:{{emp.comm}}<br>
+        부서번호 : {{emp.deptno}}<br>
+        <br>
+    </div>
+    <a href="/list">목록으로</a>
+    <a href='/update/{{emp.empno}}'>수정</a>
+    <a href="/api/delete/{{empno}}">삭제</a>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수정 페이지</title>
+</head>
+<body>
+    <h2>수정 페이지</h2>
+    <form method="post" action="/api/update">
+          사원번호 : <input type="number" name="empno" id="empno" value="{{emp.empno}}" placeholder="사원번호 입력" readonly><br>
+            <br>
+          사원명 :  <input type="text" name="ename" id="ename" value="{{emp.ename}}" placeholder="사원명 입력"><br>
+            <br>
+          직책명 :  <input type="text" name="job" id="job" value="{{emp.job}}" placeholder="직책명 입력"><br>
+            <br>
+         상사번호 :  <input type="number" name="mgr" id="mgr" value="{{emp.mgr}}" placeholder="상사번호 입력"><br>
+            <br>
+         고용일 :  <input type="text" name="hiredate" id="hiredate" value="{{emp.hiredate}}" placeholder="고용일 입력"><br>
+            <br>
+         급여 :    <input type="number" name="sal" id="sal" value="{{emp.sal}}" placeholder="급여 입력"><br>
+            <br>
+          보너스 :  <input type="text" name="comm" id="comm" value="{{emp.comm}}" placeholder="보너스 입력"><br>
+            <br>
+         부서번호 :    <input type="number" name="deptno" id="deptno" value="{{emp.deptno}}" placeholder="부서번호 입력(10, 20, 30)"><br>
+            <br>
+            <input type="submit" value="수정완료">
+            <a href="/detail/{{emp.empno}}"><input type='button' value='목록으로'></a>
+    </form>
+</body>
+</html>
