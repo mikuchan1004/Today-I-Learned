@@ -23,7 +23,7 @@ class Emp3 (SQLModel):
         foreign_key='dept3.deptno'
     )
 
-    @field_validator('comm' , mode='before')
+    @field_validator('comm' , 'mgr' , mode='before')
     @classmethod 
     def empty_to_none(cls, value):
         if value == '' :
