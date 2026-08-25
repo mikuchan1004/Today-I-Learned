@@ -30,15 +30,7 @@ class Emp3 (SQLModel):
             return None 
         else : 
             return value
-        
-    @field_validator('mgr' , mode='before')
-    @classmethod 
-    def empty_to_none(cls, value):
-        if value == '' :
-            return None 
-        else : 
-            return value
-
+    
     # @model_validator(mode='before')
     # @classmethod
     # def empty_to_none(cls, value):
