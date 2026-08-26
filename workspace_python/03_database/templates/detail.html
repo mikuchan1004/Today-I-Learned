@@ -30,10 +30,24 @@
             <div class="detail-item"><span class="label">사원번호</span><span class="value">{{emp.empno}}</span></div>
             <div class="detail-item"><span class="label">사원명</span><span class="value">{{emp.ename}}</span></div>
             <div class="detail-item"><span class="label">직책</span><span class="value">{{emp.job}}</span></div>
-            <div class="detail-item"><span class="label">상사번호</span><span class="value">{{emp.mgr}}</span></div>
+            <div class="detail-item"><span class="label">상사번호</span><span class="value">
+            {% if emp.mgr == None%}
+                -
+            {% else %}
+                {{emp.mgr}}
+            {% endif %}
+            </span>
+        </div>
             <div class="detail-item"><span class="label">고용일</span><span class="value">{{emp.hiredate}}</span></div>
             <div class="detail-item"><span class="label">급여</span><span class="value">{{emp.sal}}</span></div>
-            <div class="detail-item"><span class="label">보너스</span><span class="value">{{emp.comm}}</span></div>
+            <div class="detail-item"><span class="label">보너스</span><span class="value">
+            {% if emp.comm == None %}
+                -
+            {% else %}
+                {{emp.comm}}
+            {% endif %}
+            </span>
+        </div>
             <div class="detail-item"><span class="label">부서번호</span><span class="value">{{emp.deptno}}</span></div>
         </div>
         <div class="btn-group">

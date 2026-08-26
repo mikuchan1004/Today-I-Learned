@@ -52,7 +52,14 @@
                        </div>
                        <div class="info-row">
                            <span class="info-label">상사번호</span>
-                           <span class="info-value">{{emp.mgr}}</span>
+                           <span class="info-value">
+                            {# emp.mgr이 None일 때 None이 아닌 '-'(뺴기)가 나오게 하기 #}
+                            {% if emp.mgr == None%}
+                                -
+                            {% else %}
+                                {{emp.mgr}}
+                            {% endif %}
+                        </span>
                        </div>
                    </div>
                </div>
