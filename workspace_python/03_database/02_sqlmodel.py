@@ -44,6 +44,7 @@ def emp_list_deptno(
     emp_list = []
     try:
         # text : sql문을 실행하기 전에 미리 컴파일 해둔다
+        # text에서의 플레이스홀더 ==> 전달인자에 ':변수명' 으로 지정.
         sql = text('''
             select * 
             from emp3
