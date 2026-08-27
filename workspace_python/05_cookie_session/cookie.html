@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.onload = () => {
+            document.querySelector('#btn1').addEventListener('click' , () =>{
+                // 만료일이 없는 세션 쿠키 생성
+                document.cookie = "key=value"
+            })
+            document.querySelector('#btn2').addEventListener('click' , () => {
+                // max-age : 만료일을 뜻하고, 단위는 초
+                document.cookie = `mode=attack; max-age=${60*60}`
+            })
+        }
+
+    </script>
+</head>
+<body>
+    <button type="button" id="btn1">btn1</button>
+    <button type="button" id="btn2">btn2</button>
+    
+</body>
+</html>
