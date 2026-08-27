@@ -50,7 +50,7 @@ def emp_list_deptno(
             from emp3
             where deptno = :deptno
         ''')
-
+        # 값을 플레이스홀더로 전달할 때는 딕셔너리로 '{변수명 : 값}' 을 전달.
         result = session.execute(sql, {'deptno':deptno})
         # emp_list = result.fetchall() 
         emp_list = result.mappings().fetchall() 
