@@ -12,7 +12,12 @@
             })
             document.querySelector('#btn2').addEventListener('click' , () => {
                 // max-age : 만료일을 뜻하고, 단위는 초
-                document.cookie = `mode=attack; max-age=${60*60}`
+                document.cookie = `mode=attack; max-age=${60*60*2}`
+                document.cookie = `heal=full; max-age=${60*60*24}`
+            })
+
+            document.querySelector('#btn3').addEventListener('click' , () => {
+              console.log(document.cookie)
             })
         }
 
@@ -21,6 +26,7 @@
 <body>
     <button type="button" id="btn1">btn1</button>
     <button type="button" id="btn2">btn2</button>
+    <button type="button" id="btn3">btn3</button>
     
 </body>
 </html>
