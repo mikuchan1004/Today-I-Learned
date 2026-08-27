@@ -12,3 +12,4 @@ workspace_python/.vscode/settings.json
 workspace_python/todos/05_SQLite/Script-2.sql
 workspace_python/03_database/01_SQLite/Script-2.sql
 workspace_sql/Script.sql
+*.gif
