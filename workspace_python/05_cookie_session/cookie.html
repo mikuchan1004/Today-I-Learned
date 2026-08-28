@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>JS 쿠키 제어</title>
     <style>
+        /* 팝업창 기본 스타일 정의 */
         .popup {
             border : 2px solid black;
             padding : 20px;
@@ -13,68 +14,85 @@
             left : 30px;
             background-color : white;
         }
+        /* 팝업을 화면에서 숨겨버리는 클래스 */
         .hide {
             display: none;
         }
     </style>
     <script>
+        // 웹페이지의 모든 HTML 요소가 화면에 다 그려진(로드된) 직후 실행
         window.onload = () => {
-            document.querySelector('#btn1').addEventListener('click' , () =>{
-                // 만료일이 없는 세션 쿠키 생성
-                document.cookie = "key=value"
-            })
+
+            // [버튼 1 클릭] 만료일이 없는 '세션 쿠키' 만들기
+            document.querySelector('#btn1').addEventListener('click' , () => {
+                // max-age나 expires를 안 적으면 브라우저를 닫을 때 자동으로 삭제되는 임시 쿠키가 됩니다.
+                document.cookie = "key=value";
+            });
+
+            // [버튼 2 클릭] 수명이 정해진 쿠키 만들기
             document.querySelector('#btn2').addEventListener('click' , () => {
-                // max-age : 만료일을 뜻하고, 단위는 초
-                document.cookie = `mode=attack; max-age=${60*60*2}`
-                document.cookie = `heal=full; max-age=${60*60*24}`
-            })
+                // max-age는 쿠키의 유효 수명(초 단위)입니다.
+                // 60초 * 60분 * 2 = 7,200초 (2시간 동안 유지)
+                document.cookie = `mode=attack; max-age=${60 * 60 * 2}`;
+                
+                // 60초 * 60분 * 24 = 86,400초 (24시간 = 1일 동안 유지)
+                document.cookie = `heal=full; max-age=${60 * 60 * 24}`;
+            });
 
+            // [버튼 3 클릭] 쿠키 문자열을 직접 자르고 해석(파싱)하기
             document.querySelector('#btn3').addEventListener('click' , () => {
-              console.log(document.cookie)
-            
-              
-              // 쿠키 중 heal의 값이 'full'이면 
-              // '힐 합니다' 출력
-              // 아니면 '힐  안합니다' 출력 
+                // document.cookie는 "key=value; mode=attack; heal=full"처럼 모든 쿠키가 한 줄로 묶여 나옵니다.
+                console.log(document.cookie);
 
-              document.cookie.split(';  ') 
-                for(cookie  of  cookies) {
-                    console.log(cookie)
+                // [중요/수정] 쿠키 구분자인 세미콜론과 공백('; ')을 기준으로 문장을 싹 자릅니다.
+                const cookies = document.cookie.split('; '); 
 
-                    name = cookie.split('=')[0]
-                    value = cookie.split('=')[1]
+                // 자른 쿠키 조각들을 하나씩 돌려보면서 확인합니다.
+                for (let cookie of cookies) {
+                    console.log(cookie); // 예: "heal=full"
 
-                    if (name == 'heal') {
-                        if(value == 'full') {
-                            console.log('힐 합니다.') 
+                    // 등호('=') 기준으로 이름과 값을 쪼갭니다.
+                    let name = cookie.split('=')[0];  // 쿠키 이름 (예: heal)
+                    let value = cookie.split('=')[1]; // 쿠키 값 (예: full)
+
+                    // 쿠키 이름이 'heal'일 때 처리
+                    if (name === 'heal') {
+                        if (value === 'full') {
+                            console.log('힐 합니다.');
                         } else {
-                            console.log('힐 안합니다.')
+                            console.log('힐 안합니다.');
                         }
-                    } else {
-                        console.log('힐 안합니다')
                     }
                 }
-            })
-            // 새로 고침 했을떄, 쿠키가 있으면 팝업이 가려지고, 쿠키가 없으면 팝업이 보이게끔 
-            if (document.cookie.includes('popup=closed')) {
-                document.querySelector('.popup').classList.add('hide')
-            }
-            // 닫기 버튼 클릭 시 팝업이 보이지 않게 처리
-             document.querySelector('.close').addEventListener('click', () => {
-                document.querySelector('.popup').classList.add('hide')
-                    // 닫을 때 체크가 되어있다면 10초 짜리 쿠키 설정
-                    document.querySelector('.chk').checked 
-                        document.cookie = `popup=closed; max-age=${10}`
-             })
+            });
 
-       
+            // ====================================================
+            // 팝업 제어 로직 (페이지 접속하자마자 제일 먼저 실행)
+            // ====================================================
+
+            // 1. 페이지 접속 시 'popup=closed' 쿠키가 남아있는지 확인
+            if (document.cookie.includes('popup=closed')) {
+                // 쿠키가 존재하면 팝업에 hide 클래스를 붙여서 안 보이게 만듭니다.
+                document.querySelector('.popup').classList.add('hide');
+            }
+
+            // 2. 닫기 버튼을 눌렀을 때의 동작
+            document.querySelector('.close').addEventListener('click', () => {
+                // 버튼을 누르면 일단 화면에서 팝업을 숨깁니다.
+                document.querySelector('.popup').classList.add('hide');
+
+                // [중요/수정] 체크박스가 '체크되어 있을 때만' 10초짜리 쿠키를 새로 생성합니다.
+                if (document.querySelector('.chk').checked) {
+                    document.cookie = `popup=closed; max-age=10`;
+                }
+            });
         }
     </script>
 </head>
 <body>
-    <button type="button" id="btn1">btn1</button>
-    <button type="button" id="btn2">btn2</button>
-    <button type="button" id="btn3">btn3</button>
+    <button type="button" id="btn1">btn1 (세션쿠키)</button>
+    <button type="button" id="btn2">btn2 (수명쿠키)</button>
+    <button type="button" id="btn3">btn3 (쿠키조회)</button>
     
     <div class="popup">
         <div>
@@ -85,15 +103,5 @@
             <button type="button" class="close">닫기</button>
         </div>
     </div>
-    <!--
-    
-    1. 닫기 버튼 클릭 시 무조건 팝업 안보이게 처리 
-    2. 닫을 때 체크가 되어있다면
-        - 10초짜리 쿠키 설정
-    3. 새로고침 할 때 
-        - 쿠키가 있다면 팝업 안보이게 처리 
-        - 쿠키가 없을 때만 팝업 보이게
-    -->
-
 </body>
 </html>

@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <Script>
-        document.cookie = 'no= 1234'
-        document.cookie = 'yes= abcd; max-age=3600;'
-    </Script>
+    <script>
+        // 화면이 열리자마자 브라우저에 no 쿠키와 3600초(1시간)짜리 yes 쿠키를 세팅합니다.
+        // 이 쿠키들은 서버(/main)로 요청할 때 자동으로 파이썬에게 날아갑니다[cite: 5, 6]!
+        document.cookie = 'no= 1234';
+        document.cookie = 'yes= abcd; max-age=3600;';
+    </script>
 </head>
 <body>
     
