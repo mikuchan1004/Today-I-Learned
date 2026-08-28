@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/main.css') }}">
     <script>
         // 화면이 열리자마자 브라우저에 no 쿠키와 3600초(1시간)짜리 yes 쿠키를 세팅합니다.
         // 이 쿠키들은 서버(/main)로 요청할 때 자동으로 파이썬에게 날아갑니다!
@@ -12,6 +13,8 @@
     </script>
 </head>
 <body>
-    {{ request.session.id }}
+    <div>
+        {{ request.session.id }}
+    </div>
 </body>
 </html>

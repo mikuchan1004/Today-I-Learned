@@ -4,10 +4,17 @@ from fastapi import FastAPI,  Request,  Response
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.templating import Jinja2Templates 
 from fastapi.responses import RedirectResponse   
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
 templates = Jinja2Templates(directory='templates/')  
+
+app.mount(
+    "/static", # URL 경로 
+    StaticFiles(directory="static"), # 실제 폴더 명
+    name="static" # Jinja에서 사용할 이름 
+)
 
 app.add_middleware(
     SessionMiddleware,
