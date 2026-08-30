@@ -13,3 +13,5 @@ workspace_python/todos/05_SQLite/Script-2.sql
 workspace_python/03_database/01_SQLite/Script-2.sql
 workspace_sql/Script.sql
 *.gif
+workspace_python/TeamProject/__pycache__/api.cpython-314.pyc
+workspace_python/TeamProject/DTO/__pycache__/BoardDTO.cpython-314.pyc
