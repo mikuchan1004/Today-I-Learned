@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글 읽기</title>
+</head>
+<body>
+    <h1>글 읽기</h1>
+    <div>
+        글 ID : {{board.id}}<br>
+        작성자 : {{board.author}}<br>
+        작성일 : {{board.date}}<br>
+        내용 : {{board.detail}}<br>
+    </div>
+    <a href="/board">목록으로</a>
+    <a href="/update/{{board.id}}">수정</a>
+    <a href="/api/delete/{{board.id}}">삭제</a>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글 수정 페이지</title>
+</head>
+<body>
+    <h1>글 수정</h1>
+    <form method="post" action="/api/update">
+    아이디 :  <input type="number" name="id" id="id" value="{{board.id}}" readonly><br>
+    작성자 : <input type="text" name="author" id="author" value="{{board.author}}" readonly><br>
+    제목 : <input type="text" name="title" id="title" value="{{board.title}}" placeholder="제목을 입력해주세요"><br>
+    작성일 :  <input type="text" name="date" id="date" value="{{board.date}}" readonly><br>
+    내용 : <textarea name="detail" id="detail" placeholder="내용을 입력해주세요">{{board.detail}}</textarea><br>
+    <br>
+    <input type="submit" value="수정 완료">
+    <a href="/detail/{{board.id}}">
+        <input type="button" value="취소">
+    </a>
+    </form>
+</body>
+</html>
