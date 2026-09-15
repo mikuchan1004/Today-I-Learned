@@ -47,7 +47,7 @@ wine = [[
     0.9978,
     3.54,
     0.80,
-    7.4
+    10.4
 ]]
 
 wine_df = pd.DataFrame(wine)
