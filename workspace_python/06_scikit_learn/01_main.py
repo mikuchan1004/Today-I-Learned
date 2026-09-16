@@ -18,7 +18,7 @@ dataFrame = pd.read_csv('wine+quality/winequality-red.csv' , sep=';')
 # print(dataFrame.head())
 # 가져오고 싶은 줄(행)을 지정할 수 있다.
 #  하는 이유는 대충 hello world 느낌으로 로딩이 잘 됐는지 확인 용도
-print(dataFrame.head(2))
+print(dataFrame.head(3))
 
 # shape : 데이터프레임의 크기(행의 개수, 열의 개수)
 print('dataFrame.shape :' ,  dataFrame.shape)
@@ -101,8 +101,8 @@ wine = [[
     34.0,
     0.9978,
     3.54,
-    0.80,
-    10.4
+    2.05,
+    8.4
 ]]
 
 # 모델 학습에 사용한 X와 같은 형태로 만들기
@@ -121,3 +121,34 @@ print( '예측 결과 : ' , wine_pred)
 wine_prob = model.predict_proba(wine_df)
 print('예측 결과 :' , wine_prob )
 
+#======================
+# 모델 성능 평가 
+#======================
+
+from sklearn.metrics import f1_score, roc_auc_score
+
+# 평가 지표 : 모델이 얼마나 잘 이해했는가?를 숫자로 표현한다. 
+
+# train 데이터로 학습한 모델에
+# 모의고사 문제인 test 데이터를 예측하라고 한다.
+pred = model.predict(X_test)
+
+# 실제 정답과 예측 답으로 f1 점수를 낸다
+f1 = f1_score(y_test, pred)
+# f1은 정밀도와 재현율을 함께 고려하는 기준이다.
+# 단지 답만 점검하는 것이 아니라 실제 좋은 와인(1)을 잘 찾았는지도 고려한다.
+# 점수는 0~1까지 나오고 1이 좋은 것.
+print("f1 평가 점수 :", f1)
+
+proba = model.predict_proba(X_test)[:, 1]
+# [:, 1] : 전체 행에서 두번째 컬럼(좋은 와인의 확률)만 추출
+
+# 0~ 1
+# 1 : 완벽, 0.5는 랜덤, 0.5미만은 영 좋지 않음
+auc = roc_auc_score(y_test, proba)
+print('roc_auc 평가 점수 :' , auc)
+# ROC-AUC 지표는 얼마나 잘 구분하는가?  
+# 0.5는 무작위와 비슷하다.
+# 1에 가까울수록 두 클래스를 잘 구분하는 모델이다.
+
+# f1과 roc-auc는 서로 다른 것을 기준으로 측정하기 때문에 서로 비교하지는 말자. 
