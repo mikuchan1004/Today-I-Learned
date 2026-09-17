@@ -105,8 +105,22 @@ wine = [[
     8.4
 ]]
 
+columns = [
+    "fixed acidity",
+    "volatile acidity",
+    "citric acid",
+    "residual sugar",
+    "chlorides",
+    "free sulfur dioxide",
+    "total sulfur dioxide",
+    "density",
+    "pH",
+    "sulphates",
+    "alcohol"
+]
+
 # 모델 학습에 사용한 X와 같은 형태로 만들기
-wine_df = pd.DataFrame(wine)
+wine_df = pd.DataFrame(wine, columns=columns)
 
 # predict : 예측
 # 결과는 배열로 나온다.
@@ -152,3 +166,107 @@ print('roc_auc 평가 점수 :' , auc)
 # 1에 가까울수록 두 클래스를 잘 구분하는 모델이다.
 
 # f1과 roc-auc는 서로 다른 것을 기준으로 측정하기 때문에 서로 비교하지는 말자. 
+
+#==================================
+# cross validation 교차 검증 
+#==================================
+
+from sklearn.model_selection import cross_val_score
+
+# cross validation 교차 검증 
+# 데이터를 여러 부분으로 나눠서 모델을 반복적으로 학습하고 평가한다.
+
+'''
+예를 들어  
+[0,1,2,3,4]중에서
+1. 학습 [0,1,2,3], 연습문제[4]
+2. 학습[0.1,2,4], 연습문제[3]
+3. 학습[0,1,4,3], 연습문제[2]
+4. 학습[0,4,2,3], 연습문제[1]
+5. 학습[1,2,3,4], 연습문제[0]
+'''
+
+# 데이터가 많지 않은 경우에는 분할에 따라서 성능이 달라질 수 있기 때문에 유용하다.
+# 즉, 한번의 결과만으로 모델 성능을 판단하는 문제를 줄이기 위해 사용한다.
+
+scores = cross_val_score (
+    model, X_train, y_train,
+    cv = 2,
+    scoring='f1'
+)
+
+# 전체 X와 y로 5번 교차 검증( 5-Fold Cross Validation)을 수행한다 
+# cv = 5는 데이터를 5개 부분을 나눠서 교대로 검증한다.
+# 한 번에 4개의 구분을 학습에 사용하고  1개의 구분을 검증에 사용한다.
+# scoring = 'f1'  : 각 검증에서 F1-score를 계산하라
+
+print('cross_val_score : ' , scores)
+
+print('scores 평균 : ' , scores.mean())
+
+# 단순하게 어떤게 좋다 나쁘다가 아니고 어떤 덩어리가 무조건 정답도 아니다
+
+from sklearn.model_selection import GridSearchCV
+prarms = {
+    'n_estimators' : [50, 100],
+    'max_depth' : [5,10, None]
+}
+# 2 * 3  = 6개의 조합
+# n_estimatiors : 의사결정나무 갯수
+# max_depth : 나무의 최대 깊이 (None은 제한하지 않는다.)
+# 하이퍼파라미터 : 개발자가 바꿀 수 있는 값
+
+grid = GridSearchCV(
+    RandomForestClassifier(random_state=42),
+    prarms,
+    cv=5,
+    scoring='f1'
+)
+# GridSearchCV
+# 첫 번째 전달인자 :  머신러닝 모델 
+# 두 번째 전달인자 : 시험할 하이퍼파라미터 후보
+# 세 번째 전달인자 : 학습 데이터의 조합 수 
+# 네 번째 전달인자 : 평가 지표, 지표의 점수가 가장 높은 조합을 찾는다
+
+grid.fit(X_train, y_train)
+#지정한  6개의 하이퍼라파라미터 조합을 각각 학습하고 평가한다.
+
+print('최적의 조합법 : ', grid.best_params_)
+# 6개 조합 중 가장 좋았던 조합을 출력한다.
+
+print('최고 점수 : ' ,grid.best_score_)
+# GridSearchCV가 선택한 최적의 하이퍼파라미터 조합으로 교차검증에서 얻은 평균 F1 점수를 출력한다.
+# 진짜 평가는 X_test , y_test로 평가하는게 좋다.
+
+grid_model =  grid.best_estimator_ 
+# GridSearchCV가 찾은 가장 좋은 하이퍼파라미터 조합으로 만들어진 모델을 가져온다.
+# 최적의 RandomForest 모델
+
+grid_pred = model.predict(wine_df)
+print(' grid 와인 결과 예측 : ' , grid_pred)
+
+grid_proba = model.predict_proba(wine_df)
+print(' grid 와인 확률 예측 : ' , grid_proba )
+
+from sklearn.model_selection import StratifiedKFold
+
+skf = StratifiedKFold (
+    n_splits=5,
+    shuffle=True,
+    random_state=42
+)
+# StratifiedKFold  : 분류할 때 클래스의 비율을 최대한 유지하면서 나누는 방법 
+# n_splits : 5개 구역으로 쪼개기 5 Fold Cross Validation
+# shuffle : 데이터를 섞은 다음에 Fold로 나눈다
+
+scores = cross_val_score (
+    grid_model, X, y,
+    cv = skf,
+    scoring='f1'
+)
+# StratifiedKFold 방식을 사용해서 Cross Validation을 수행한다.
+# 위에서 배운 내용은 그냥 5개 구역으로 나눠서 진행했지만 
+# 지금은 정답의 비율에 가까운  구성으로 진행한다(train_test_split 과 비슷한 역할을 한다.)
+
+print ('skf 방식의 교차 검증 결과 : ',scores)
+print('skf 방식의 교차 검증 결과의 평균' , scores.mean())
