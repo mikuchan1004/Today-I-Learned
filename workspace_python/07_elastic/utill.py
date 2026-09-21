@@ -20,7 +20,7 @@ def load_documents() :
     # print(Path(__file__).resolve().parents[1]) 
     # print(Path(__file__).resolve().parents[0])
 
-    BASE_DIR  = Path(__file__).resolve().parents[1]
+    BASE_DIR  = Path(__file__).resolve().parents[0]
     DOCUMENT_FILE = BASE_DIR / 'data' / 'data.json' # 경로 합치기 
     #Path에서는  / 가 더하기 역할을 한다. 
     
