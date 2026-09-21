@@ -247,6 +247,10 @@ def term(keyword: str):
         "msg" : formatter(response)
     }
 
+# gte : >= greater than equal 
+#gt  :  > greater than 
+# lte : <= less than equal
+# lt : < less than
 @router.get('/es/select/range')
 def range_(max : int , min : int = 0):
     response = es.search(
@@ -305,4 +309,114 @@ def orderby(sort_field,order = 'asc'):
     )
     return {
         "msg" : formatter(response)
+    }
+
+# 전달인자로 dict 형태를 완성해서 줬을 때 
+@router.post('/es/crud/insert')
+def insert_document(document : dict) :
+    response = es.index(
+        index = 'computer',
+        id=document.get('id', -1),
+        document = document
+    )
+
+    return {
+        'response' : response,
+        "msg" : 'document 추가 완료'
+    }
+
+'''
+{
+  "response": {
+    "_index": "computer",
+    "_id": "10001",
+    "_version": 1,
+    "result": "created",
+    "_shards": {
+      "total": 1,
+      "successful": 1,
+      "failed": 0
+    },
+    "_seq_no": 125,
+    "_primary_term": 1
+  },
+  "msg": "document 추가 완료"
+}
+'''
+
+@router.get('/es/crud/select')
+def select_document(id) :
+    result = {}
+    try : 
+        # es.serach  사용해도 되고
+        # _id로 검색할 때는 get도 사용이 가능하다.
+        response = es.get(
+            index = 'computer',
+            id = id 
+        )
+        print('response :' , response)
+
+        result = response.get('_source')
+
+    except Exception as e :
+        print(e)
+
+    return {
+        'result' : result,
+        "msg" : 'document 조회 완료'
+    }
+
+# document 전체로 덮어쓰기
+@router.put('/es/crud/update')
+def update_document(id, document: dict):
+    result = {}
+    try:
+        result = es.update(
+            index = 'computer',
+            id = id,
+            doc = document
+        )
+    except Exception as e :
+        print(e)
+
+    return {
+        'result' : result,
+        "msg" : 'document 업데이트 완료'
+    }
+
+# 원하는 필드만 업데이트
+@router.put('/es/crud/update/field')
+def update_field_document(id, price:int, rating:float):
+    result = {}
+    try:
+        result = es.update(
+            index = 'computer',
+            id = id,
+            doc = {
+                'price': price,
+                'rating' : rating
+            }
+        )
+    except Exception as e :
+        print(e)
+
+    return {
+        'result' : result,
+        'msg' : 'price , rating 업데이트 완료 '
+    }
+
+@router.delete('/es/crud/delete')
+def delete_document(id):
+    result = {}
+    try:
+        result = es.delete(
+            index = 'computer',
+            id = id
+        )
+    except Exception as e :
+        print(e)
+
+    return {
+        'result' : result,
+        'msg' : 'document 삭제 완료'
     }
