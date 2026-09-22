@@ -239,7 +239,7 @@ def get_keyword_embedding(keyword):
     # 생성한 백터를 반환한다.
     return result ['text_embedding'][0]['embedding']
 
-# 제미나이를 이용해검색어를 벡터화 한다.
+# 제미나이를 이용해 검색어를 벡터화 한다.
 def get_keyword_embedding_with_llm(keyword):
     prompt = f''''
         task: retrival query\n
