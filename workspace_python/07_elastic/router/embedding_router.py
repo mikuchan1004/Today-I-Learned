@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from utill import es, load_documents, formatter
+from utill import es, load_documents, formatter, gemini
 from elasticsearch import helpers
 
 # 정규표현식 (regular expression, regExp) 사용을 위한 모듈
@@ -129,7 +129,15 @@ def ingest_embed_documents():
     # json 가져오기 
     documents = load_documents()
 
+    # for index, data in enumerate(range(100)):
+    #     # 제미나이 접속 29번 하고 나서 
+    #     if index % 30 == 0:
+    #         print(data)
+    #         import time
+    #         time.sleep(60) # 초 단위
+
     actions = [ ]
+    call_count = 0 # call_count 초기화
     for doc in documents : 
         # chunk 만들기 
         chunks = split_text(doc['content'])
@@ -137,7 +145,15 @@ def ingest_embed_documents():
         for index, chunk in enumerate(chunks) :
 
             # 백터로 변환
-            embedding =  get_embedding(doc['title'], chunk)
+            # embedding =  get_embedding(doc['title'], chunk)
+            embedding =  get_embedding_with_llm(doc['title'], chunk)
+            call_count += 1
+            print(f'[{call_count}번째 청크 임베딩 완료]')
+
+            if call_count % 30 == 0:
+                print(f'>>> {call_count}회 호출 완료 : 1분간 대기합니다...')
+                import time
+                time.sleep(60)
 
             # 살짝 변환 
             doc2 = doc
@@ -166,6 +182,7 @@ def ingest_embed_documents():
         }
     }
 
+# 엘라스틱 모델을 사용해서 벡터화 한다
 def get_embedding(title, content):
     text = f'title : {title}\ncontent: {content}'
     # 임베딩을 저장용으로 요청한다
@@ -182,6 +199,34 @@ def get_embedding(title, content):
     # print('차원 :' , len(result['text_embedding'][0]['embedding']))
     return result ['text_embedding'][0]['embedding']
 
+# 제미나이에서 사용할 타입들
+from google.genai import types
+# 제미나이를 이용해서 벡터화 한다.
+def get_embedding_with_llm(title, content):
+    prompt = f''''
+        task: retrival document\n
+        title: {title}\n
+        content: {content}
+'''
+    result = gemini.models.embed_content(
+        model='gemini-embedding-2',
+
+        # 텍스트를 임베딩한다 
+        contents = [
+            types.Content(
+                parts=[
+                    types.Part.from_text(text=prompt)
+                ]
+            )
+        ],
+
+        # 옵션
+        config=types.EmbedContentConfig(
+            output_dimensionality=384
+        )
+    )
+    return result.embeddings[0].values
+
 def get_keyword_embedding(keyword):
 
     # 임베딩을 검색용으로 요청한다
@@ -194,10 +239,36 @@ def get_keyword_embedding(keyword):
     # 생성한 백터를 반환한다.
     return result ['text_embedding'][0]['embedding']
 
+# 제미나이를 이용해검색어를 벡터화 한다.
+def get_keyword_embedding_with_llm(keyword):
+    prompt = f''''
+        task: retrival query\n
+        query: {keyword}
+'''
+    result = gemini.models.embed_content(
+        model='gemini-embedding-2',
+
+        # 텍스트를 임베딩한다 
+        contents = [
+            types.Content(
+                parts=[
+                    types.Part.from_text(text=prompt)
+                ]
+            )
+        ],
+
+        # 옵션
+        config=types.EmbedContentConfig(
+            output_dimensionality=384
+        )
+    )
+    return result.embeddings[0].values
+
 @router.get('/embed/search/vector')
 def search_vector(keyword):
     #검색어를 검색용 백터로 변환한다
-    vector_keyword = get_keyword_embedding(keyword)
+    # vector_keyword = get_keyword_embedding(keyword)
+    vector_keyword = get_keyword_embedding_with_llm(keyword)
 
     # 엘라스틱서치에서 KNN 백터 검색을 한다
     '''
@@ -247,7 +318,8 @@ def hybrid(keyword):
     # 두 결과를 RRF 방식으로 합쳐서 최종적으로 관련성 높은 문서만 반환한다.
 
     size = 5
-    vector_keyword = get_keyword_embedding(keyword)
+    # vector_keyword = get_keyword_embedding(keyword)
+    vector_keyword = get_keyword_embedding_with_llm(keyword)
     response = es.search(
         index='computer_chunk',
         size = size,
