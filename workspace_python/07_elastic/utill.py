@@ -36,3 +36,19 @@ def load_documents() :
         print('open 하다가 오류 발생 :' , e)
 
     return result
+
+def formatter(resp) :
+    results = [ ]
+    # 우리가 넣은 내용만 쏙 빼온다.
+    for hit in resp['hits']['hits'] :
+        document = hit.get('_source' , {})
+
+        results.append({
+            'document' : hit.get('_source' , {}),
+            'score' : hit.get('_score')
+        })
+
+    return {
+                'results' : results,
+                'total' : resp['hits']['total']['value']
+            }

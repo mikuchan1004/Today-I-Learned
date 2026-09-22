@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from elasticsearch import helpers
 # 원래 여기에 있다가 임베딩 하면서 util로 변경했음
-from utill import es, load_documents
+from utill import es, load_documents, formatter
 
 router = APIRouter(tags=['엘라스틱서치 관련 라우터']) # tags : 스웨거용 글씨
 
@@ -145,22 +145,6 @@ def select_all():
         'total' : response['hits']['total']['value']
         }
     }
-
-def formatter(resp) :
-    results = [ ]
-    # 우리가 넣은 내용만 쏙 빼온다.
-    for hit in resp['hits']['hits'] :
-        document = hit.get('_source' , {})
-
-        results.append({
-            'document' : hit.get('_source' , {}),
-            'score' : hit.get('_score')
-        })
-
-    return {
-                'results' : results,
-                'total' : resp['hits']['total']['value']
-            }
 
 # match
 # where랑 비슷함 
