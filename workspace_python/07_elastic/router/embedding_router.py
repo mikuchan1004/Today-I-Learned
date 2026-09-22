@@ -153,7 +153,7 @@ def ingest_embed_documents():
             if call_count % 30 == 0:
                 print(f'>>> {call_count}회 호출 완료 : 1분간 대기합니다...')
                 import time
-                time.sleep(60)
+                time.sleep(0.7)
 
             # 살짝 변환 
             doc2 = doc
