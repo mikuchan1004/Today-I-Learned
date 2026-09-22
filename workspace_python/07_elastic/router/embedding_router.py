@@ -156,7 +156,7 @@ def ingest_embed_documents():
                 time.sleep(0.7)
 
             # 살짝 변환 
-            doc2 = doc
+            doc2 = doc.copy()
             doc2['chunk_index' ] = index
             doc2['embedding'] = embedding
 
