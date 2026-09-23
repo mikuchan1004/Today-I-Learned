@@ -154,6 +154,7 @@ def ingest_embed_documents():
             # [중요] .copy()로 복사본을 만들어야 루프 내에서 이전 청크 데이터가 오염되지 않음
             doc2 = doc.copy()
             doc2['chunk_index'] = index  # 현재 청크의 순번 기록
+            doc2['content'] = chunk # 쪼갠 텍스트로 덮어쓰기
             doc2['embedding'] = embedding  # 추출한 384차원 임베딩 벡터 주입
 
             # Elasticsearch 벌크 작업 리스트에 추가 (도큐먼트 ID는 "문서ID-청크번호"로 고유화)
