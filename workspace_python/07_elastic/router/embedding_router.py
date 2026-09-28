@@ -257,8 +257,8 @@ def search_vector(keyword):
     return formatter(response)
 
 
-@router.get('/embed/search/hybrid')
-def hybrid(keyword):
+@router.get('/embed/search/hybrid/rrf')
+def hybrid_rrf(keyword):
     """
     하이브리드 검색 (Hybrid Search):
     1) BM25 키워드 일치 검색(multi_match)
@@ -304,6 +304,90 @@ def hybrid(keyword):
         },
     )
     return formatter(response)
+
+@router.get('/embed/search/hybrid')
+def hybrid(keyword) :
+    # 라이센스가 없어서(trial에 있는데 클라우드 14일 도커 30일 제한)
+    # rrf 직접 구현
+    vector_keyword = get_keyword_embedding_with_llm(keyword)
+
+    # BM25 검색
+    text_response = es.search(
+        index="computer_chunk",
+        query={
+            "multi_match": {
+                "query": keyword,
+                "fields": ["title", "content"]
+            }
+        },
+        size=50
+    )
+
+    # 벡터 검색
+    vector_response = es.search(
+        index="computer_chunk",
+        knn={
+            "field": "embedding",
+            "query_vector": vector_keyword,
+            "k": 50,
+            "num_candidates": 100
+        },
+        size=50
+    )
+
+    rrf_score = {}
+    rank_constant = 60
+
+    # match 검색 결과 하나마다
+    for rank, hit in enumerate(text_response["hits"]["hits"], start=1):
+        # id를 추출하고 
+        doc_id = hit['_id']
+        # rrf_score에서 key로 방금의 id가 없으면 
+        if doc_id not in rrf_score:
+            # key를 만들고 기본값 넣어주기
+            rrf_score[doc_id] = {
+                "score": 0,
+                "source": hit["_source"]
+            }
+        # 같은 문서끼리 점수를 누적해서 올린다
+        rrf_score[doc_id]['score'] += (1 / (rank_constant + rank))
+# vector 검색 결과 하나마다 
+    for rank, hit in enumerate(vector_response["hits"]["hits"], start=1):
+        doc_id = hit['_id']
+        if doc_id not in rrf_score:
+            rrf_score[doc_id] = {
+                "score": 0,
+                "source": hit["_source"]
+            }
+        rrf_score[doc_id]['score'] += (1 / (rank_constant + rank))
+
+    print('rrf_score:', rrf_score)
+    results = sorted(
+        rrf_score.items(), # (key, value) 튜플로
+        key=lambda x: x[1]['score'], # items의 두번째 값 즉 value
+        reverse=True # 내림차순으로 정렬
+    )
+
+    # 돌려주고 싶은 개수(즉 조회 결과 수)
+    size = 10
+    # 기존 formatter가 사용할 수 있도록 Elasticsearch 응답 형태로 변환
+    hits = []
+    for doc_id, data in results[:size]:
+        hits.append({
+            "_id": doc_id,
+            "_score": data["score"],
+            "_source": data["source"]
+        })
+
+    resp = {
+        "hits": {
+            "hits": hits,
+            "total": {
+                "value": len(rrf_score)
+            }
+        }
+    }
+    return formatter(resp)
 
 # RAG (Retrieval-Augmented Generation) 검색 증강 생성 
 @router.get('/embed/ask')
