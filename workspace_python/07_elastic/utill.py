@@ -5,10 +5,9 @@ from elasticsearch import Elasticsearch
 from elasticsearch import helpers
 from google import genai
 
-# 엘라스틱서치를 클라우드에서 연결 
+# 엘라스틱서치를 로컬에다가 연결
 es = Elasticsearch(
-    ELASTIC_ENDPOINT, # DB 연결 주소
-    api_key = ELASTIC_API_KEY # DB 계정
+    ELASTIC_ENDPOINT # DB 연결 주소
 )
 # 제미나이 연결
 gemini = genai.Client(api_key=GEMINI_API_KEY)
