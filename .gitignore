@@ -17,3 +17,5 @@ workspace_python/TeamProject/__pycache__/api.cpython-314.pyc
 workspace_python/TeamProject/DTO/__pycache__/BoardDTO.cpython-314.pyc
 workspace_python/07_elastic/router/__pycache__/es_router.cpython-314.pyc
 workspace_python/07_elastic/router/__pycache__/embedding_router.cpython-314.pyc
+workspace_python/08_langgraph/__pycache__/api.cpython-314.pyc
+workspace_python/08_langgraph/__pycache__/util.cpython-314.pyc
