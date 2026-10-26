@@ -214,14 +214,9 @@ def chunk():
     """생성된 청크 목록 중 앞쪽 10개만 미리보기로 반환하는 API"""
     return makeChunk()[0:10]
 
+@router.get('/make/embedding')
+def embedding():
+    target = makeChunk()[0:10]
+    actions = util.embedding_with_gemini(target)
 
-# ==============================================================================
-# 5. 임베딩 모델 연동 스텁 (향후 구현 영역)
-# ==============================================================================
-def embedding_with_gemini(data):
-    """Google Gemini 임베딩 모델(예: text-embedding-004)을 호출하여 벡터를 생성할 함수"""
-    pass
-
-def embedding_with_gpt(data):
-    """OpenAI GPT 임베딩 모델(예: text-embedding-3-small)을 호출하여 벡터를 생성할 함수"""
-    pass
+    return actions
