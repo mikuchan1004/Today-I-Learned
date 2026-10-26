@@ -8,7 +8,7 @@
 5. Gemini/GPT 임베딩 연동 준비
 """
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 import traceback 
 from pathlib import Path
 import util
@@ -193,7 +193,7 @@ def makeChunk():
 
         # range(시작, 끝, 간격) : step만큼 건너뛰며 청크 시작 인덱스 생성
         for idx, idx_start in enumerate(range(0, len(text), step)):
-            # [주의: 슬라이싱 범위 수정]
+            # [주의: 슬라이싱 범위]
             # text[idx_start : idx_start + size_chunk]로 잘라야 지정한 길이(50자)만큼 슬라이싱됨
             chunk = text[idx_start : idx_start + size_chunk]
             if chunk:
@@ -207,8 +207,7 @@ def makeChunk():
                     'chunk_index': idx  # 해당 영화 내에서 몇 번째 청크인지 식별
                 })
 
-    # [주의: return 위치 수정]
-    # for info in content 루프가 완전히 끝난 뒤 모든 영화의 청크를 반환해야 함
+    # for info in content 루프가 완전히 끝난 뒤 모든 영화의 청크를 반환
     return chunks
 
 
@@ -217,41 +216,61 @@ def chunk():
     """생성된 청크 목록 중 앞쪽 10개만 미리보기로 반환하는 API"""
     return makeChunk()[0:10]
 
+
+# ==============================================================================
+# 5. 임베딩(Embedding) 생성 및 테스트 API
+# ==============================================================================
 @router.get('/make/embedding/gemini')
 def embedding_gemini():
+    """Gemini API를 활용하여 상위 10개 청크의 벡터 임베딩 생성 테스트"""
     target = makeChunk()[0:10]
     actions = util.embedding_with_gemini(target)
     return actions
 
 @router.get('/make/embedding/openai')
 def embedding_openai():
+    """OpenAI API를 활용하여 상위 10개 청크의 벡터 임베딩 생성 테스트"""
     target = makeChunk()[0:10]
     actions = util.embedding_with_openai(target)
     return actions
 
+
+# ==============================================================================
+# 6. 엘라스틱서치 연결 상태 및 대량 데이터 색인(Bulk Insert)
+# ==============================================================================
 @router.get('/es/health')
 def health():
-    return {'msg' :  util.es.ping()}
+    """엘라스틱서치 클러스터와의 핑(Ping) 연결 상태 점검"""
+    return {'msg' : util.es.ping()}
 
 @router.post('/es/bulk')
 def bulk():
+    """
+    모든 영화 청크를 벡터로 임베딩한 후 엘라스틱서치 인덱스에 벌크(Bulk) 색인
+    - 기존 인덱스가 존재하면 삭제 후 최신 스키마(매핑)로 재생성합니다.
+    """
     target = makeChunk()
+    # 임베딩 생성 (벡터 필드 포함 액션 리스트 반환)
     actions = util.embedding_with_openai(target)
 
-    # 1. 만약에 엘라스틱서치에 인덱스가 없다면 새로 만들기 
-    if not util.es.indices.exists(index=os.getenv('ES_INDEX')) :
+    # 1. 엘라스틱서치에 기존 인덱스가 있다면 깔끔하게 삭제
+    if util.es.indices.exists(index=os.getenv('ES_INDEX')):
+        util.es.indices.delete(index=os.getenv('ES_INDEX'))
+
+    # 2. 인덱스가 없으면 필드 매핑(스키마) 정의 후 새로 생성
+    if not util.es.indices.exists(index=os.getenv('ES_INDEX')):
         mappings = {
-            'properties' : {
-                'index' : {'type' : 'integer'},
-                'movieId' : {'type' : 'integer'},
-                'title' : {'type' : 'keyword'},
-                'genres' : {'type' : 'keyword'},
-                'tags' : {'type' : 'keyword'},
-                'content' : {'type' : 'text'},
-                'chunk_index' : {'type' : 'integer'},
-                'embedding' : {
-                    'type' : 'dense_vector',
-                    'dims' : 768
+            'properties': {
+                'index': {'type': 'integer'},
+                'movieId': {'type': 'integer'},
+                'title': {'type': 'text'},
+                'genres': {'type': 'keyword'},      # 정확한 필터링/집계를 위해 keyword 사용
+                'tags': {'type': 'text'},
+                'content': {'type': 'text'},
+                'chunk_index': {'type': 'integer'},
+                'embedding': {
+                    'type': 'dense_vector',         # 벡터 검색용 dense_vector 타입
+                    'dims': 768                     # 임베딩 모델의 벡터 차원 수
                 },
             }
         }
@@ -260,15 +279,76 @@ def bulk():
             mappings=mappings
         )
 
-    # 2. bulk로 넣기
+    # 3. helpers.bulk()를 통해 대량 문서를 한 번의 네트워크 요청으로 고속 삽입
     success, errors = helpers.bulk(
         util.es,
         actions,
         stats_only=False
     )
     return {
-        'msg' : {
-        'succ' : success,
-        'errors' : errors
+        'msg': {
+            'succ': success,
+            'errors': errors
+        }
     }
-}
+
+
+# ==============================================================================
+# 7. 엘라스틱서치 검색(Search) API
+# ==============================================================================
+def search_movies(keyword: str, size: int = 10):
+    """
+    다중 필드(multi_match) 키워드 텍스트 검색 헬퍼 함수
+    - title, genres, tags, content 필드를 대상으로 검색어 매칭
+    """
+    response = util.es.search(
+        index=os.getenv('ES_INDEX'),
+        query={
+            'multi_match': {
+                'query': keyword,
+                'fields': ['title', 'genres', 'tags', 'content'],
+            }
+        },
+        size=size
+    )
+    return response
+
+@router.get('/es/select/multi_match')
+def multi_match(keyword: str, size: int = 10):
+    """키워드를 입력받아 다중 필드에서 검색된 영화 목록을 반환하는 API"""
+    response = search_movies(keyword, size)
+    return {
+        'msg': util.formatter(response)
+    }
+
+def term_movieId(ids: list):
+    """
+    여러 movieId를 기반으로 문서를 조회하는 terms 쿼리 헬퍼 함수
+    - [주의]: URL Query 파라미터로 넘어온 값은 문자열 형태일 수 있으므로 정수형(int) 변환 필요
+    - [주의]: 엘라스틱서치 쿼리 키는 반드시 따옴표로 감싼 'terms' 문자열이어야 함 (함수 terms와 혼동 방지)
+    """
+    # 엘라스틱서치 movieId 필드가 integer 타입이므로 안전하게 int로 변환
+    int_ids = [int(i) for i in ids]
+
+    response = util.es.search(
+        index=os.getenv('ES_INDEX'),
+        query={
+            'terms': {
+                'movieId': int_ids
+            }
+        },
+        # 영화당 청크가 여러 개 존재할 수 있으므로 요청한 ID 개수에 비례하여 사이즈 확보
+        size=len(int_ids) * 5
+    )
+    return response
+
+@router.get('/es/select/terms')
+def terms(ids: list = Query(...)):
+    """
+    복수의 movieId를 쿼리 파라미터로 받아 해당하는 청크 문서를 조회하는 API
+    - 예시: /es/select/terms?ids=1&ids=2
+    """
+    response = term_movieId(ids)
+    return {
+        'msg': util.formatter(response)
+    }
