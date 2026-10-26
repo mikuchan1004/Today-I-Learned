@@ -67,27 +67,30 @@ def embedding_with_openai(chunks):
 
     contents =  [chunk['content']  for chunk in chunks]
 
-    # 임베딩 하기 
-    # openai는 list를 주면 결과도 list로 나온다
-    result = client.embeddings.create(
-        model='text-embedding-3-small',
-        input=contents,
-        encoding_format='float', # 기본값 : base64
-        dimensions=768
-    )
-    # 혹시 몰라서 내용 중의 index로 재정렬
-    vectors = [sort_data.embedding for sort_data  in  sorted (result.data , key=lambda item: item.index)]
+    for idx_start in range(0, len(contents), 2047):
+        contents_part = contents[idx_start : idx_start + 2047] 
 
-    actions = []
-    for  idx, chunk in enumerate(chunks) : 
-        chunk['embedding'] = vectors[idx]
+        # 임베딩 하기 
+        # openai는 list를 주면 결과도 list로 나온다
+        result = client.embeddings.create(
+            model='text-embedding-3-small',
+            input=contents_part,
+            encoding_format='float', # 기본값 : base64
+            dimensions=768
+        )
+        # 혹시 몰라서 내용 중의 index로 재정렬
+        vectors = [sort_data.embedding for sort_data  in  sorted (result.data , key=lambda item: item.index)]
+
+        actions = []
+        for  idx, chunk in enumerate(chunks) : 
+            chunk['embedding'] = vectors[idx]
 
     
-    actions.append(
-    {
-        '_index' : os.getenv('ES_INDEX'),
-        '_id' : f'{chunk['movieId']} - {chunk['chunk_index']}',
-        '_source': chunk
-    })
+        actions.append(
+        {
+            '_index' : os.getenv('ES_INDEX'),
+            '_id' : f'{chunk['movieId']} - {chunk['chunk_index']}',
+            '_source': chunk
+        })
 
     return actions
