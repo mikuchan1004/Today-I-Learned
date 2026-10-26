@@ -65,8 +65,11 @@ def embedding_with_openai(chunks):
     api_key = os.getenv('OPEN_API_KEY')
     client = OpenAI(api_key=api_key)
 
-    contents =  [chunk['content']  for chunk in chunks]
+    actions = []
+    last_index = 0 
+    time_before = time.time()
 
+    contents =  [chunk['content']  for chunk in chunks]
     for idx_start in range(0, len(contents), 2047):
         contents_part = contents[idx_start : idx_start + 2047] 
 
@@ -81,16 +84,20 @@ def embedding_with_openai(chunks):
         # 혹시 몰라서 내용 중의 index로 재정렬
         vectors = [sort_data.embedding for sort_data  in  sorted (result.data , key=lambda item: item.index)]
 
-        actions = []
-        for  idx, chunk in enumerate(chunks) : 
-            chunk['embedding'] = vectors[idx]
+        for  idx, vector in enumerate(vectors) : 
+            chunks[last_index]['embedding'] = vector
 
-    
-        actions.append(
-        {
-            '_index' : os.getenv('ES_INDEX'),
-            '_id' : f'{chunk['movieId']} - {chunk['chunk_index']}',
-            '_source': chunk
-        })
+            actions.append(
+            {
+                '_index' : os.getenv('ES_INDEX'),
+                '_id' : f'{chunks[last_index]['movieId']} - {chunks[last_index]['chunk_index']}',
+                '_source': chunks[last_index]
+            })
+
+            last_index += 1 
+
+        time_after = time.time()
+        print('걸린 시간(2047개)'  , time_after - time_before)
+        time_before = time.time()
 
     return actions
