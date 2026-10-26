@@ -14,6 +14,8 @@ from pathlib import Path
 import util
 import pandas as pd 
 from typing import Any, Literal
+import os
+from elasticsearch import helpers
 
 # Swagger UI에서 '엘라스틱서치' 태그 그룹으로 묶이도록 라우터 설정
 router = APIRouter(tags=["엘라스틱서치"])
@@ -184,7 +186,7 @@ def makeChunk():
     # 예: size=50, overlap=15 -> 35글자씩 전진
     step = size_chunk - overlap
 
-    for info in content:
+    for idx_content, info in enumerate(content):
         text = info.get('content_text', '').strip()
         if not text:
             continue
@@ -196,6 +198,7 @@ def makeChunk():
             chunk = text[idx_start : idx_start + size_chunk]
             if chunk:
                 chunks.append({
+                    'index' : idx_content,
                     'movieId': int(info['movieId']),
                     'title': str(info['title']),
                     'genres': list(info['list_genre']),
@@ -225,3 +228,47 @@ def embedding_openai():
     target = makeChunk()[0:10]
     actions = util.embedding_with_openai(target)
     return actions
+
+@router.get('/es/health')
+def health():
+    return {'msg' :  util.es.ping()}
+
+@router.post('/es/bulk')
+def bulk():
+    target = makeChunk()
+    actions = util.embedding_with_openai(target)
+
+    # 1. 만약에 엘라스틱서치에 인덱스가 없다면 새로 만들기 
+    if not util.es.indices.exists(index=os.getenv('ES_INDEX')) :
+        mappings = {
+            'properties' : {
+                'index' : {'type' : 'integer'},
+                'movieId' : {'type' : 'integer'},
+                'title' : {'type' : 'keyword'},
+                'genres' : {'type' : 'keyword'},
+                'tags' : {'type' : 'keyword'},
+                'content' : {'type' : 'text'},
+                'chunk_index' : {'type' : 'integer'},
+                'embedding' : {
+                    'type' : 'dense_vector',
+                    'dims' : 768
+                },
+            }
+        }
+        util.es.indices.create(
+            index=os.getenv('ES_INDEX'),
+            mappings=mappings
+        )
+
+    # 2. bulk로 넣기
+    success, errors = helpers.bulk(
+        util.es,
+        actions,
+        stats_only=False
+    )
+    return {
+        'msg' : {
+        'succ' : success,
+        'errors' : errors
+    }
+}
