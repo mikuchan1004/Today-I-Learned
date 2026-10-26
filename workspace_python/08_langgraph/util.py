@@ -11,6 +11,8 @@ from google.genai import types
 import time
 
 from openai import OpenAI
+from elasticsearch import Elasticsearch
+es = Elasticsearch(os.getenv('ELASTIC_ENDPOINT'))
 
 def load_csv(fileName):
     BASE_DIR = Path(__file__).resolve().parents[0]
