@@ -214,9 +214,14 @@ def chunk():
     """생성된 청크 목록 중 앞쪽 10개만 미리보기로 반환하는 API"""
     return makeChunk()[0:10]
 
-@router.get('/make/embedding')
-def embedding():
+@router.get('/make/embedding/gemini')
+def embedding_gemini():
     target = makeChunk()[0:10]
     actions = util.embedding_with_gemini(target)
+    return actions
 
+@router.get('/make/embedding/openai')
+def embedding_openai():
+    target = makeChunk()[0:10]
+    actions = util.embedding_with_openai(target)
     return actions
