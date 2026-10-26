@@ -21,6 +21,8 @@
 | :--- |
 [HTML, CSS 수업을 위해 활용할 사이트(poiemaweb)](https://poiemaweb.com/)
 [전체 수업 내용 정리(노션)](https://www.notion.so/260629-387a69c6e8268029bc39e45c08072f09)
+[1차 팀 프로젝트 저장소](https://github.com/mikuchan1004/chimpiler)
+[2차 팀 프로젝트 저장소](https://github.com/mikuchan1004/cruder)
 ------------------------------------------------------------------------
 
 ## 📅 학습 목차
