@@ -505,7 +505,7 @@ def split_train_test(test_size : float = 0.2):
 
         # 전체 데이터 중 test_size 비율로 뽑았다 
         # 0.4 등의 결괴를 1로 만든다
-        test_count = math.cell(len(ordered) * test_size) 
+        test_count = math.ceil(len(ordered) * test_size) 
         if test_count < 1 :
             test_count = 1 
 
@@ -520,7 +520,7 @@ def split_train_test(test_size : float = 0.2):
         # 최대값을 지정할 때 사용
         min(test_count, 3)
 
-        test_count = min(len(ordered)) - 1, max(1, math.cell(len(ordered) * test_size))
+        test_count = min(len(ordered)) - 1, max(1, math.ceil(len(ordered) * test_size))
 
         ordered.tail(test_count).index.tolist()
 
