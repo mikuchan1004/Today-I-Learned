@@ -16,6 +16,8 @@ import pandas as pd
 from typing import Any, Literal
 import os
 from elasticsearch import helpers
+from collections import Counter
+import math
 
 # Swagger UI에서 '엘라스틱서치' 태그 그룹으로 묶이도록 라우터 설정
 router = APIRouter(tags=["엘라스틱서치"])
@@ -352,3 +354,183 @@ def terms(ids: list = Query(...)):
     return {
         'msg': util.formatter(response)
     }
+
+#-----------------------------------
+# 추천 시스템
+#-----------------------------------
+
+@router.get('/recommend/test/counter')
+def test_counter():
+    str = 'hello world'
+    print( Counter(str))
+
+    list_counter = ['hi' , 'hey' , 'hi' , 'hello'  , 'hi' , 'nihao' , 'hey'] 
+    print(Counter(list_counter))
+
+    food_counter = Counter()
+    list_food = ['떡만두국' , '제육덮밥' , '참치김밥' , '돈까스' , '참치김밥', '돈까스']
+    for food in list_food :
+        food_counter.update(food)
+    print(1, food_counter)
+
+    food_counter2 = Counter()
+    for food in [list_food] :
+        food_counter2.update(food)
+    print(2, food_counter2)
+
+    favorite_foods = [ 
+        ['밥' , '치킨'] ,
+        ['산낙지', '육회' , '광어회'],
+        ['밥' , '라면' , '짜장면'],
+        ['햄버거' , '라면' , '밥']
+    ]
+    food_counter3 = Counter()
+    for foods in favorite_foods  : 
+        food_counter3.update(foods)
+    print(3, food_counter3)
+
+# CBF 콘텐츠 기반 필터링 Content-Based Filtering
+# "내가 뭘 좋아했지?"
+def content_based_filtering(list_movieId: list):
+    selected = term_movieId(list_movieId)
+
+    # return selected
+
+    genre_counter = Counter()
+    tag_counter = Counter()
+    for hit in  selected['hits']['hits']:
+        source = hit['_source']
+        genre_counter.update(source.get('genres' , []))
+        tag_counter.update(source.get('tags' , []))
+
+    print('genre_counter : ' , genre_counter )
+    print('tag_counter : ' , tag_counter )
+   
+    # terms_genre = [ ]
+    # for term, count in genre_counter.most_common(max):
+    #     terms_genre.append(term)
+
+    max = 5
+    # 장르와 태그를 각각 집계한 뒤 : counter
+    # 빈도가 높은 특성부터 검색어에 반영한다
+    # most_common : 기본값 None - 모두 다 
+    # most_common의 리턴은 내용과 숫자가 나온다
+    # 사용하지 않는 변수는 보통 _로만 표시한다
+    terms_genre  = [term for term, _ in genre_counter.most_common(max)]
+
+    terms_tag  = [term for term, _ in tag_counter.most_common(max)]
+
+    # list는 +로 합칠 수 있는데 하나씩 더해 나갈 때 마다 메모리를 차지한다.
+
+    terms = terms_genre + terms_tag
+
+    # extend를 사용하면 메모리를 절약할 수 있다.
+    terms = []
+    terms.extend(terms_genre)
+    terms.extend(terms_tag)
+    # return terms
+
+    # 단점 : 중복 데이터가 있을 수 있다
+    # " ".join(terms)
+    # 그래서 set에 넣어보자
+    # 그런데 순서를 보장하지 않는다
+    # " ".join(set(terms))
+    # 나는 순서를 유지하면서 중복을 제거하고 싶다
+    # dict.fromkeys()를 사용하면 된다.
+    # [a,b,c] >>>> {a: None, b : None}
+    # 이걸 join 하면 key만 빼올 수 있다.
+    query = " ".join(dict.fromkeys(terms))
+    response = search_movies(query)
+
+    return response
+
+@router.get('/recommend/cbf')
+def cbf(list_movieId: list[int] =  Query(...)):
+   response =  content_based_filtering(list_movieId)
+   return response['hits']['hits']
+
+def split_train_test(test_size : float = 0.2):
+    '''
+    과거 평점을 학습시키고 미래 평점으로 평가하자
+    test_size  : 미래 평점의 비율(정답 데이터의 비율)
+
+    사용자 별로 
+    최신 평점은 평가용
+    과거 평점은 학습용 
+
+    평점이 한 건뿐인 사용자는 학습 데이터에만 둔다 
+    만약에 timestamp가 같으면 원본 행 순서대로 정렬한다
+    '''
+    # 평점 파일 일기 
+    frame_ratings = util.load_csv('ratings.csv')
+
+    # 원본 유지를 위해 
+    data = frame_ratings.copy()
+
+    data['original_order'] = range(len(data))
+
+    # timestamp을 숫자 타입으로 변경
+    # errors='coerce' : 변경이 안 되는건 NaN으로 강제 변경
+    # errors ='ignore'  : 변경 실패 시 원본 유지 
+    # errors = 'raise'  :  ValueError 발생하고 즉시 중단
+    pd.to_numeric(data['timestamp'], errors ='coerce')
+
+    # N/A가 아닌 것만 뽑아준다 
+    # data[ True/False] >>> 참인 행 (row 또는 document)만 반환
+    vaild_data = data[data['timestamp'].notna()].copy()
+
+    # 시간이 N/A 즉 비어있는 것만 뽑아준다
+    no_time = data[data['timestamp'].isna()].copy()
+
+    test_indices = [ ]
+
+    # userId가 같은 데이터끼리 groupby 
+    # sort의 기본값은 True >> userId로 정렬하지 않고 원래 등장 순서를 유지 
+    # 원래 id, value 반환인데 Id는 안 쓸 거라서
+    for _, group in vaild_data.groupby('userId' , sort=False) :
+
+        # 별점을 하나만 준 사용자는 건너뛰기 
+        # 지금은 학습과 정답 데이터를 나누는 거라서
+        if len(group) <= 1 :
+            continue
+
+        # 과거와 미래를 나누기 위해서 
+        # timestamp 기준으로 정렬한다 
+        # 같은 게 있다면 original_order 기준으로 정렬해라
+        #  kind stable : 그래도 같은 게 있다면 정렬 전 순서 유지 
+        # kind에 사용할 수 있는 것
+        # quicksort(기본값) , mergesort, heapsort, stable
+        # 오름차순
+        ordered = group.sort_values(['timestamp', 'original_order'] , kind='stable')
+
+        # 전체 데이터 중 test_size 비율로 뽑았다 
+        # 0.4 등의 결괴를 1로 만든다
+        test_count = math.cell(len(ordered) * test_size) 
+        if test_count < 1 :
+            test_count = 1 
+
+        if test_count > len(ordered) - 1 :
+            test_count = len(ordered) - 1
+
+        # max : 둘 중의 큰 값을 돌려준다 
+        # 최소값을 지정할 떄 사용
+        max(1, test_count)
+
+        # min : 둘 중의 작은 값을 돌려준다
+        # 최대값을 지정할 때 사용
+        min(test_count, 3)
+
+        test_count = min(len(ordered)) - 1, max(1, math.cell(len(ordered) * test_size))
+
+        ordered.tail(test_count).index.tolist()
+
+        # tail : 끝에서 몇 개 
+        # 미리 시간 오름차순으로 정렬해 둬서 최신 데이터는 끝에 있다
+        # index만 모은다 = 나중에 학습 데이터 분리할 때 사용하려고
+        test_indices.extend(ordered.tail(test_count).index.tolist())
+
+        # 테스트 할 데이터의 index는 모아둔 상태 
+
+        # 실제 테스트 데이터 추출 
+
+        # 학습 데이터 추출
