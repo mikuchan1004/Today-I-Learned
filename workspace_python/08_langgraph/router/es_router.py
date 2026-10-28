@@ -18,6 +18,7 @@ import os
 from elasticsearch import helpers
 from collections import Counter
 import math
+from surprise import Dataset, Reader, KNNWithMeans
 
 # Swagger UI에서 '엘라스틱서치' 태그 그룹으로 묶이도록 라우터 설정
 router = APIRouter(tags=["엘라스틱서치"])
@@ -520,7 +521,7 @@ def split_train_test(test_size : float = 0.2):
         # 최대값을 지정할 때 사용
         min(test_count, 3)
 
-        test_count = min(len(ordered)) - 1, max(1, math.ceil(len(ordered) * test_size))
+        test_count = min(len(ordered) - 1, max(1, math.ceil(len(ordered) * test_size)))
 
         ordered.tail(test_count).index.tolist()
 
@@ -531,6 +532,124 @@ def split_train_test(test_size : float = 0.2):
 
         # 테스트 할 데이터의 index는 모아둔 상태 
 
-        # 실제 테스트 데이터 추출 
+    # --------------------------------------------------------------------------
+    # [데이터 분할 단계] 수집된 인덱스를 기반으로 최종 학습/테스트 셋 분리
+    # --------------------------------------------------------------------------
+    # 1. 테스트 데이터 추출: 각 사용자별 최신 평점 인덱스(test_indices)에 해당하는 행만 복사
+    test = vaild_data.loc[test_indices].copy()
 
-        # 학습 데이터 추출
+    # 2. 학습 데이터 추출: 원본 데이터에서 테스트용 인덱스를 제외(drop)하여 과거 데이터만 유지
+    train = vaild_data.drop(index=test_indices)
+
+    # 3. 원본 순서 복구: 분할 과정에서 섞인 데이터를 원래 입력 순서(original_order)대로 정렬 후 임시 컬럼 삭제
+    #    (kind='stable': 동일 값일 때 기존 정렬 순서를 보장하여 데이터 무결성 유지)
+    test = test.sort_values('original_order', kind='stable').drop(columns="original_order")
+    train = train.sort_values('original_order', kind='stable').drop(columns="original_order")
+
+    # 4. 인덱스 초기화 후 반환: 0부터 시작하는 깔끔한 인덱스로 재설정하여 튜플(test, train) 형태로 반환
+    return test.reset_index(drop=True), train.reset_index(drop=True)
+
+
+# ==============================================================================
+# 8. 사용자 기반 협업 필터링 (Collaborative Filtering, CF)
+# ==============================================================================
+# "나와 취향 및 평점 패턴이 비슷한 다른 사용자들은 어떤 영화를 좋아했을까?"
+def collaborative_filtering(userId: int, top_k: int = 10):
+    """
+    Surprise 라이브러리의 KNNWithMeans 모델을 사용한 사용자 기반 협업 필터링 추천 함수
+    - userId: 추천 대상 사용자의 고유 ID (Raw ID)
+    - top_k: 예상 평점이 가장 높은 추천 영화 반환 개수 (기본값: 10)
+    """
+    # 1. 학습/테스트 데이터셋 분리 (과거 평점 데이터인 train만 모델 학습에 사용)
+    test, train = split_train_test()
+
+    # 2. 모델 학습에 필수적인 3개 컬럼만 추출 (Surprise는 사용자ID, 아이템ID, 평점 순서를 요구함)
+    data = train[['userId', 'movieId', 'rating']].copy()
+
+    # [예외 처리] 학습 데이터셋에 없는 유저는 취향을 분석할 수 없으므로(Cold Start 문제) 즉시 중단
+    # (주의: data['userId'] 대신 .values를 검사해야 Series 인덱스가 아닌 실제 유저 ID 값을 올바르게 확인)
+    if userId not in data['userId'].values:
+        raise ValueError(f'[userId: {userId}]을/를 찾을 수 없습니다. 다시 입력해주세요')
+
+    # 3. Surprise Reader 객체 생성: 평점의 유효 범위(최소점, 최대점)를 명시하여 스케일 해석 기준 설정
+    reader = Reader(rating_scale=(0.5, 5.0))
+
+    # 4. Pandas DataFrame을 Surprise 전용 Dataset 자료구조로 로드
+    data_set = Dataset.load_from_df(data, reader)
+
+    # 5. 전체 데이터를 학습용 Trainset 객체로 변환
+    #    [주의] build_full_trainset 뒤에 ()를 반드시 호출해야 함수 객체가 아닌 실제 Trainset이 생성됨
+    train_set = data_set.build_full_trainset()
+
+    # --------------------------------------------------------------------------
+    # [유사도 및 추천 모델 설정]
+    # - KNNWithMeans: 사용자별 평점 부여 편향(항상 후하게 주거나 짜게 주는 성향의 평균값)을 보정해주는 KNN
+    # - n_neighbors: 유사도 계산 시 참고할 이웃(유사 사용자) 수 (k=30)
+    # - sim_options:
+    #     * name: 'cosine' (코사인 유사도 - 벡터의 크기보다는 방향/취향 패턴의 일치도를 중심 평가)
+    #     * user_based: True (True=사용자 기반 유사도 추천, False=아이템 기반 유사도 추천)
+    # - verbose: False (학습 및 유사도 계산 진행 로그 미출력)
+    # --------------------------------------------------------------------------
+    n_neighbors = 30
+    model = KNNWithMeans(
+        k=n_neighbors,
+        sim_options={
+            'name': 'cosine',
+            'user_based': True
+        },
+        verbose=False
+    )
+
+    # 6. 모델 학습: 사용자 간 코사인 유사도 행렬을 계산하여 내부 메모리에 적재
+    model.fit(train_set)
+
+    # --------------------------------------------------------------------------
+    # [Surprise ID 변환 개념]
+    # - Raw ID: 원본 CSV/DB에서 쓰이는 실제 식별자 (예: 실제 movieId 1, 104 등)
+    # - Inner ID: Surprise 내부 계산 효율화를 위해 0부터 연속 부여된 정수 인덱스
+    # --------------------------------------------------------------------------
+    # 대상 사용자의 실제 userId를 Surprise 내부 인덱스(inner_uid)로 변환
+    inner_user_id = train_set.to_inner_uid(userId)
+
+    # 7. 대상 사용자가 이미 평가(시청)한 영화 목록 수집
+    #    - train_set.ur: User-Ratings 딕셔너리 {inner_uid: [(inner_iid, rating), ...]}
+    #    - to_raw_iid(): 내부 영화 인덱스를 실제 movieId로 변환하여 집합(set)에 보관 (중복 방지 및 빠른 탐색)
+    rated_movies = set()
+    for inner_movie_id, _ in train_set.ur[inner_user_id]:
+        rated_movies.add(train_set.to_raw_iid(inner_movie_id))
+
+    # 8. 추천 후보 영화(Candidate) 선정: 학습 셋에 등록된 전체 영화 중 "아직 평가하지 않은 영화"만 필터링
+    #    - train_set.n_items: 전체 고유 영화 수
+    candidate_movies = [
+        train_set.to_raw_iid(inner_movie_id)
+        for inner_movie_id in range(train_set.n_items)
+        if train_set.to_raw_iid(inner_movie_id) not in rated_movies
+    ]
+
+    # 9. 미평가 영화들에 대한 예상 평점(Predicted Rating) 추정
+    #    - model.predict(userId, movieId).est: 유사한 이웃들의 평가를 가중 평균하여 예상한 점수
+    recommend = []
+    for movieId in candidate_movies:
+        score = model.predict(userId, movieId).est
+        recommend.append({
+            'movieId': movieId,
+            'score': score
+        })
+
+    # 10. 예상 평점 내림차순 정렬 (높은 점수를 받을 것으로 예측된 영화가 맨 위로 오도록)
+    recommend.sort(key=lambda x: x['score'], reverse=True)
+
+    # 상위 top_k개 결과 슬라이싱 반환
+    return recommend[:top_k]
+
+
+# ==============================================================================
+# 9. 추천 API 엔드포인트
+# ==============================================================================
+@router.get('/es/recommend/cf')
+def cf(userId: int, top_k: int = 10):
+    """
+    특정 사용자(userId)에게 취향이 유사한 다른 유저 기반의 영화 top_k개를 추천하는 GET API
+    - Swagger 호출 예시: /es/recommend/cf?userId=1&top_k=10
+    """
+    return collaborative_filtering(userId, top_k)
