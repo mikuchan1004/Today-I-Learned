@@ -316,6 +316,31 @@ def search_movies(keyword: str, size: int = 10):
     )
     return response
 
+def search_vector(keyword: str, size:int = 10):
+    # 검색어를 백터로 바꾼다
+    # 그런데 기존의 embedding은 수정 없이 활용한다
+
+    querys = [{
+        'content' : keyword,
+        'movieId' :  0,
+        'chunk_index' : 0,
+    }]
+    vectors =  util.embedding_with_gemini(querys)
+    vector = vectors[0]['_source']['embedding']
+
+    response = util.es.search(
+        index = os.getenv('ES_INDEX'),
+        knn = {
+            'field' : 'embedding',
+            'query_vector' : vector,
+            'num_candidates' : max(size*10, 50),
+            'k' : size
+        },
+        size = size 
+    )
+    
+    return response
+
 @router.get('/es/select/multi_match')
 def multi_match(keyword: str, size: int = 10):
     """키워드를 입력받아 다중 필드에서 검색된 영화 목록을 반환하는 API"""
@@ -441,7 +466,8 @@ def content_based_filtering(list_movieId: list):
     # [a,b,c] >>>> {a: None, b : None}
     # 이걸 join 하면 key만 빼올 수 있다.
     query = " ".join(dict.fromkeys(terms))
-    response = search_movies(query)
+    # response = search_movies(query)
+    response = search_vector (query)
 
     return response
 
@@ -568,7 +594,8 @@ def collaborative_filtering(userId: int, top_k: int = 10):
 
     # [예외 처리] 학습 데이터셋에 없는 유저는 취향을 분석할 수 없으므로(Cold Start 문제) 즉시 중단
     # (주의: data['userId'] 대신 .values를 검사해야 Series 인덱스가 아닌 실제 유저 ID 값을 올바르게 확인)
-    if userId not in data['userId'].values:
+    # if userId not in data['userId'].values:
+    if userId not in data['userId'].to_numpy():
         raise ValueError(f'[userId: {userId}]을/를 찾을 수 없습니다. 다시 입력해주세요')
 
     # 3. Surprise Reader 객체 생성: 평점의 유효 범위(최소점, 최대점)를 명시하여 스케일 해석 기준 설정
@@ -594,7 +621,8 @@ def collaborative_filtering(userId: int, top_k: int = 10):
     model = KNNWithMeans(
         k=n_neighbors,
         sim_options={
-            'name': 'cosine',
+            # 'name': 'cosine',
+            'name': 'pearson',
             'user_based': True
         },
         verbose=False
@@ -653,3 +681,55 @@ def cf(userId: int, top_k: int = 10):
     - Swagger 호출 예시: /es/recommend/cf?userId=1&top_k=10
     """
     return collaborative_filtering(userId, top_k)
+
+# Recall@K 
+# 전체 정답 개수 중에 맞힌 개수
+# 순위는 안 본다
+# 내 정답 개수 / 전체 정답 개수
+def recall_at_k(
+        userId: int,
+        test : pd.DataFrame,  # 정답 데이터
+        recommend : list[dict], # 추천 목록 
+        threshold: float = 4.0,
+        k: int =10
+):      
+        # 내가 평점을 threshold 이상을 준 정답만 뽑자
+        # 첫 번째 전달인자 : 조건
+        # 두 번째 전달인자 : 특정 컬럼만 가져오기
+        # relevant _movies  relevant (관련된)
+        # 나와 관련된 영화 목록
+        # pandas.Series 객체는 set으로 자동 형변환이 안된다 
+        # 그래서 set()으로 명시적 형변환 
+        relevant_movies = test.loc[
+            # 첫 번째 
+            (test['userId'] == userId)
+            & (test['rating'] >= threshold),
+            # 두 번째
+            'movieId'
+        ]
+        # 정답 데이터에 조건이 맞는 영화가 없어서 Recall 계산할 수 없다
+        if len(relevant_movies) == 0:
+            return -1.0
+
+        # 암시적, 묵시적 형변환
+        recommend_movies = {
+            item['movieId'] for item in recommend[:k]
+        }
+
+        # 추천 목록 중에서 내가 좋아하는 영화의 개수
+        # 추천 중 정답 개수
+        # & : 교집합
+        hit_count = len (relevant_movies) & len (recommend_movies)
+
+        # Recall@K = 맞힌 개수 / 전체 정답
+        result = hit_count / len(relevant_movies)
+        return result
+        
+@router.get('/recommend/recall')
+def recall(userId: int):
+    test,_ = split_train_test()
+    recommend = collaborative_filtering(userId, 50)
+    threshold = 2.0
+    k = 50
+
+    return  recall_at_k(userId, test, recommend, threshold, k)
