@@ -6,6 +6,7 @@
 3. 텍스트 결합 (영화 제목 + 장르 리스트 + 태그 리스트 -> 검색용 통합 텍스트)
 4. 텍스트 청킹 (Sliding Window 방식으로 고정 크기 분할)
 5. Gemini/GPT 임베딩 연동 준비
+6. 콘텐츠 기반 필터링(CBF), 협업 필터링(CF), 하이브리드 추천(RRF) 구현
 """
 
 from fastapi import APIRouter, Query
@@ -317,24 +318,28 @@ def search_movies(keyword: str, size: int = 10):
     return response
 
 def search_vector(keyword: str, size:int = 10):
-    # 검색어를 백터로 바꾼다
-    # 그런데 기존의 embedding은 수정 없이 활용한다
-
+    """
+    입력된 검색어를 벡터로 변환한 후 엘라스틱서치 KNN 벡터 검색을 수행하는 함수
+    - 기존 embedding_with_gemini 함수를 그대로 재활용하여 쿼리 벡터 생성
+    """
+    # 1. 단일 검색어 텍스트를 임베딩 입력 형식(딕셔너리 리스트)으로 구성
     querys = [{
         'content' : keyword,
         'movieId' :  0,
         'chunk_index' : 0,
     }]
+    # 2. Gemini 임베딩 모델을 통해 벡터 추출
     vectors =  util.embedding_with_gemini(querys)
     vector = vectors[0]['_source']['embedding']
 
+    # 3. 엘라스틱서치 dense_vector 필드를 대상으로 KNN(k-최근접 이웃) 유사도 검색 수행
     response = util.es.search(
         index = os.getenv('ES_INDEX'),
         knn = {
             'field' : 'embedding',
             'query_vector' : vector,
-            'num_candidates' : max(size*10, 50),
-            'k' : size
+            'num_candidates' : max(size*10, 50), # 탐색할 후보 벡터 수
+            'k' : size                          # 반환할 이웃 수
         },
         size = size 
     )
@@ -382,28 +387,36 @@ def terms(ids: list = Query(...)):
     }
 
 #-----------------------------------
-# 추천 시스템
+# 추천 시스템 (Recommendation System)
 #-----------------------------------
 
 @router.get('/recommend/test/counter')
 def test_counter():
+    """
+    collections.Counter의 동작 원리(문자열, 1차원 리스트, 2차원 리스트 누적)를 테스트하는 학습용 API
+    """
+    # 1. 단일 문자열 내 각 알파벳의 등장 빈도 계산
     str = 'hello world'
     print( Counter(str))
 
+    # 2. 1차원 리스트 내 요소들의 등장 빈도 계산
     list_counter = ['hi' , 'hey' , 'hi' , 'hello'  , 'hi' , 'nihao' , 'hey'] 
     print(Counter(list_counter))
 
+    # 3. Counter 객체 생성 후 update()로 리스트 요소를 누적하는 방식
     food_counter = Counter()
     list_food = ['떡만두국' , '제육덮밥' , '참치김밥' , '돈까스' , '참치김밥', '돈까스']
     for food in list_food :
         food_counter.update(food)
     print(1, food_counter)
 
+    # 4. 리스트를 통째로 감싸서 넘기면 리스트 자체가 단일 요소로 처리됨 (주의점 확인용)
     food_counter2 = Counter()
     for food in [list_food] :
         food_counter2.update(food)
     print(2, food_counter2)
 
+    # 5. 2차원 리스트(유저별 선호 음식 등)를 반복문으로 순회하며 update() 누적
     favorite_foods = [ 
         ['밥' , '치킨'] ,
         ['산낙지', '육회' , '광어회'],
@@ -415,13 +428,19 @@ def test_counter():
         food_counter3.update(foods)
     print(3, food_counter3)
 
-# CBF 콘텐츠 기반 필터링 Content-Based Filtering
-# "내가 뭘 좋아했지?"
+# CBF 콘텐츠 기반 필터링 (Content-Based Filtering)
+# 핵심 개념: "내가 과거에 좋아했던 영화들의 장르와 태그를 분석해서, 그와 가장 비슷한 영화를 찾자!"
 def content_based_filtering(list_movieId: list, candidate_size: int = 10):
+    """
+    사용자가 선택한 영화 ID 리스트를 바탕으로, 해당 영화들의 주요 장르와 태그를 추출하여
+    유사한 영화를 벡터 검색(KNN)으로 찾아내는 CBF 함수
+    """
+    # 1. 입력받은 영화들의 상세 청크 데이터를 엘라스틱서치 terms 쿼리로 조회
     selected = term_movieId(list_movieId)
 
     # return selected
 
+    # 2. 조회된 영화들에서 사용된 장르와 태그의 출현 빈도를 각각 집계
     genre_counter = Counter()
     tag_counter = Counter()
     for hit in  selected['hits']['hits']:
@@ -437,126 +456,115 @@ def content_based_filtering(list_movieId: list, candidate_size: int = 10):
     #     terms_genre.append(term)
 
     max = 5
-    # 장르와 태그를 각각 집계한 뒤 : counter
-    # 빈도가 높은 특성부터 검색어에 반영한다
-    # most_common : 기본값 None - 모두 다 
-    # most_common의 리턴은 내용과 숫자가 나온다
-    # 사용하지 않는 변수는 보통 _로만 표시한다
+    # 3. 장르와 태그를 각각 집계한 뒤 빈도가 가장 높은 상위 5개 특성 추출
+    #    - most_common(max): [(단어, 빈도), ...] 형태에서 단어(term)만 리스트 컴프리헨션으로 추출
+    #    - 사용하지 않는 빈도수 변수는 언더스코어(_)로 무시
     terms_genre  = [term for term, _ in genre_counter.most_common(max)]
 
     terms_tag  = [term for term, _ in tag_counter.most_common(max)]
 
-    # list는 +로 합칠 수 있는데 하나씩 더해 나갈 때 마다 메모리를 차지한다.
-
+    # 4. 리스트 결합 방식 비교:
+    #    - terms_genre + terms_tag 는 매번 새로운 리스트 메모리를 생성함
     terms = terms_genre + terms_tag
 
-    # extend를 사용하면 메모리를 절약할 수 있다.
+    #    - extend()를 사용하면 기존 리스트에 원소들을 바로 추가하여 메모리를 절약할 수 있음
     terms = []
     terms.extend(terms_genre)
     terms.extend(terms_tag)
     # return terms
 
-    # 단점 : 중복 데이터가 있을 수 있다
-    # " ".join(terms)
-    # 그래서 set에 넣어보자
-    # 그런데 순서를 보장하지 않는다
-    # " ".join(set(terms))
-    # 나는 순서를 유지하면서 중복을 제거하고 싶다
-    # dict.fromkeys()를 사용하면 된다.
-    # [a,b,c] >>>> {a: None, b : None}
-    # 이걸 join 하면 key만 빼올 수 있다.
+    # 5. 검색어 문자열 생성 및 순서 보장 중복 제거:
+    #    - 단순히 " ".join(terms)를 하면 중복 단어가 들어갈 수 있음
+    #    - set(terms)에 넣으면 순서가 뒤죽박죽으로 깨짐
+    #    - dict.fromkeys(terms)를 사용하면 파이썬 3.7+부터 입력 순서를 유지하면서 중복만 제거됨!
     query = " ".join(dict.fromkeys(terms))
     # response = search_movies(query)
+    
+    # 6. 완성된 특성 검색어로 벡터 유사도 검색(KNN) 수행
     response = search_vector (query, candidate_size)
 
     return response
 
 @router.get('/recommend/cbf')
 def cbf(list_movieId: list[int] =  Query(...)):
+   """
+   콘텐츠 기반 필터링(CBF) 추천 결과를 반환하는 API
+   - 예시: /recommend/cbf?list_movieId=1&list_movieId=2
+   """
    response =  content_based_filtering(list_movieId)
    return response['hits']['hits']
 
 def split_train_test(test_size : float = 0.2):
     '''
-    과거 평점을 학습시키고 미래 평점으로 평가하자
-    test_size  : 미래 평점의 비율(정답 데이터의 비율)
+    과거 평점을 학습시키고 미래 평점으로 평가하기 위한 시간 기반 Train/Test 데이터 분할 함수
+    - test_size : 미래 평점의 비율 (평가/정답 데이터의 비율, 기본값 20%)
 
-    사용자 별로 
-    최신 평점은 평가용
-    과거 평점은 학습용 
-
-    평점이 한 건뿐인 사용자는 학습 데이터에만 둔다 
-    만약에 timestamp가 같으면 원본 행 순서대로 정렬한다
+    [분할 원칙]
+    - 사용자별로 타임스탬프를 정렬하여 과거 평점은 학습용(train), 최신 평점은 평가용(test)으로 분리
+    - 평점이 단 1건뿐인 사용자는 분할하지 않고 학습 데이터에만 보존 (평가 불가능 방지)
+    - 만약 timestamp가 동일하다면 원본 데이터 등장 순서(original_order)대로 정렬
     '''
-    # 평점 파일 일기 
+    # 1. 평점 CSV 파일 로드
     frame_ratings = util.load_csv('ratings.csv')
 
-    # 원본 유지를 위해 
+    # 2. 원본 데이터의 불변성을 유지하기 위해 copy() 생성
     data = frame_ratings.copy()
 
+    # 나중에 원본 순서대로 복원하기 위해 행 인덱스를 임시 컬럼에 보관
     data['original_order'] = range(len(data))
 
-    # timestamp을 숫자 타입으로 변경
-    # errors='coerce' : 변경이 안 되는건 NaN으로 강제 변경
-    # errors ='ignore'  : 변경 실패 시 원본 유지 
-    # errors = 'raise'  :  ValueError 발생하고 즉시 중단
+    # timestamp 컬럼을 안전하게 숫자 타입으로 변환
+    # errors='coerce' : 변환 불가능한 값은 NaN으로 강제 치환
+    # errors='ignore' : 실패 시 원본 유지
+    # errors='raise'  : 실패 시 ValueError 발생 후 중단
     pd.to_numeric(data['timestamp'], errors ='coerce')
 
-    # N/A가 아닌 것만 뽑아준다 
-    # data[ True/False] >>> 참인 행 (row 또는 document)만 반환
+    # 유효한 타임스탬프를 가진 행만 추출 (notna: NaN이 아닌 정상 데이터)
     vaild_data = data[data['timestamp'].notna()].copy()
 
-    # 시간이 N/A 즉 비어있는 것만 뽑아준다
+    # 시간이 비어있는(NaN) 데이터 분리 보관
     no_time = data[data['timestamp'].isna()].copy()
 
     test_indices = [ ]
 
-    # userId가 같은 데이터끼리 groupby 
-    # sort의 기본값은 True >> userId로 정렬하지 않고 원래 등장 순서를 유지 
-    # 원래 id, value 반환인데 Id는 안 쓸 거라서
+    # 3. userId 기준으로 그룹핑 (sort=False: 정렬 연산을 생략하여 원래 등장 순서 유지)
     for _, group in vaild_data.groupby('userId' , sort=False) :
 
-        # 별점을 하나만 준 사용자는 건너뛰기 
-        # 지금은 학습과 정답 데이터를 나누는 거라서
+        # 별점을 단 1개만 매긴 사용자는 분할할 수 없으므로 건너뜀 (학습용에만 남김)
         if len(group) <= 1 :
             continue
 
-        # 과거와 미래를 나누기 위해서 
-        # timestamp 기준으로 정렬한다 
-        # 같은 게 있다면 original_order 기준으로 정렬해라
-        #  kind stable : 그래도 같은 게 있다면 정렬 전 순서 유지 
-        # kind에 사용할 수 있는 것
-        # quicksort(기본값) , mergesort, heapsort, stable
-        # 오름차순
+        # 과거와 미래를 시간 순서로 나누기 위해 정렬:
+        # - 1차 기준: timestamp 오름차순 (과거 -> 미래)
+        # - 2차 기준: original_order (동일 시간대일 경우 원본 순서 유지)
+        # - kind='stable': 동일한 값일 때 기존 정렬 순서를 엄격히 보존
         ordered = group.sort_values(['timestamp', 'original_order'] , kind='stable')
 
-        # 전체 데이터 중 test_size 비율로 뽑았다 
-        # 0.4 등의 결괴를 1로 만든다
+        # 전체 평점 중 test_size 비율에 해당하는 테스트 건수 계산 (올림 처리)
         test_count = math.ceil(len(ordered) * test_size) 
         if test_count < 1 :
             test_count = 1 
 
+        # 최소 1건의 평점은 무조건 학습 데이터에 남겨야 하므로 최대치 제한
         if test_count > len(ordered) - 1 :
             test_count = len(ordered) - 1
 
-        # max : 둘 중의 큰 값을 돌려준다 
-        # 최소값을 지정할 떄 사용
+        # max(1, test_count) : 최소값을 1건으로 보장
         max(1, test_count)
 
-        # min : 둘 중의 작은 값을 돌려준다
-        # 최대값을 지정할 때 사용
+        # min(test_count, 3) : 최대값을 3건으로 제한할 때 활용
         min(test_count, 3)
 
+        # 최종 테스트 개수 결정 (최소 1개 ~ 최대 전체길이-1개 사이)
         test_count = min(len(ordered) - 1, max(1, math.ceil(len(ordered) * test_size)))
 
         ordered.tail(test_count).index.tolist()
 
-        # tail : 끝에서 몇 개 
-        # 미리 시간 오름차순으로 정렬해 둬서 최신 데이터는 끝에 있다
-        # index만 모은다 = 나중에 학습 데이터 분리할 때 사용하려고
+        # tail(test_count) : 시간순 정렬에서 가장 마지막에 위치한(최신) 데이터 추출
+        # 최신 데이터의 인덱스(index)만 수집하여 test_indices 리스트에 추가
         test_indices.extend(ordered.tail(test_count).index.tolist())
 
-        # 테스트 할 데이터의 index는 모아둔 상태 
+        # 테스트할 데이터의 인덱스 수집 완료
 
     # --------------------------------------------------------------------------
     # [데이터 분할 단계] 수집된 인덱스를 기반으로 최종 학습/테스트 셋 분리
@@ -579,7 +587,7 @@ def split_train_test(test_size : float = 0.2):
 # ==============================================================================
 # 8. 사용자 기반 협업 필터링 (Collaborative Filtering, CF)
 # ==============================================================================
-# "나와 취향 및 평점 패턴이 비슷한 다른 사용자들은 어떤 영화를 좋아했을까?"
+# 핵심 개념: "나와 취향 및 평점 패턴이 비슷한 다른 사용자들은 어떤 영화를 좋아했을까?"
 def collaborative_filtering(userId: int, top_k: int = 10):
     """
     Surprise 라이브러리의 KNNWithMeans 모델을 사용한 사용자 기반 협업 필터링 추천 함수
@@ -593,7 +601,7 @@ def collaborative_filtering(userId: int, top_k: int = 10):
     data = train[['userId', 'movieId', 'rating']].copy()
 
     # [예외 처리] 학습 데이터셋에 없는 유저는 취향을 분석할 수 없으므로(Cold Start 문제) 즉시 중단
-    # (주의: data['userId'] 대신 .values를 검사해야 Series 인덱스가 아닌 실제 유저 ID 값을 올바르게 확인)
+    # (주의: data['userId'] 대신 .values 또는 .to_numpy()를 검사해야 실제 유저 ID 값을 올바르게 확인)
     # if userId not in data['userId'].values:
     if userId not in data['userId'].to_numpy():
         raise ValueError(f'[userId: {userId}]을/를 찾을 수 없습니다. 다시 입력해주세요')
@@ -613,7 +621,7 @@ def collaborative_filtering(userId: int, top_k: int = 10):
     # - KNNWithMeans: 사용자별 평점 부여 편향(항상 후하게 주거나 짜게 주는 성향의 평균값)을 보정해주는 KNN
     # - n_neighbors: 유사도 계산 시 참고할 이웃(유사 사용자) 수 (k=30)
     # - sim_options:
-    #     * name: 'cosine' (코사인 유사도 - 벡터의 크기보다는 방향/취향 패턴의 일치도를 중심 평가)
+    #     * name: 'pearson' (피어슨 상관계수 - 유저들의 평점 경향성 유사도 측정)
     #     * user_based: True (True=사용자 기반 유사도 추천, False=아이템 기반 유사도 추천)
     # - verbose: False (학습 및 유사도 계산 진행 로그 미출력)
     # --------------------------------------------------------------------------
@@ -628,7 +636,7 @@ def collaborative_filtering(userId: int, top_k: int = 10):
         verbose=False
     )
 
-    # 6. 모델 학습: 사용자 간 코사인 유사도 행렬을 계산하여 내부 메모리에 적재
+    # 6. 모델 학습: 사용자 간 유사도 행렬을 계산하여 내부 메모리에 적재
     model.fit(train_set)
 
     # --------------------------------------------------------------------------
@@ -682,81 +690,82 @@ def cf(userId: int, top_k: int = 10):
     """
     return collaborative_filtering(userId, top_k)
 
-# Recall@K 
-# 전체 정답 개수 중에 맞힌 개수
-# 순위는 안 본다
-# 내 정답 개수 / 전체 정답 개수
+# Recall@K (재현율 지표)
+# 개념: 전체 정답 개수 중에 추천 시스템이 맞힌 개수의 비율 (순위는 고려하지 않음)
+# 계산 공식: (추천 결과 중 정답 개수) / (전체 정답 개수)
 def recall_at_k(
         userId: int,
-        test : pd.DataFrame,  # 정답 데이터
-        recommend : list[dict], # 추천 목록 
-        threshold: float = 4.0,
-        k: int =10
+        test : pd.DataFrame,    # 정답 데이터 (평가용 테스트셋)
+        recommend : list[dict], # 모델이 생성한 추천 목록 
+        threshold: float = 4.0, # 사용자가 좋아했다고 판단할 최소 평점 기준
+        k: int =10              # 상위 몇 개의 추천 결과를 검사할 것인가 (K개)
 ):      
-        # 내가 평점을 threshold 이상을 준 정답만 뽑자
-        # 첫 번째 전달인자 : 조건
-        # 두 번째 전달인자 : 특정 컬럼만 가져오기
-        # relevant _movies  relevant (관련된)
-        # 나와 관련된 영화 목록
-        # pandas.Series 객체는 set으로 자동 형변환이 안된다 
-        # 그래서 set()으로 명시적 형변환 
+        # 1. 정답 데이터(test)에서 사용자가 threshold(예: 4.0점) 이상 높은 평점을 준 영화 목록(정답셋) 필터링
+        #    - pandas.Series 객체는 set으로 자동 형변환이 안 되므로 set()으로 명시적 형변환
+        #    - relevant_movies : 사용자가 실제로 선호한(관련된) 정답 영화 집합
         relevant_movies = set(test.loc)[
-            # 첫 번째 
+            # 첫 번째 전달인자 : 조건 (해당 유저이면서 기준 평점 이상)
             (test['userId'] == userId)
             & (test['rating'] >= threshold),
-            # 두 번째
+            # 두 번째 전달인자 : 가져올 특정 컬럼 ('movieId')
             'movieId'
         ]
-        # 정답 데이터에 조건이 맞는 영화가 없어서 Recall 계산할 수 없다
+        # 정답 데이터에 조건에 맞는 영화가 없다면 분모가 0이 되므로 Recall 계산 불가 (-1.0 반환)
         if len(relevant_movies) == 0:
             return -1.0
 
-        # 암시적, 묵시적 형변환
+        # 2. 추천 목록 상위 k개에서 movieId만 모아서 set 집합으로 생성 (묵시적/내포 집합 생성)
         recommend_movies = {
             item['movieId'] for item in recommend[:k]
         }
 
-        # 추천 목록 중에서 내가 좋아하는 영화의 개수
-        # 추천 중 정답 개수
-        # & : 교집합
+        # 3. 추천 목록 중 사용자가 좋아한 정답 영화의 개수 (교집합 연산)
+        #    - len(relevant_movies & recommend_movies)의 의미로 작성된 연산
         hit_count = len (relevant_movies) & len (recommend_movies)
 
-        # Recall@K = 맞힌 개수 / 전체 정답
+        # 4. Recall@K = 맞힌 개수 / 전체 정답 개수
         result = hit_count / len(relevant_movies)
         return result
         
 @router.get('/recommend/recall')
 def recall(userId: int):
+    """
+    특정 유저에 대한 협업 필터링 추천 결과의 Recall@K 지표를 계산하는 API
+    """
     test,_ = split_train_test()
     recommend = collaborative_filtering(userId, 50)
-    threshold = 2.0
-    k = 50
+    threshold = 2.0 # 평점 2.0 이상을 선호한 영화로 가정
+    k = 50          # 상위 50개 추천 결과 내에서 평가
 
     return  recall_at_k(userId, test, recommend, threshold, k)
 
-# 하이브리드 추천 : CBF + CF 
+# 하이브리드 추천 : CBF (콘텐츠 기반) + CF (협업 필터링)
+# 개념: 두 가지 알고리즘의 추천 결과를 결합하고, RRF(상호 순위 융합) 방식으로 점수를 매겨 최종 순위 결정
 def hybrid_filtering(
-     list_movieId : list [int], # CBF에서 사용할 영화 목록
-     userId:int,                        # CF 에서 사용할 사용자 id 
-     top_k:int = 10,                # 결과 개수
-     candidate_size:int = 50 # 각각의 추천의 후보 수
+     list_movieId : list [int], # CBF에서 사용할 사용자의 시청 영화 목록
+     userId:int,                # CF에서 사용할 사용자 ID 
+     top_k:int = 10,            # 최종 반환할 결과 개수
+     candidate_size:int = 50    # 각 추천 알고리즘별로 추출할 후보군 크기
 ):
     pass
-    # CBF 추천
-
+    # --------------------------------------------------------------------------
+    # [1단계: CBF 추천 수행]
+    # --------------------------------------------------------------------------
     # def content_based_filtering(list_movieId: list):
-
     response_cbf = content_based_filtering(list_movieId, candidate_size)
     # return response_cbf
 
+    # 조회된 결과 중 사용자가 이미 본 영화(list_movieId)는 제외하고 중복 없이 movieId 수집
     result_cbf = set()
     for hit  in  response_cbf['hits']['hits']:
         movieId  = int(hit['_source']['movieId'])
-        # 내가 안 본 영화id만 중복 없이 담는다.
+        # 내가 안 본 영화 id만 중복 없이 담는다.
         if movieId not in list_movieId:
             result_cbf.add(movieId)
      
-    # CF 추천 
+    # --------------------------------------------------------------------------
+    # [2단계: CF 추천 수행]
+    # --------------------------------------------------------------------------
     response_cf = collaborative_filtering(userId, candidate_size)
     result_cf = set()
     for hit in response_cf:
@@ -764,47 +773,62 @@ def hybrid_filtering(
         if movieId not in list_movieId:
             result_cf.add(movieId)
 
-    # 각각 점수 계산하기 
+    # --------------------------------------------------------------------------
+    # [3단계: RRF (Reciprocal Rank Fusion) 상호 순위 점수 계산]
+    # --------------------------------------------------------------------------
+    # RRF 공식: 1 / (60 + 순위) -> 높은 순위일수록 분모가 작아져서 더 높은 점수를 얻음
     rrf_score = {}
-    # CBF의 RRF 점수 계산 
-    # start : index의 시작값
+
+    # CBF 결과에 대한 RRF 점수 누적 (start=1 : 1위부터 시작)
     for index, movieId in enumerate(result_cbf, start=1):
-        # rrf_score이라는 딕셔너리에 movieId라는 키가 이미 있다면
+        # rrf_score 딕셔너리에 movieId 키가 이미 존재한다면 기존 점수에 합산
         if rrf_score.get(movieId) : 
             rrf_score[movieId] += 1 / (60 + index)
         else :
             rrf_score[movieId] = 1 / (60 + index)
 
-    # CF의 RRF 점수 계산 
+    # CF 결과에 대한 RRF 점수 누적 (두 알고리즘 모두에서 상위에 든 영화일수록 점수가 대폭 상승)
     for index, movieId in enumerate(result_cf, start=1):
         if rrf_score.get(movieId) : 
             rrf_score[movieId] += 1 / (60 + index)
         else :
             rrf_score[movieId] = 1 / (60 + index)
 
-    # 점수가 높은 순으로 정렬 
+    # --------------------------------------------------------------------------
+    # [4단계: 최종 점수 기준 내림차순 정렬 및 상위 K개 추출]
+    # --------------------------------------------------------------------------
+    # 점수가 높은 순(reverse=True)으로 정렬 
     result = sorted(
         rrf_score.items(),
         key=lambda x:x[1], 
         reverse=True
     )
 
-    # 상위 목록 top_k만큼 돌려주기
+    # 상위 목록 top_k만큼 잘라서 돌려주기
     return result[:top_k]
 
 @router.get('/recommend/hybrid')
 def hybrid(
-    userId:int,                        # CF 에서 사용할 사용자 id 
-    top_k:int = 10,                # 결과 개수
-    candidate_size:int = 50, # 각각의 추천의 후보 수
-    list_movieId : list [int] = Query(...), # CBF에서 사용할 영화 목록
+    userId:int,                             # CF에서 사용할 사용자 ID 
+    top_k:int = 10,                         # 최종 반환할 결과 개수
+    candidate_size:int = 50,                # 각 추천의 후보 수
+    list_movieId : list [int] = Query(...), # CBF에서 사용할 영화 목록 (쿼리 파라미터)
 ):
+    """
+    CBF와 CF를 결합한 하이브리드 추천 결과를 영화 제목과 함께 반환하는 API
+    """
+    # 1. 하이브리드 추천 순위 결과 [(movieId, score), ...] 계산
     result_hybrid =  hybrid_filtering(list_movieId, userId, top_k, candidate_size)
+    
+    # 2. movieId에 대응하는 영화 제목을 조회하기 위해 영화 메타데이터 로드
     df_movies = util.load_csv('movies.csv')
     result = {}
+    
+    # 3. 각 추천 결과의 movieId로 제목(title)을 매핑하여 최종 딕셔너리 구성
     for i in result_hybrid:
             movieId = i[0]
             score = i[1]
+            # 해당 movieId를 가진 행의 title 값을 추출 (.iloc[0] : 첫 번째 매칭 행)
             title = df_movies.loc [
                 df_movies['movieId'] == movieId,
                 'title'
@@ -816,4 +840,3 @@ def hybrid(
             }
 
     return result
-
