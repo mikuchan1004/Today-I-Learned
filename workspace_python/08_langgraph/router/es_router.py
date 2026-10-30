@@ -417,7 +417,7 @@ def test_counter():
 
 # CBF 콘텐츠 기반 필터링 Content-Based Filtering
 # "내가 뭘 좋아했지?"
-def content_based_filtering(list_movieId: list):
+def content_based_filtering(list_movieId: list, candidate_size: int = 10):
     selected = term_movieId(list_movieId)
 
     # return selected
@@ -467,7 +467,7 @@ def content_based_filtering(list_movieId: list):
     # 이걸 join 하면 key만 빼올 수 있다.
     query = " ".join(dict.fromkeys(terms))
     # response = search_movies(query)
-    response = search_vector (query)
+    response = search_vector (query, candidate_size)
 
     return response
 
@@ -700,7 +700,7 @@ def recall_at_k(
         # 나와 관련된 영화 목록
         # pandas.Series 객체는 set으로 자동 형변환이 안된다 
         # 그래서 set()으로 명시적 형변환 
-        relevant_movies = test.loc[
+        relevant_movies = set(test.loc)[
             # 첫 번째 
             (test['userId'] == userId)
             & (test['rating'] >= threshold),
@@ -733,3 +733,87 @@ def recall(userId: int):
     k = 50
 
     return  recall_at_k(userId, test, recommend, threshold, k)
+
+# 하이브리드 추천 : CBF + CF 
+def hybrid_filtering(
+     list_movieId : list [int], # CBF에서 사용할 영화 목록
+     userId:int,                        # CF 에서 사용할 사용자 id 
+     top_k:int = 10,                # 결과 개수
+     candidate_size:int = 50 # 각각의 추천의 후보 수
+):
+    pass
+    # CBF 추천
+
+    # def content_based_filtering(list_movieId: list):
+
+    response_cbf = content_based_filtering(list_movieId, candidate_size)
+    # return response_cbf
+
+    result_cbf = set()
+    for hit  in  response_cbf['hits']['hits']:
+        movieId  = int(hit['_source']['movieId'])
+        # 내가 안 본 영화id만 중복 없이 담는다.
+        if movieId not in list_movieId:
+            result_cbf.add(movieId)
+     
+    # CF 추천 
+    response_cf = collaborative_filtering(userId, candidate_size)
+    result_cf = set()
+    for hit in response_cf:
+        movieId = hit.get('movieId')
+        if movieId not in list_movieId:
+            result_cf.add(movieId)
+
+    # 각각 점수 계산하기 
+    rrf_score = {}
+    # CBF의 RRF 점수 계산 
+    # start : index의 시작값
+    for index, movieId in enumerate(result_cbf, start=1):
+        # rrf_score이라는 딕셔너리에 movieId라는 키가 이미 있다면
+        if rrf_score.get(movieId) : 
+            rrf_score[movieId] += 1 / (60 + index)
+        else :
+            rrf_score[movieId] = 1 / (60 + index)
+
+    # CF의 RRF 점수 계산 
+    for index, movieId in enumerate(result_cf, start=1):
+        if rrf_score.get(movieId) : 
+            rrf_score[movieId] += 1 / (60 + index)
+        else :
+            rrf_score[movieId] = 1 / (60 + index)
+
+    # 점수가 높은 순으로 정렬 
+    result = sorted(
+        rrf_score.items(),
+        key=lambda x:x[1], 
+        reverse=True
+    )
+
+    # 상위 목록 top_k만큼 돌려주기
+    return result[:top_k]
+
+@router.get('/recommend/hybrid')
+def hybrid(
+    userId:int,                        # CF 에서 사용할 사용자 id 
+    top_k:int = 10,                # 결과 개수
+    candidate_size:int = 50, # 각각의 추천의 후보 수
+    list_movieId : list [int] = Query(...), # CBF에서 사용할 영화 목록
+):
+    result_hybrid =  hybrid_filtering(list_movieId, userId, top_k, candidate_size)
+    df_movies = util.load_csv('movies.csv')
+    result = {}
+    for i in result_hybrid:
+            movieId = i[0]
+            score = i[1]
+            title = df_movies.loc [
+                df_movies['movieId'] == movieId,
+                'title'
+            ].iloc[0] # 행의 순서
+            
+            result[movieId] = {
+                'title' : title,
+                'score' : score
+            }
+
+    return result
+
