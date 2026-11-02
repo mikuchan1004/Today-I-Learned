@@ -11,6 +11,6 @@ google-genai
 openai
 python-dotenv
 langchain-openai
-langchain-genai
+langchain-google-genai
 langchain-core
 langgraph>=0.2,<2.0
