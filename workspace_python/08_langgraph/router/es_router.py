@@ -703,13 +703,13 @@ def recall_at_k(
         # 1. 정답 데이터(test)에서 사용자가 threshold(예: 4.0점) 이상 높은 평점을 준 영화 목록(정답셋) 필터링
         #    - pandas.Series 객체는 set으로 자동 형변환이 안 되므로 set()으로 명시적 형변환
         #    - relevant_movies : 사용자가 실제로 선호한(관련된) 정답 영화 집합
-        relevant_movies = set(test.loc)[
+        relevant_movies = set(test.loc[
             # 첫 번째 전달인자 : 조건 (해당 유저이면서 기준 평점 이상)
             (test['userId'] == userId)
             & (test['rating'] >= threshold),
             # 두 번째 전달인자 : 가져올 특정 컬럼 ('movieId')
             'movieId'
-        ]
+        ])
         # 정답 데이터에 조건에 맞는 영화가 없다면 분모가 0이 되므로 Recall 계산 불가 (-1.0 반환)
         if len(relevant_movies) == 0:
             return -1.0
@@ -721,7 +721,7 @@ def recall_at_k(
 
         # 3. 추천 목록 중 사용자가 좋아한 정답 영화의 개수 (교집합 연산)
         #    - len(relevant_movies & recommend_movies)의 의미로 작성된 연산
-        hit_count = len (relevant_movies) & len (recommend_movies)
+        hit_count = len(relevant_movies & recommend_movies)
 
         # 4. Recall@K = 맞힌 개수 / 전체 정답 개수
         result = hit_count / len(relevant_movies)
@@ -747,7 +747,6 @@ def hybrid_filtering(
      top_k:int = 10,            # 최종 반환할 결과 개수
      candidate_size:int = 50    # 각 추천 알고리즘별로 추출할 후보군 크기
 ):
-    pass
     # --------------------------------------------------------------------------
     # [1단계: CBF 추천 수행]
     # --------------------------------------------------------------------------
