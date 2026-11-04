@@ -337,4 +337,41 @@ def recommend_hybrid(
     # LLM에게 이쁘게 포장해달라고 해서 그 결과를 출력한다.
     # 단, 사용자가 gpt, gemini를 선택할 수 있게 하자
 
+    prompt  = ChatPromptTemplate.from_messages([
+        (
+            'system' , 
+            '너는 영화 추천 서비스의 설명 도우미야'
+            '필요하면 인터넷 검색을 해서 알아봐'
+            '입력 받은 추천 결과만 사용해서 설명한다'
+            '결과는 구조적인 json으로 알려줘'
+        ),
+
+        ('human' , 
+        'cbf , cf의 하이브리드 추천 결과물 : {hybrid}'
+        '제목을 한국 제목으로 변경해서도 알려줘 단, 제목을 추측하지마'
+        '영화 줄거리도 알려줘 단, 추측하지마'
+        '순위를 보고 3개 정돤 정리해주면 되'
+        )
+
+    ])
+
     hybrid = es_router.hybrid(userId, top_k, candidate_size, list_movieId)
+
+    if provider == 'gemini':
+        model = ChatGoogleGenerativeAI(
+            model='gemini-3.8-flash',
+            temperature=0,
+            api_key=os.getenv('GEMINI_API_KEY')
+        )
+    else : 
+        model = ChatOpenAI(
+            model='gpt-5.5',
+            temperature=0,
+            api_key=os.getenv('OPENAI_API_KEY')
+        )
+            
+    chain = prompt | model | StrOutputParser()
+
+    return chain.invoke({
+        "hybrid" : hybrid
+    })
