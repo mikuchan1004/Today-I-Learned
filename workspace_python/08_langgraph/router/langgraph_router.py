@@ -47,6 +47,8 @@ class State(BaseModel):
 
     explain: Optional[str] = "LLM 응답 없음"       # 최종 LLM 생성 설명 텍스트
 
+    error : Optional[str] = None # 에러 메시지
+
 
 # ==========================================
 # 2. 구조화된 출력(Structured Output) 스키마
@@ -199,6 +201,30 @@ def explain(state: State):
         'explain': result
     }
 
+def validator(state : State):
+    state.recommend_type
+    if type == 'CBF':
+        if state.list_movieId is None : 
+            return 'ERROR'
+
+    if type == 'CF' :
+        if state.userId is None : 
+            return 'ERROR'
+
+    return type
+
+def makeErrorMessage(state : State):
+
+    error = None
+    
+    if type == 'CBF':
+        if state.list_movieId is None : 
+            error = 'list_movieId는 필수입니다.'
+    elif type == 'CF' :
+            error = 'userId는 필수입니다.'
+    return {
+        'error ' : error
+    }
 
 # ==========================================
 # 4. FastAPI 엔드포인트 및 Graph 조립
@@ -217,6 +243,8 @@ def recommend(param: State):
     graph.add_node('CF', cf)
     graph.add_node('BM25', bm25)
     graph.add_node('explain', explain)
+    graph.add_node('validator' , validator)
+    graph.add_node('makeErrorMessage' , makeErrorMessage)
 
     # 3. 엣지 연결: 시작 노드 지정
     graph.add_edge(START, 'select')
@@ -224,11 +252,13 @@ def recommend(param: State):
     # 4. 조건부 분기 (Conditional Edge): recommend_select의 결과(recommend_type)에 따라 분기
     graph.add_conditional_edges(
         'select', 
-        lambda s: s.recommend_type,
+        # lambda s: s.recommend_type,
+        'validator',
         {
             'CBF': 'CBF',
             'CF': 'CF',
-            'BM25': 'BM25'
+            'BM25': 'BM25',
+            'ERROR'  : "makeErrorMessage"
         }
     )
 
@@ -239,6 +269,7 @@ def recommend(param: State):
     
     # 6. 설명 생성 완료 후 종료(END)
     graph.add_edge('explain', END)
+    graph.add_edge('makeErrorMessage' , END)
 
     # 7. 그래프 컴파일 및 실행
     recommend_graph = graph.compile()
