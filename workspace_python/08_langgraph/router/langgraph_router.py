@@ -202,28 +202,30 @@ def explain(state: State):
     }
 
 def validator(state : State):
-    state.recommend_type
-    if type == 'CBF':
-        if state.list_movieId is None : 
+
+    rec_type = state.recommend_type
+
+    if rec_type == 'CBF' and not state.list_movieId:
             return 'ERROR'
 
-    if type == 'CF' :
-        if state.userId is None : 
+    if rec_type == 'CF' and state.userId is None :
             return 'ERROR'
 
-    return type
+    return rec_type
 
 def makeErrorMessage(state : State):
 
-    error = None
+    rec_type = state.recommend_type
+
+    error = "요청을 처리할 수 없습니다."
     
-    if type == 'CBF':
-        if state.list_movieId is None : 
+    if rec_type == 'CBF' and not state.list_movieId:
             error = 'list_movieId는 필수입니다.'
-    elif type == 'CF' :
+    elif rec_type == 'CF' and state.userId is None:
             error = 'userId는 필수입니다.'
+
     return {
-        'error ' : error
+        'error' : error
     }
 
 # ==========================================
@@ -243,7 +245,6 @@ def recommend(param: State):
     graph.add_node('CF', cf)
     graph.add_node('BM25', bm25)
     graph.add_node('explain', explain)
-    graph.add_node('validator' , validator)
     graph.add_node('makeErrorMessage' , makeErrorMessage)
 
     # 3. 엣지 연결: 시작 노드 지정
@@ -253,7 +254,7 @@ def recommend(param: State):
     graph.add_conditional_edges(
         'select', 
         # lambda s: s.recommend_type,
-        'validator',
+        validator,
         {
             'CBF': 'CBF',
             'CF': 'CF',
