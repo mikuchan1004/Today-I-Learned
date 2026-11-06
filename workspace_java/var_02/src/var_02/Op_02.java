@@ -1,6 +1,6 @@
 package var_02;
 
-public class Op {
+public class Op_02 {
 	public static void main(String[] args) {
 		// 1. 증감 연산자 (전위 vs 후위)
 		int x = 10;
