@@ -107,6 +107,11 @@ public class For_06 {
 			}
 			System.out.println(); // 줄바꿈
 		}
+		// 향상된 for문
+		int [] score = {1,2,3,4,5};
+		for (int s : score) {
+			System.out.println(s);
+		}
 	}
-
+	
 }

@@ -226,6 +226,45 @@ public class Type_03 {
 		 * - Math.random()으로 위 아스키코드 범위의 정수를 뽑은 뒤 (char)로 형변환하면
 		 *   임의의 알파벳/숫자 문자를 얻을 수 있어.
 		 */
+		char lower = (char)((int)(Math.random() * ((122-97)+1))+97);
+		System.out.println("lower:" + lower);
+		
+		String result = "";
+		// 최종적으로 10번 반복하기
+		// 대/소문자, 숫자를 랜덤으로 뽑아서 붙이기
+		// 각각의 카운트를 기록해둘꺼임 
+		// 8쯤에서 필수요소가 빠진게 있다면 채우기
+		int cnt_upper = 0;
+		int cnt_lower = 0;
+		int cnt_num = 0;
+		for (int i=0; i<10; i++) {
+			int type = (int)(Math.random() * ((2-1)+1))+0;
+			
+			if (i >= 8) {
+				if(cnt_upper < 1) {
+					type = 0;
+				}else if (cnt_lower < 1) {
+					type = 1;
+				}else if (cnt_num < 1) {
+					type = 2;
+				}
+			}
+			
+			char val = 0;
+			if (type == 0) {
+				val = (char)((int)(Math.random() * ((90-65)+1))+65);
+				cnt_upper++;
+			}else if (type == 1) {
+				val = (char)((int)(Math.random() * ((122-97)+1))+97);
+				cnt_lower++;
+			}else {
+				val = (char)((int)(Math.random() * ((57-48)+1))+48);
+				cnt_num++;
+			}
+			result += val;
+		}
+		System.out.println(result);
+		
 	}
 
 }
