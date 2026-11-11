@@ -12,6 +12,8 @@ package game_04;
  * 2. 다형성(Polymorphism)의 토대:
  *    - 모든 챔피언은 'Champ'라는 하나의 공통 타입으로 묶어서 다룰 수 있습니다.
  */
+// final : 클래스의 경우 상속 불가
+// public final class Champ extends Object {
 public class Champ {
 	
 	/**
@@ -25,6 +27,8 @@ public class Champ {
 	 * 기본 이동 동작
 	 * (자식 클래스인 Jax나 VI에서 각자의 개성에 맞게 오버라이딩하여 재정의할 수 있습니다.)
 	 */
+	// final : 메소드의 경우 오버라이드 금지 
+	// final void move() {
 	void move() {
 		System.out.println("이동 합니다.");
 	}
