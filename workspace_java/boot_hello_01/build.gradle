@@ -1,0 +1,46 @@
+// ========================================================
+// Gradle 빌드 설정 파일 (프로젝트 빌드 및 라이브러리 의존성 관리)
+// ========================================================
+
+plugins {
+	id 'java'
+	id 'war' // 외장 톰캣 배포(war 패키징)를 위한 플러그인
+	id 'org.springframework.boot' version '4.1.2' // 스프링 부트 플러그인
+	id 'io.spring.dependency-management' version '1.1.7' // 스프링 부트 의존성 버전 자동 관리
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+// 자바 컴파일 및 런타임 버전 지정
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17) // Java 17 사용
+	}
+}
+
+// 라이브러리를 다운로드할 원격 저장소 (기본: 메이븐 중앙 저장소)
+repositories {
+	mavenCentral()
+}
+
+// 프로젝트에 필요한 외부 라이브러리(의존성) 목록
+dependencies {
+	// 스프링 웹 MVC(내장 톰캣, 스프링 MVC 웹 기능 지원)
+	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+	
+	// 개발 편의 도구 (코드 수정 시 서버 자동 재시작 및 브라우저 새로고침 지원)
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	
+	// 외장 톰캣 환경에서 war 실행 시 내장 톰캣과 충돌하지 않도록 런타임 제공으로 설정
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat-runtime'
+	
+	// 단위 테스트 및 통합 테스트용 라이브러리
+	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// 테스트 실행 시 JUnit Platform 사용 설정
+tasks.named('test') {
+	useJUnitPlatform()
+}
